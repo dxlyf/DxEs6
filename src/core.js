@@ -1,7 +1,6 @@
 export  class View{
     constructor(name,args)
     {
-        super()
         this._name=name
         this.args=args
     }

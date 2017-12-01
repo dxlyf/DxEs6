@@ -14,6 +14,7 @@ module.exports = {
     path: path.join(root, 'dist'),
   },
   module: {
+    noParse: /jquery|vue|lodash/,
     rules: [
           {
                 test: /\.css$/,
@@ -22,13 +23,10 @@ module.exports = {
               {
                   test:/\.js$/,
                   exclude: /(node_modules|bower_components)/,
-                  use:[{
-                        loader:'babel-loader',
-                        options:{
-                            
-                        }
+                  use:{
+                        loader:'babel-loader'
 
-                  }]
+                  }
               }
             ]
  },

@@ -1,12 +1,6 @@
 {
-    "presets": ["env",{
-        "targets":{
-            "ie":9
-        },
-        "modules": 'commonjs',
-        "useBuiltIns": false,
-        "debug": true
-      }],
-      "plugins": ["@babel/plugin-syntax-jsx"],
-      "ignore": []
+    "presets": ["env"],
+      "ignore": [],
+      "plugins": ["syntax-jsx"],
+      
 }
