@@ -4,7 +4,7 @@
   "description": "开发",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --config  build/webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,9 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
-    "webpack": "^3.9.1"
+    "babel-minify-webpack-plugin": "^0.2.0",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.9.1",
+    "webpack-merge": "^4.1.1"
   }
 }
