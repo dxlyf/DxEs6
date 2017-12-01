@@ -1,14 +1,18 @@
 const path = require('path');
-const MinifyPlugin=require('babel-minify-webpack-plugin')
+const merge = require('webpack-merge');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 //console.log(path.resolve(__dirname, '../dist'));
 //console.log(path.resolve(process.cwd(), 'dist'));
-module.exports = {
-  entry: './src/index.js',
-  output: {
-    filename: 'dx.js',
-    path: path.resolve(__dirname, '../dist')
+const root= path.resolve(__dirname,'../');
+console.log( path.join(root, 'dist'));
+module.exports =merge(require('./webpack.common'), {
+  entry: {
+        index:'./src/index.js',
+        vue:['vue']
   },
-  plugins: [
-    new MinifyPlugin({}, {})
-  ]
-};
+  output: {
+    filename: '[name].js',
+    publicPath: '/'
+  }
+});

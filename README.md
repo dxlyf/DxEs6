@@ -16,6 +16,17 @@ npm install babel-minify-webpack-plugin --save-dev
             new MinifyPlugin(minifyOpts, pluginOpts)
         ]
         }
+
+**插件** 
+清除文件夹         
+npm install clean-webpack-plugin --save-dev   
+创建HTML文件      
+npm install --save-dev html-webpack-plugin    
+创建热插件   
+npm install --save-dev express webpack-dev-middleware     
+创建css 加载
+npm install --save-dev style-loader css-loader
+
 #### 安装es6编译插件
 npm install --save-dev babel-loader babel-core
 创建.babelrc配置文件 Env预设
@@ -35,3 +46,6 @@ npm install babel-preset-env --save-dev
         }
 没有任何配置选项，babel-preset-env与babel-preset-latest（或者babel-preset-es2015，babel-preset-es2016和babel-preset-es2017一起）的行为完全相同。
 
+
+#### 安装开发依赖
+npm install vue element-ui lodash -S
