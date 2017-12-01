@@ -2,9 +2,10 @@
 ## ES6 开发编译环境
 ### 安装编译环境
 #### 打包插件webpack
-npm install --save-dev webpack
-配置合并 
-npm install --save-dev webpack-merge
+npm install --save-dev webpack 
+配置合并  
+npm install --save-dev webpack-merge 
+
 [压缩代码](https://github.com/webpack-contrib/babel-minify-webpack-plugin)
 npm install babel-minify-webpack-plugin --save-dev
 
