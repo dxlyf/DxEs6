@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/fanyonglong/DxEs6#readme",
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "webpack": "^3.9.1"
   }
 }
