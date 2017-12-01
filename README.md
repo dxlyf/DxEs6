@@ -4,11 +4,9 @@
 #### 打包插件webpack
 npm install --save-dev webpack  
 配置合并  
-npm install --save-dev webpack-merge  
-
-[压缩代码](https://github.com/webpack-contrib/babel-minify-webpack-plugin)
-npm install babel-minify-webpack-plugin --save-dev
-
+npm install --save-dev webpack-merge     
+[压缩代码](https://github.com/webpack-contrib/babel-minify-webpack-plugin)   
+npm install babel-minify-webpack-plugin --save-dev   
         const MinifyPlugin = require("babel-minify-webpack-plugin");
         module.exports = {
         entry: //...,
