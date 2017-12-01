@@ -7,6 +7,6 @@
         "useBuiltIns": false,
         "debug": true
       }],
-      "plugins": [],
+      "plugins": ["@babel/plugin-syntax-jsx"],
       "ignore": []
 }

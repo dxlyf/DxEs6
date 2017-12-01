@@ -69,6 +69,9 @@ npm install --save-dev style-loader css-loader
         minSize: number,
         // 在 公共chunk 被创建立之前，所有 公共模块 (common module) 的最少大小。
 
+**loader 加载器**
+创建jsx 解析   
+npm install --save-dev @babel/plugin-syntax-jsx
 
 #### 安装es6编译插件
 npm install --save-dev babel-loader babel-core

@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/fanyonglong/DxEs6#readme",
   "devDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.0.0-beta.32",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-minify-webpack-plugin": "^0.2.0",

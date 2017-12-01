@@ -1,3 +1,7 @@
+import core from './core'
+ import _ from 'lodash'
+ import vue from 'vue'
+
 var Dx=Object.create(null);
 
 function LoadImage(src)

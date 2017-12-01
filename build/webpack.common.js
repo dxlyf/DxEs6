@@ -13,14 +13,46 @@ module.exports = {
     filename: 'index.js',
     path: path.join(root, 'dist'),
   },
-   module: {
- rules: [
-       {
-             test: /\.css$/,
-             use: ['style-loader', 'css-loader']
-           }
-         ]
-   },
+  module: {
+    rules: [
+          {
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
+              },
+              {
+                  test:/\.js$/,
+                  exclude: /(node_modules|bower_components)/,
+                  use:[{
+                        loader:'babel-loader',
+                        options:{
+                            
+                        }
+
+                  }]
+              }
+            ]
+ },
+ //externals:['lodash','vue'],
+    externals: {
+        lodash: {
+          commonjs: 'lodash',
+          commonjs2: 'lodash',
+          amd: 'lodash',
+          root: '_'
+     },
+     vue:{
+        commonjs: 'vue',
+        commonjs2: 'vue',
+        amd: 'vue',
+        root: 'Vue'
+     }
+  },
+ resolve: {
+       extensions: ['.js', '.html', '.ts','.css'],
+       alias: {
+           'template': '../template/',
+       }
+    },
   plugins: [
     // new webpack.optimize.CommonsChunkPlugin({
     //     name: "vue",
