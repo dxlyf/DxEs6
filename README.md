@@ -135,7 +135,11 @@ npm install --save babel-polyfill
 
 ##### jsx 解析和转换  
 npm install --save-dev babel-plugin-syntax-jsx 解析      
-npm install --save-dev babel-plugin-transform-react-jsx 转换    
+npm install --save-dev babel-plugin-transform-react-jsx 转换   
+
+##### object rest 语法解构
+npm install --save-dev babel-plugin-transform-object-rest-spread 转换   
+npm install --save-dev babel-plugin-syntax-object-rest-spread 解析   
 
 ##### 插件    
 在大多数情况下，您应该将其babel-plugin-transform-runtime作为开发依赖项（with --save-dev）进行安装。  

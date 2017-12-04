@@ -27,7 +27,7 @@ module.exports = {
                         loader:'babel-loader',
                         options:{
                           presets:['env'],
-                          plugins:['syntax-jsx'],
+                          plugins:['transform-react-jsx','transform-object-rest-spread'],
                           babelrc:false,
                          // plugins:['syntax-jsx']
                         }
