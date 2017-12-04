@@ -133,8 +133,13 @@ es6语法填充它会仿效一个完整的 ES2015+ 环境，并意图运行于�
 这意味着你可以使用新的内置对象比如 Promise 或者 WeakMap, 静态方法比如 Array.from 或者 Object.assign, 实例方法比如 Array.prototype.includes 和生成器函数（提供给你使用 regenerator 插件）。为了达到这一点， polyfill 添加到了全局范围，就像原生类型比如 String 一样。    
 npm install --save babel-polyfill
 
-##### 插件   
- 
+##### jsx 解析和转换  
+npm install --save-dev babel-plugin-syntax-jsx 解析      
+npm install --save-dev babel-plugin-transform-react-jsx 转换    
+
+##### 插件    
+在大多数情况下，您应该将其babel-plugin-transform-runtime作为开发依赖项（with --save-dev）进行安装。  
+ npm install --save-dev babel-plugin-transform-runtime   
 
 #### 安装开发依赖
 npm install vue element-ui lodash -S

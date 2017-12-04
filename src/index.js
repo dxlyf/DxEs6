@@ -16,11 +16,12 @@ window.onload=function()
 }
 function getDiv()
 {
-    var data={
-        name:'李三',
-        age:19
-    };
-   // return (<div >6565</div>)
+    // var {name,...list}={
+    //     name:'李三',
+    //     age:19,
+    //     address:'ffd'
+    // };
+     return (<div ></div>);
 }
 if (module.hot) {
        module.hot.accept('./print', function() {

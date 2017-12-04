@@ -23,9 +23,15 @@ module.exports = {
               {
                   test:/\.js$/,
                   exclude: /(node_modules|bower_components)/,
-                  use:{
-                        loader:'babel-loader'
-                  }
+                  use:[{
+                        loader:'babel-loader',
+                        options:{
+                          presets:['env'],
+                          plugins:['syntax-jsx'],
+                          babelrc:false,
+                         // plugins:['syntax-jsx']
+                        }
+                  }]
               }
             ]
  },
