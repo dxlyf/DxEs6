@@ -1,6 +1,6 @@
 {
     "presets": ["env"],
       "ignore": [],
-      "plugins": ["syntax-jsx"],
+      "plugins": ["syntax-jsx"]
       
 }

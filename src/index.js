@@ -20,7 +20,7 @@ function getDiv()
         name:'李三',
         age:19
     };
-    return (<div >6565</div>)
+   // return (<div >6565</div>)
 }
 if (module.hot) {
        module.hot.accept('./print', function() {
