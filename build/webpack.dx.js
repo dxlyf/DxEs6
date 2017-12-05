@@ -1,18 +1,32 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common');
-const MinifyPlugin=require('babel-minify-webpack-plugin')
+const MinifyPlugin=require('babel-minify-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const webpack=require('webpack')
-const fs=require('fs')
-const path=require('path')
-
-
-
+const webpack=require('webpack');
+const fs=require('fs');
+const path=require('path');
+const args=require('yargs').default('ug','no').argv;
+var filename=args.ug=='yes'?'index.min.js':'index.js';
+var plugins=[
+    new CleanWebpackPlugin(['dx'],{
+        root: path.resolve(__dirname,'../')
+    }),
+    new webpack.DefinePlugin({
+        'process.env': {
+            'NODE_ENV': JSON.stringify('dev')
+        }
+    })
+];
+console.log(args.ug);
+if(args.ug=='yes')
+{
+    plugins.unshift(new MinifyPlugin())
+}
 module.exports = {
    // devtool: 'hidden-source-map',//'source-map',//'inline-source-map',
     entry:'./src/dx/index.js',
     output: {
-        filename: 'index.js',
+        filename: filename,
         chunkFilename: '[name].bundle.js',
       //  libraryTarget: "amd",
       libraryTarget: "umd", /// amd commonjs  assign this window commonjs2
@@ -47,6 +61,12 @@ module.exports = {
             commonjs2: 'ELEMENT',
             amd: 'ELEMENT',
             root: 'ELEMENT'
+        },
+        'configs':{
+            commonjs: 'configs',
+            commonjs2: 'configs',
+            amd: 'configs',
+            root: 'configs'
         }
     },
     module: {
@@ -73,14 +93,5 @@ module.exports = {
                   }
                 ]
     },
-    plugins: [
-        new CleanWebpackPlugin(['dx'],{
-            root: path.resolve(__dirname,'../')
-        }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('dev')
-            }
-        })
-   ] 
+    plugins: plugins
 }

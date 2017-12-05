@@ -1,14 +1,4 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("lodash"), require("vue"));
-	else if(typeof define === 'function' && define.amd)
-		define(["lodash", "vue"], factory);
-	else {
-		var a = typeof exports === 'object' ? factory(require("lodash"), require("vue")) : factory(root["_"], root["Vue"]);
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
-})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__) {
-return /******/ (function(modules) { // webpackBootstrap
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -77,13 +67,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_0__;
+module.exports = undefined;
 
 /***/ }),
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+module.exports = undefined;
 
 /***/ }),
 /* 2 */
@@ -112,7 +102,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-if (true) {
+if (false) {
   console.log('Looks like we are in development mode!');
 }
 
@@ -935,4 +925,3 @@ module.exports = function (css) {
 
 /***/ })
 /******/ ]);
-});

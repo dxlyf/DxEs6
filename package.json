@@ -10,6 +10,7 @@
     "server": "node build/server.js",
     "hotserver": "node build/dev-server.js",
     "dx": "webpack --config  build/webpack.dx.js",
+    "dx:ug": "node  build/webpack.dx.js --ug=yes",
     "start": "webpack-dev-server --open --config  build/webpack.dev.js"
   },
   "repository": {
@@ -43,7 +44,8 @@
     "webpack": "^3.9.1",
     "webpack-dev-middleware": "^1.12.2",
     "webpack-dev-server": "^2.9.5",
-    "webpack-merge": "^4.1.1"
+    "webpack-merge": "^4.1.1",
+    "yargs": "^10.0.3"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",

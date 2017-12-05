@@ -78,9 +78,6 @@ export  var View= Observable.extend({
         that._createElement();
         that.delegateEvents();
         that.initialize.apply(this, arguments);
-        if (that.el && that.el != 'body' && !that.Model._isMounted) {
-            that.Model.$mount(that.$el[0]);
-        }
     },
     //视图初始化函数,会自动执行
     initialize: function () {
@@ -91,6 +88,9 @@ export  var View= Observable.extend({
             that.Model = that.Model.apply(that, arguments);
         }
         if (that.Model && !(that.Model instanceof Vue)) {
+            if (that.el && that.el != 'body' && !_.has(that.Model, "el")) {
+                that.Model.el = that.el;
+            }
             that.Model = new Vue(that.Model);
         }
     },
