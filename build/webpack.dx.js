@@ -5,8 +5,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack=require('webpack');
 const fs=require('fs');
 const path=require('path');
-const args=require('yargs').default('ug','no').argv;
-var filename=args.ug=='yes'?'index.min.js':'index.js';
+//const args=require('yargs').default('ug','no').argv;
+// var filename=args.ug=='yes'?'index.min.js':'index.js';
 var plugins=[
     new CleanWebpackPlugin(['dist'],{
         root: path.resolve(__dirname,'../')
@@ -17,16 +17,19 @@ var plugins=[
         }
     })
 ];
-console.log(args.ug);
-if(args.ug=='yes')
-{
-    plugins.unshift(new MinifyPlugin())
-}
-module.exports = {
+
+
+module.exports = (env)=>{
    // devtool: 'hidden-source-map',//'source-map',//'inline-source-map',
+   if(env.production)
+   {
+       plugins.unshift(new MinifyPlugin())
+   }
+    //console.log(env.production);
+    return {
     entry:'./src/dx/index.js',
     output: {
-        filename: filename,
+        filename: env.production?'index.min.js':'index.js',
         chunkFilename: '[name].bundle.js',
       //  libraryTarget: "amd",
       libraryTarget: "umd", /// amd commonjs  assign this window commonjs2
@@ -94,5 +97,5 @@ module.exports = {
                 ]
     },
     plugins: plugins
+    }
 }
-webpack(module.exports)
