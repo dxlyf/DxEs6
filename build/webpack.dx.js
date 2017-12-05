@@ -8,7 +8,7 @@ const path=require('path');
 const args=require('yargs').default('ug','no').argv;
 var filename=args.ug=='yes'?'index.min.js':'index.js';
 var plugins=[
-    new CleanWebpackPlugin(['dx'],{
+    new CleanWebpackPlugin(['dist'],{
         root: path.resolve(__dirname,'../')
     }),
     new webpack.DefinePlugin({
@@ -30,7 +30,7 @@ module.exports = {
         chunkFilename: '[name].bundle.js',
       //  libraryTarget: "amd",
       libraryTarget: "umd", /// amd commonjs  assign this window commonjs2
-        path: path.resolve(__dirname, '../dx'),
+        path: path.resolve(__dirname, '../dist/dx'),
         library:'Dx',
         publicPath:"/",
         sourceMapFilename:'[file].map',
@@ -95,3 +95,4 @@ module.exports = {
     },
     plugins: plugins
 }
+webpack(module.exports)

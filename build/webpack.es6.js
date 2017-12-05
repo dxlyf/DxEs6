@@ -27,7 +27,7 @@ module.exports = merge(common, {
         filename: '[name].js',
         chunkFilename: '[name].bundle.js',
         libraryTarget: "umd",
-        path: path.resolve(__dirname, '../es6'),
+        path: path.resolve(__dirname, '../dist/es6'),
     },
   //  externals:['lodash','vue'],
     // externals:{
@@ -65,7 +65,7 @@ module.exports = merge(common, {
                 ]
     },
     plugins: [
-        new CleanWebpackPlugin(['es6'],{
+        new CleanWebpackPlugin(['dist'],{
             root: path.resolve(__dirname,'../')
         }),
         new webpack.optimize.CommonsChunkPlugin({
