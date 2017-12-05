@@ -1,4 +1,6 @@
-import {Observable,_,$} from './core'
+import {Observable} from './core'
+import $,{extend,isFunction} from 'jquery'
+import _ from 'lodash'
 import {request} from './request'
 var Source = Observable.extend({
     options: {
@@ -24,16 +26,16 @@ var Source = Observable.extend({
         }
 
     },
-    initialize: function () { },
-    beforeSend: function (callback) {
+    initialize () { },
+    beforeSend (callback) {
         this.on('onBeforeSend', callback);
         return this;
     },
-    complete: function (callback) {
+    complete (callback) {
         this.on('onComplete', callback);
         return this;
     },
-    then: function (success, fail) {
+    then (success, fail) {
         if (this.data != null) {
             success.call(this, this.data, this.orgData);
             return this;
@@ -48,36 +50,36 @@ var Source = Observable.extend({
         }
         return this;
     },
-    _dataHandler: function (data) {
+    _dataHandler (data) {
         this.data = isFunction(this.options.parseData) ? this.options.parseData.call(this, data) : data;
         this.orgData = data;
         this._callSuccess();
     },
-    _callSuccess: function () {
+    _callSuccess () {
         this.trigger('onSuccess', this.data, this.orgData);
         this.trigger('onComplete');
     },
-    _fail: function (e, statusText, error, isSuccess) {
+    _fail (e, statusText, error, isSuccess) {
         this.errorMessages = _.slice(arguments);
         this.trigger('onFail', this.errorMessages);
         this.trigger('onComplete');
     },
-    query: function (data) {
+    query (data) {
         data = data || {};
         this.trigger('onQuery', data);
         this.fetch(data);
     },
-    read: function (data) {
+    read (data) {
         data = data || {};
         this.trigger('onRead', data);
         this.fetch(data);
     },
-    refresh: function (data) {
+    refresh (data) {
         data = data || {};
         this.trigger('onRefresh', data);
         this.fetch(data);
     },
-    fetch: function (data) {
+    fetch (data) {
         this.trigger('onBeforeSend', data);
         if (this.options.cache && this.data != null) {
             this._callSuccess();
@@ -88,20 +90,20 @@ var Source = Observable.extend({
         this.errorMessages = [];
         this._fetch(data);
     },
-    _fetch: function () { },
-    getData: function () {
+    _fetch () { },
+    getData () {
         return this.data;
     },
-    getItemData: function (index) {
+    getItemData (index) {
         return this.data[index];
     },
-    findItemIndex: function (predicate) {
+    findItemIndex (predicate) {
         return _.findIndex(this.data, predicate);
     },
-    findItem: function (predicate) {
+    findItem (predicate) {
         return _.find(this.data, predicate);
     },
-    filter: function (predicate) {
+    filter (predicate) {
         return _.filter(this.data, predicate);
     }
 });
@@ -109,7 +111,7 @@ var remoteSource = Source.extend({
     requestOptions: {
         inShowLoading: false
     },
-    initialize: function (options) {
+    initialize (options) {
         this.orgData = null;
         this.requestOptions = extend({}, this.requestOptions, options.transport);
         this.requestData = this.requestOptions.data;
@@ -121,26 +123,26 @@ var remoteSource = Source.extend({
             }
         }
     },
-    query: function (data) {
+    query (data) {
         data = data || {};
         this.trigger('onQuery', data);
         var oldData = this.getRequestData() || {}, refData = extend({}, oldData, data);
         this.fetch(refData);
     },
-    read: function (data) {
+    read (data) {
         data = data || {};
         this.trigger('onRead', data);
         var oldData = this.getRequestData() || {}, refData = extend({}, oldData, data);
         this.fetch(refData);
     },
-    _fetch: function (data) {
+    _fetch (data) {
         var requestOptions = this.requestOptions;
         requestOptions.data = data;
         request(requestOptions).then(this._dataHandler, this._fail);
     }
 });
 var localSource = Source.extend({
-    _fetch: function (data) {
+    _fetch (data) {
         var that = this;
         if (isFunction(this.options.data)) {
             var deferred = $.Deferred();

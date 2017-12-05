@@ -1,5 +1,6 @@
-import {Observable,hasInstanceof,_,$} from './core'
-
+import {Observable,hasInstanceof} from './core'
+import $,{extend,isFunction} from 'jquery'
+import _ from 'lodash'
 var  delegateEventSplitter = /^(\S+)\s*(.*)$/;
 /***
  * 

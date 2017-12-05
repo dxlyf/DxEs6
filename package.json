@@ -9,7 +9,7 @@
     "es6": "webpack --config  build/webpack.es6.js",
     "server": "node build/server.js",
     "hotserver": "node build/dev-server.js",
-    "dx": "webpack --config  build/webpack.dx.js --env",
+    "dx": "webpack --config  build/webpack.dx.js --env --progress",
     "dx:ug": "webpack --config  build/webpack.dx.js --env.production",
     "start": "webpack-dev-server --open --config  build/webpack.dev.js"
   },

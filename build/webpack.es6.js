@@ -65,7 +65,7 @@ module.exports = merge(common, {
                 ]
     },
     plugins: [
-        new CleanWebpackPlugin(['dist'],{
+        new CleanWebpackPlugin(['dist/es6'],{
             root: path.resolve(__dirname,'../')
         }),
         new webpack.optimize.CommonsChunkPlugin({

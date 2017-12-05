@@ -161,10 +161,10 @@ export {
 export  var  {
     Promise=$.Deferred,
     when= $.when,
-    template= function (template) {
+    template=  (template)=> {
         return _.template(template);
     },
-    getUrlParams= function (name, url) {
+    getUrlParams= (name, url)=> {
         url = url || location.search;
         var sname = name + "=",
             len = sname.length,
@@ -177,7 +177,7 @@ export  var  {
         }
         return result;
     },
-    convertToInt=function (value, defaultValue) {
+    convertToInt= (value, defaultValue)=>{
         defaultValue = _.isUndefined(defaultValue) ? null : defaultValue;
         value = Number(value);
         if (isNaN(value)) {
@@ -185,7 +185,7 @@ export  var  {
         }
         return value;
     },
-    cloneObject= function (obj) {
+    cloneObject=  (obj)=> {
         return JSON.parse(JSON.stringify(obj));
     }
 }={};

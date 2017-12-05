@@ -8,7 +8,7 @@ const path=require('path');
 //const args=require('yargs').default('ug','no').argv;
 // var filename=args.ug=='yes'?'index.min.js':'index.js';
 var plugins=[
-    new CleanWebpackPlugin(['dist'],{
+    new CleanWebpackPlugin(['dist/dx'],{
         root: path.resolve(__dirname,'../')
     }),
     new webpack.DefinePlugin({
@@ -16,9 +16,11 @@ var plugins=[
             'NODE_ENV': JSON.stringify('dev')
         }
     })
+    // 预先定义加载模块
+    // new webpack.ProvidePlugin({
+    //     //   _: 'lodash'
+    // })
 ];
-
-
 module.exports = (env)=>{
    // devtool: 'hidden-source-map',//'source-map',//'inline-source-map',
    if(env.production)
@@ -27,31 +29,49 @@ module.exports = (env)=>{
    }
     //console.log(env.production);
     return {
-    entry:'./src/dx/index.js',
+    entry:'./src/dx/main.js',
     output: {
         filename: env.production?'index.min.js':'index.js',
         chunkFilename: '[name].bundle.js',
       //  libraryTarget: "amd",
-      libraryTarget: "umd", /// amd commonjs  assign this window commonjs2
+       libraryTarget: "umd", /// amd commonjs  assign this window commonjs2
         path: path.resolve(__dirname, '../dist/dx'),
-        library:'Dx',
+      //  library:'YY',
         publicPath:"/",
         sourceMapFilename:'[file].map',
-    //    libraryExport:'fff'
+        libraryExport:'default'//'mjb'
     },
-  //  externals:['lodash','vue'],
-    externals: {
+    target:"web",
+    resolve:{
+      //  mainFiles: ["index"],//解析目录要使用的文件名
+     //   modules: [path.resolve(__dirname, "../src"), "node_modules"], // 模块搜索目录
+        alias: {
+            ffff: path.resolve(__dirname, '../src/dx/vue-extends.js')
+        },
+        extensions: [".js", ".json"]
+    },
+    // externals: [
+    //     function(context, request, callback) {
+    //     console.log('aaaa:'+request);
+    //       if (/^yourregex$/.test(request)){
+    //         return callback(null, 'commonjs ' + request);
+    //       }
+    //       callback();
+    //     }
+    //   ],
+   externals:['lodash','vue'],
+    externals: [{
        lodash: {
             commonjs: 'lodash',
             commonjs2: 'lodash',
             amd: 'lodash',
             root: '_'
         },
-        vue:{
+        'vue':{
             commonjs: 'vue',
             commonjs2: 'vue',
             amd: 'vue',
-            root: 'Vue'
+            root: 'vue'
         },
         jquery:{
             commonjs: 'jquery',
@@ -71,9 +91,15 @@ module.exports = (env)=>{
             amd: 'configs',
             root: 'configs'
         }
-    },
+    }],
     module: {
-        noParse: /jquery|vue|lodash/,
+      //  noParse: /^(jquery|lodash|vue|element\-ui)$/,
+      //  noParse: /jquery|vue|lodash/, // 排除文件解析
+        // noParse:function(context)
+        // {
+        //     console.log("ppppp:"+context);
+        //     return false;
+        // },
         rules: [
               {
                     test: /\.css$/,
@@ -81,7 +107,8 @@ module.exports = (env)=>{
                   },
                   {
                       test:/\.js$/,
-                      exclude: /(node_modules|bower_components)/,
+                      exclude: /(node_modules|bower_components)/, // 排除
+                      include:[path.resolve(__dirname,'../src/dx')],// 匹配
                       use:{
                             loader:'babel-loader',
                             options:{
@@ -90,7 +117,7 @@ module.exports = (env)=>{
                                 presets:[['env',{
 
                                 }]],
-                                plugins:['transform-es2015-typeof-symbol','transform-object-rest-spread']
+                               // plugins:['transform-es2015-typeof-symbol','transform-object-rest-spread']
                             }
                       }
                   }

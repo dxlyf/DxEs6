@@ -27,6 +27,7 @@ npm install --save-dev express webpack-dev-middleware
 创建css 加载
 npm install --save-dev style-loader css-loader     
 创建 公共js 
+ webpack.optimize.CommonsChunkPlugin  
 
             {
         name: string, // or
@@ -68,6 +69,9 @@ npm install --save-dev style-loader css-loader
 
         minSize: number,
         // 在 公共chunk 被创建立之前，所有 公共模块 (common module) 的最少大小。
+
+自动加载模块，而不必到处 import 或 require 。       
+webpack.ProvidePlugin
 
 **loader 加载器**
 创建jsx 解析   

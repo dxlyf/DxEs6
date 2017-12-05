@@ -1,5 +1,5 @@
-import {Observable,hasInstanceof,_,$} from './core'
-
+import {Observable,hasInstanceof,_} from './core'
+import $ from 'jquery'
 var  widgets = {};
 var noop = $.noop,
    support = (function () {

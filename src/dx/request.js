@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import configs from 'configs'
+//import configs from 'configs'
 import {loading,hideLoading,alert} from './element'
 var responseStatus = {
     'success': "200", // 操作成功
@@ -8,7 +8,7 @@ var responseStatus = {
     'noFound': "404", // 资源未找到
     'ServerError': "500" //服务器内部错误
 },
-  getUrl = configs.getUrl,
+  getUrl = __non_webpack_require__('configs').getUrl,
   noop = $.noop,
   globalAjaxSetting = {
       inShowLoading: false,

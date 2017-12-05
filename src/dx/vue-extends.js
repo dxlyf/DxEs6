@@ -1,12 +1,13 @@
-import {DataSource} from './data-source'
 import Vue from 'vue'
 import _ from 'lodash'
 import $ from 'jquery'
-var components = {};
+import {DataSource} from './data-source'
+
+var components = Object.create(null);
 Vue.directive('authorize', (function () {
     var permissions = window.GLOBALREQUIRECONFIGS.permissions || [];
     function update(el, name) {
-        var item = mjb._.find(permissions, { Keys: name });
+        var item = _.find(permissions, { Keys: name });
         if (item && item.vals == 1) {
             el.style.display = el.__orgDisplay;
         } else if (item && item.vals == 0) {
@@ -137,4 +138,4 @@ components.registerComponent = function (name, component) {
     Vue.component('mjb-' + name, component);
     return component;
 }
-export {components}
+export  {components}
