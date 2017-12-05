@@ -1,5 +1,6 @@
-import {Observable,hasInstanceof,_} from './core'
-import $ from 'jquery'
+import {Observable,hasInstanceof} from './core'
+import _ from 'lodash'
+import $,{extend} from 'jquery'
 var  widgets = {};
 var noop = $.noop,
    support = (function () {
@@ -51,8 +52,8 @@ if (support) {
 }
 
 $.fn.emulateTransitionEnd = function (duration) {
-    var called = false
-    var $el = this
+    var called = false;
+    var $el = this;
     $(this).one('bsTransitionEnd', function () { called = true })
     var callback = function () { if (!called) $($el).trigger(support.transitionEnd) }
     setTimeout(callback, duration)
