@@ -1,2 +1,2 @@
-import * as dx  from './index'
-export default window.mjb=dx
+import * as index  from './index'
+export default window[process.env.globalvar]=index

@@ -38,11 +38,11 @@ export const sessionStorage = new Storage(window.sessionStorage);
 export const localStorage = new Storage(window.localStorage);
 export const tempStorage = {
     setItem: function (name, data) {
-        exports.localStorage.setItem(name, data);
+        localStorage.setItem(name, data);
     },
     getItem: function (name) {
         var result = exports.localStorage.getItem(name, data);
-        exports.localStorage.removeItem(name);
+        localStorage.removeItem(name);
         return result;
     }
 };

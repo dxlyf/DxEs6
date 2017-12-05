@@ -40,9 +40,9 @@ components.base = {
                         this.$emit.apply(this, arguments);
                     }, that, name);
                 });
-                _cacheCloneListeners = ons;
+                this._cacheCloneListeners = ons;
             }
-            return _cacheCloneListeners;
+            return this._cacheCloneListeners;
         },
         _extendListeners: function () {
             var that = this, keys = flatDeepArgs(arguments), ons = {};

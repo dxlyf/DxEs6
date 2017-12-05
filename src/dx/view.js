@@ -1,6 +1,7 @@
 import {Observable,hasInstanceof} from './core'
 import $,{extend,isFunction} from 'jquery'
 import _ from 'lodash'
+import Vue from 'vue'
 var  delegateEventSplitter = /^(\S+)\s*(.*)$/;
 /***
  * 

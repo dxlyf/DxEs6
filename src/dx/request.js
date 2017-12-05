@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import _ from 'lodash'
 //import configs from 'configs'
 import {loading,hideLoading,alert} from './element'
 var responseStatus = {

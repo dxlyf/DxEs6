@@ -13,7 +13,8 @@ var plugins=[
     }),
     new webpack.DefinePlugin({
         'process.env': {
-            'NODE_ENV': JSON.stringify('dev')
+            'NODE_ENV': JSON.stringify('dev'),
+            'globalvar':JSON.stringify('mjb')
         }
     })
     // 预先定义加载模块

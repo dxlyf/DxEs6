@@ -69,7 +69,7 @@ $.fn.emulateAnimationEnd = function (duration) {
 
 var Widget = Observable.extend({
     constructor: function (element, options) {
-        if (!exports.hasInstanceof(this, this.constructor)) {
+        if (!hasInstanceof(this, this.constructor)) {
             return new this.constructor(element, options);
         }
         Observable.call(this);
