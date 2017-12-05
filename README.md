@@ -130,8 +130,8 @@ npm install babel-preset-env --save-dev
 
 ##### 填充  
 es6语法填充它会仿效一个完整的 ES2015+ 环境，并意图运行于一个应用中而不是一个库/工具。这个 polyfill 会在使用 babel-node 时自动加载。
-这意味着你可以使用新的内置对象比如 Promise 或者 WeakMap, 静态方法比如 Array.from 或者 Object.assign, 实例方法比如 Array.prototype.includes 和生成器函数（提供给你使用 regenerator 插件）。为了达到这一点， polyfill 添加到了全局范围，就像原生类型比如 String 一样。    
-npm install --save babel-polyfill
+这意味着你可以使用新的内置对象比如 Promise 或者 WeakMap, 静态方法比如 Array.from 或者 Object.assign, 实例方法比如 Array.prototype.includes 和生成器函数（提供给你使用 regenerator 插件）。为了达到这一点， polyfill 添加到了全局范围，就像原生类型比如 String 一样。     
+npm install --save babel-polyfill 
 
 ##### jsx 解析和转换  
 npm install --save-dev babel-plugin-syntax-jsx 解析      
@@ -139,7 +139,10 @@ npm install --save-dev babel-plugin-transform-react-jsx 转换
 
 ##### object rest 语法解构
 npm install --save-dev babel-plugin-transform-object-rest-spread 转换   
-npm install --save-dev babel-plugin-syntax-object-rest-spread 解析   
+npm install --save-dev babel-plugin-syntax-object-rest-spread 解析  
+
+##### ES2015 转换插件
+npm install --save-dev babel-plugin-transform-es2015-typeof-symbol   
 
 ##### 插件    
 在大多数情况下，您应该将其babel-plugin-transform-runtime作为开发依赖项（with --save-dev）进行安装。  

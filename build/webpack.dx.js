@@ -6,40 +6,49 @@ const webpack=require('webpack')
 const fs=require('fs')
 const path=require('path')
 
-const dir=path.resolve(__dirname,'../','src/es6');
-var files=fs.readdirSync(dir,{
-    encoding:"utf8"
-});
-var entryFiles={};   //{['babel-polyfill']:'babel-polyfill'};
-files.forEach((file)=>{
-    
-    entryFiles[path.basename(file,'.js')]='./src/es6/'+file;
-});
-//cls
-common.plugins=[]
-common.entry={};
-common.module={};
-console.log(entryFiles);
-module.exports = merge(common, {
- //   devtool: 'inline-source-map',
-    entry:entryFiles,
+
+
+module.exports = {
+   // devtool: 'hidden-source-map',//'source-map',//'inline-source-map',
+    entry:'./src/dx/index.js',
     output: {
-        filename: '[name].js',
+        filename: 'index.js',
         chunkFilename: '[name].bundle.js',
-        libraryTarget: "umd",
-        path: path.resolve(__dirname, '../es6'),
+      //  libraryTarget: "amd",
+      libraryTarget: "umd", /// amd commonjs  assign this window commonjs2
+        path: path.resolve(__dirname, '../dx'),
+        library:'Dx',
+        publicPath:"/",
+        sourceMapFilename:'[file].map',
+    //    libraryExport:'fff'
     },
   //  externals:['lodash','vue'],
-    // externals:{
-    //     lodash:{
-    //         commonjs: "lodash",
-    //         amd: "lodash",
-    //         root:'_'
-    //     }
-    // },
-    // devServer: {
-    //  contentBase: '../dist'
-    // },
+    externals: {
+       lodash: {
+            commonjs: 'lodash',
+            commonjs2: 'lodash',
+            amd: 'lodash',
+            root: '_'
+        },
+        vue:{
+            commonjs: 'vue',
+            commonjs2: 'vue',
+            amd: 'vue',
+            root: 'Vue'
+        },
+        jquery:{
+            commonjs: 'jquery',
+            commonjs2: 'jquery',
+            amd: 'jquery',
+            root: '$'
+        },
+        'element-ui':{
+            commonjs: 'ELEMENT',
+            commonjs2: 'ELEMENT',
+            amd: 'ELEMENT',
+            root: 'ELEMENT'
+        }
+    },
     module: {
         noParse: /jquery|vue|lodash/,
         rules: [
@@ -58,23 +67,20 @@ module.exports = merge(common, {
                                 presets:[['env',{
 
                                 }]],
-                                plugins:['transform-es2015-typeof-symbol']
+                                plugins:['transform-es2015-typeof-symbol','transform-object-rest-spread']
                             }
                       }
                   }
                 ]
     },
     plugins: [
-        new CleanWebpackPlugin(['es6'],{
+        new CleanWebpackPlugin(['dx'],{
             root: path.resolve(__dirname,'../')
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-                 name: 'common', // 指定公共 bundle 的名称。
-        }),
-         new webpack.DefinePlugin({
+        new webpack.DefinePlugin({
             'process.env': {
                 'NODE_ENV': JSON.stringify('dev')
             }
         })
    ] 
-});
+}
