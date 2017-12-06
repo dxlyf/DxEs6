@@ -13,7 +13,8 @@
     "hotserver": "node build/dev-server.js",
     "dx": "webpack --config  build/webpack.dx.js --env --progress",
     "dx:ug": "webpack --config  build/webpack.dx.js --env.production",
-    "start": "webpack-dev-server --open --config  build/webpack.dev.js"
+    "start": "webpack-dev-server --open --config  build/webpack.dev.js",
+    "flow": "flow check"
   },
   "repository": {
     "type": "git",

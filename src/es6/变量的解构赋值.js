@@ -75,6 +75,9 @@ function d()
       move2({}); // [undefined, undefined]
       move2(); // [0, 0]
 }
+var ff:number=43;
+ff="fd5454";
+
 // 用途
 function f()
 {

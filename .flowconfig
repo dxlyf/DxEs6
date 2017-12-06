@@ -1,13 +1,15 @@
 [ignore]
 .*/node_modules/.*
-/dist/
-/build/
-/assets/
-/examples/
+.*/dist/.*
+.*/build/.*
+.*/assets/.*
+.*/examples/.*
 
 [include]
-/src/*.js
 
 [libs]
+flow
 
 [options]
+all=false
+unsafe.enable_getters_and_setters=true

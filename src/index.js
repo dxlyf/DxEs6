@@ -1,4 +1,6 @@
 
+/* @flow */
+
 import printMe from './print';
 import '../assets/index.css'
 
@@ -6,11 +8,6 @@ if (process.env.NODE_ENV !== 'production') {
   console.log('Looks like we are in development mode!');
 }
 
-function square(n: number) {
-  return n * n;
-}
-
-square("5454");
 function getDiv() {
   var { name, ...list } = {
     name: '李三',
