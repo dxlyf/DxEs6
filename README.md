@@ -179,3 +179,47 @@ npm install --save-dev babel-plugin-transform-es2015-typeof-symbol
 
 #### 安装开发依赖
 npm install vue element-ui lodash vue jquery -S
+
+
+### vs code 调试
+                以下属性对于每个启动配置都是必需的：
+
+                type - 用于此启动配置的调试器类型。每安装调试扩展引入一个类型，例如，node对于内置的节点调试器，或php与go对PHP和去扩展。
+                request - 此启动配置的请求类型。目前支持的是launch和attach。
+                name - 出现在Debug启动配置下拉列表中的友好名称。
+                以下是可用于所有启动配置的一些可选属性：
+
+                preLaunchTask- 要在调试会话开始之前启动任务，请将此属性设置为tasks.json（位于工作区.vscode文件夹下）中指定的任务的名称。
+                internalConsoleOptions - 在调试会话期间控制调试控制台面板的可见性
+                debugServer- 仅限调试扩展作者：连接到指定的端口，而不是启动调试适配器
+                许多调试器支持以下一些属性：
+
+                program - 启动调试器时运行的可执行文件或文件
+                args - 传递给程序进行调试的参数
+                env - 环境变量
+                cwd - 用于查找依赖关系和其他文件的当前工作目录
+                port - 连接到正在运行的进程时的端口
+                stopOnEntry - 节目启动时立即中断
+                console-要使用什么样的主机，例如internalConsole，integratedTerminal，externalTerminal。
+
+                VS Code支持字符串中的变量替换，launch.json并具有以下预定义变量：
+
+                $ {workspaceFolder} - 在VS Code中打开的文件夹的路径
+                $ {workspaceFolderBasename} - VS代码中打开的文件夹的名称，不带任何斜杠（/）
+                $ {file} - 当前打开的文件
+                $ {relativeFile} - 当前打开的文件相对于workspaceFolder
+                $ {fileBasename} - 当前打开的文件的基本名称
+                $ {fileBasenameNoExtension} - 当前打开的文件的基本名称，没有文件扩展名
+                $ {fileDirname} - 当前打开的文件的dirname
+                $ {fileExtname} - 当前打开的文件的扩展名
+                $ {cwd} - 启动时任务运行者的当前工作目录
+                $ {lineNumber} - 活动文件中当前选定的行号
+                您也可以通过$ {env：Name}语法（例如，$ {env：PATH}）来引用环境变量。确保匹配环境变量名称的外壳，例如${env:Path}在Windows上。  
+                {
+                "type": "node",
+                "request": "launch",
+                "name": "Launch Program",
+                "program": "${workspaceFolder}/app.js",
+                "cwd": "${workspaceFolder}",
+                "args": [ "${env:USERNAME}" ]
+                }

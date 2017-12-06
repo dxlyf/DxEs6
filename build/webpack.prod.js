@@ -7,10 +7,6 @@ const webpack=require('webpack')
 module.exports = merge(common, {
     plugins: [
        //  new MinifyPlugin(),
-         new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('production')
-            }
-        })
+    
    ] 
 });
