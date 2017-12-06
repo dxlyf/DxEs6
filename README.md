@@ -99,7 +99,7 @@ npm install --save-dev less-loader less
 创建jsx 解析   
 npm install --save-dev @babel/plugin-syntax-jsx
 
-#### 安装es6编译插件
+#### 安装es6编译插件 
 npm install --save-dev babel-loader babel-core
 创建.babelrc配置文件 Env预设
 npm install babel-preset-env --save-dev
@@ -153,6 +153,11 @@ npm install babel-preset-env --save-dev
         sourceRoot	(moduleRoot)	所有 source 都是相对于 root 的。
         sourceType	"module"	设置 babel 解析代码的模式。可以设置为 “script” 或 “module” 。
         wrapPluginVisitorMethod	null	可用于包装访问者模式的可选回调。注意: 这对于自我检查这样的事是有必要的，并且不需要实现任何方法。具体调用为 wrapPluginVisitorMethod(pluginAlias, visitorType, callback) 。
+
+
+##### 安装babel-es2015 
+[es2015](https://babeljs.cn/docs/plugins/preset-es2015/)     
+npm install --save-dev babel-preset-es2015     
 
 ##### 填充  
 es6语法填充它会仿效一个完整的 ES2015+ 环境，并意图运行于一个应用中而不是一个库/工具。这个 polyfill 会在使用 babel-node 时自动加载。

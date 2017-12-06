@@ -12,7 +12,7 @@ var Source = Observable.extend({
         parseData: null// 数据转换
     },
     events: ['onBeforeSend', 'onSuccess', 'onFail', 'onComplete', 'onRead', 'onQuery', 'onRefresh'],
-    constructor: function (options) {
+    constructor (options) {
         Observable.call(this);
         _.bindAll(this, '_dataHandler', '_fail');
         this.data = null;

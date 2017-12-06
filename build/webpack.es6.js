@@ -44,10 +44,8 @@ module.exports ={
                             options:{
                                 babelrc:false,
                               //  plugins:['syntax-jsx'],
-                                presets:[['env',{
-
-                                }]],
-                               // plugins:['transform-es2015-typeof-symbol']
+                                presets:['env'],
+                              //  plugins:['transform-es2015-typeof-symbol']
                             }
                       }
                   }
