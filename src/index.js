@@ -1,7 +1,4 @@
 
- import {Dx} from './base'
- import _ from 'lodash'
- import vue from 'vue'
  import printMe from './print';
  import '../assets/index.css'
 
@@ -9,11 +6,10 @@
    console.log('Looks like we are in development mode!');
  }
 
-window.onload=function()
-{
-    document.body.appendChild(document.createElement('input'))
-    console.log('111');
+ function square(n: number) {
+    return n * n;
 }
+square("5454");
 function getDiv()
 {
     var {name,...list}={

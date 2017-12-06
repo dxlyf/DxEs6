@@ -161,7 +161,7 @@ npm install --save babel-polyfill
 
 ##### flow 类型转换  
 npm install --save-dev babel-preset-flow  
-
+npm install --save-dev flow-bin
 ##### jsx 解析和转换  
 npm install --save-dev babel-plugin-syntax-jsx 解析      
 npm install --save-dev babel-plugin-transform-react-jsx 转换   

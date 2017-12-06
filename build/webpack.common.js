@@ -54,7 +54,8 @@ module.exports = {
                   use:[{
                         loader:'babel-loader',
                         options:{
-                          presets:['env'],
+                          presets:['env','flow'],
+                          retainLines:false,
                           plugins:['transform-react-jsx','transform-object-rest-spread'],
                           babelrc:false,
                          // plugins:['syntax-jsx']

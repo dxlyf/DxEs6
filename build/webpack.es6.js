@@ -30,7 +30,7 @@ module.exports ={
         path: path.resolve(__dirname, '../dist/es6'),
     },
     module: {
-        noParse: /jquery|vue|lodash/,
+       // noParse: /jquery|vue|lodash/,
         rules: [
               {
                     test: /\.css$/,
@@ -47,7 +47,7 @@ module.exports ={
                                 presets:[['env',{
 
                                 }]],
-                                plugins:['transform-es2015-typeof-symbol']
+                               // plugins:['transform-es2015-typeof-symbol']
                             }
                       }
                   }
