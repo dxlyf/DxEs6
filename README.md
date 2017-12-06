@@ -23,9 +23,9 @@ npm install clean-webpack-plugin --save-dev
 创建HTML文件      
 npm install --save-dev html-webpack-plugin    
 创建热插件   
-npm install --save-dev express webpack-dev-middleware     
-创建css 加载
-npm install --save-dev style-loader css-loader     
+npm install --save-dev express webpack-dev-middleware      
+提取外部css    
+npm install --save-dev extract-text-webpack-plugin
 创建 公共js 
  webpack.optimize.CommonsChunkPlugin  
 
@@ -70,10 +70,21 @@ npm install --save-dev style-loader css-loader
         minSize: number,
         // 在 公共chunk 被创建立之前，所有 公共模块 (common module) 的最少大小。
 
-自动加载模块，而不必到处 import 或 require 。       
-webpack.ProvidePlugin
+自动加载模块，而不必到处 import 或 require 。        
+webpack.ProvidePlugin    
+[压缩js](https://doc.webpack-china.org/plugins/extract-text-webpack-plugin)     
+webpack.optimize.UglifyJsPlugin        
+npm i  --save-dev uglifyjs-webpack-plugin            
+npm install babel-minify-webpack-plugin --save-dev   
+
+
 
 **loader 加载器**
+创建css 加载         
+npm install --save-dev style-loader css-loader    
+文件资源图片或字体加载,假想，现在我们正在下载 CSS，但是我们的背景和图标这些图片，要如何处理呢？使用 file-loader，我们可以轻松地将这些内容混合到 CSS 中：                       
+npm install --save-dev file-loader      
+
 创建jsx 解析   
 npm install --save-dev @babel/plugin-syntax-jsx
 

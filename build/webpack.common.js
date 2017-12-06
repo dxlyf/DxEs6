@@ -66,7 +66,16 @@ module.exports = {
     //     //  goes into the vendor chunk)
     //   }),
     new CleanWebpackPlugin(['dist'],{
-        root: root
+        root: root, // 根目录
+        verbose:true,// //  将日志写入控制台。
+        dry:false,// 模拟删除
+        exclude:  ['dx','es6'], // 排除
+         //  如果为true，则删除重新编译的文件。 
+        //  默认：false
+        watch:false,     
+        //  允许插件清理webpack根目录之外的文件夹。
+      //  默认：false  - 不允许在webpack根目录之外的干净的文件夹
+        allowExternal:false 
     }),
     new HtmlWebpackPlugin({
               title: '开发',
