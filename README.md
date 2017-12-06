@@ -181,7 +181,7 @@ npm install --save-dev babel-plugin-transform-es2015-typeof-symbol
 npm install vue element-ui lodash vue jquery -S
 
 
-### vs code 调试
+### vs code 调试  "Control+Space"   
                 以下属性对于每个启动配置都是必需的：
 
                 type - 用于此启动配置的调试器类型。每安装调试扩展引入一个类型，例如，node对于内置的节点调试器，或php与go对PHP和去扩展。
@@ -252,3 +252,4 @@ npm install vue element-ui lodash vue jquery -S
                 该属性仅适用于请求类型的启动配置attach：
 
                 processId - 调试器在发送USR1信号后尝试附加到这个过程。通过这个设置，调试器可以附加到一个已经运行的进程，这个进程在调试模式下没有启动。当使用该processId属性时，调试端口将根据node.js版本（和使用的协议）自动确定，并且不能被明确配置。所以不要指定一个port属性。
+
