@@ -17,3 +17,12 @@ for (let i = 0; i < text.length; i++) {
 for (let i of text) {
   console.log(i);
 }
+
+function  templates(basket={count:43,onSale:54}) {
+  
+    $('#result').append(`
+    There are <b>${basket.count}</b> items
+    in your basket, <em>${basket.onSale}</em>
+    are on sale!
+  `);
+}

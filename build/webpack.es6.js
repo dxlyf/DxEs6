@@ -45,6 +45,7 @@ module.exports ={
                                 babelrc:false,
                               //  plugins:['syntax-jsx'],
                                 presets:['env'],
+                                plugins:['transform-object-rest-spread']
                               //  plugins:['transform-es2015-typeof-symbol']
                             }
                       }
