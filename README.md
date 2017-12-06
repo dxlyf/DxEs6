@@ -223,3 +223,32 @@ npm install vue element-ui lodash vue jquery -S
                 "cwd": "${workspaceFolder}",
                 "args": [ "${env:USERNAME}" ]
                 }
+                                启动配置属性
+                类型launch和启动配置支持以下属性attach：
+
+                protocol - 调试协议使用。请参阅上面的“支持的类似节点的运行时”一节。
+                port - 调试端口使用。请参阅“附加到Node.js”和“远程调试Node.js”部分。
+                address - 调试端口的TCP / IP地址。请参阅“附加到Node.js”和“远程调试Node.js”部分。
+                restart - 终止时重启会话。请参见“自动重新启动调试会话”一节。
+                timeout - 重新启动一个会话后，放弃这个毫秒数。请参阅“附加到Node.js”一节。
+                stopOnEntry - 当程序启动时立即中断。
+                localRoot - VS Code的根目录。请参阅下面的“远程调试Node.js”部分。
+                remoteRoot - 节点的根目录。请参阅下面的“远程调试Node.js”部分。
+                sourceMaps- 通过设置它来启用源地图true。请参阅“源地图”部分。
+                outFiles - 在JavaScript文件中查找的glob模式数组。请参阅“源地图”部分。
+                smartStep - 尝试自动跨越不映射到源文件的代码。请参见“智能步进”一节。
+                skipFiles - 自动跳过这些glob模式覆盖的文件。请参阅“跳过无趣代码”一节。
+                trace - 启用诊断输出。设置"all"为详细输出。
+                这些属性仅适用于请求类型的启动配置launch：
+
+                program - 调试Node.js程序的绝对路径。
+                args - 传递给程序进行调试的参数。这个属性的类型是数组，需要单独的参数作为数组元素。
+                cwd - 启动程序在这个目录下进行调试。
+                runtimeExecutable - 要使用的运行时可执行文件的绝对路径。默认是node。请参阅'启动npm'和其他工具的配置支持'一节。
+                runtimeArgs - 传递给运行时可执行文件的可选参数。
+                env - 可选的环境变量。该属性需要环境变量作为字符串类型键/值对的列表。
+                envFile - 包含环境变量定义的文件的可选路径。
+                console-种控制台的启动程序，例如internalConsole，integratedTerminal，externalTerminal。请参阅下面的“节点控制台”一节。
+                该属性仅适用于请求类型的启动配置attach：
+
+                processId - 调试器在发送USR1信号后尝试附加到这个过程。通过这个设置，调试器可以附加到一个已经运行的进程，这个进程在调试模式下没有启动。当使用该processId属性时，调试端口将根据node.js版本（和使用的协议）自动确定，并且不能被明确配置。所以不要指定一个port属性。
