@@ -277,7 +277,7 @@
  
 export const dom={loadImage}
 export const  strings = {
-            format: function (str) {
+            format (str) {
                 var arr_params = _.slice(arguments, 1);
                 return str.replace(/\{(\d+)\}/g, function (s, i) {
                     return arr_params[i];
@@ -285,7 +285,7 @@ export const  strings = {
             }
 };
 export const paths = {
-            join: function () {
+            join () {
                 var paths = _.slice(arguments, 0).map(function (d, index) {
                     if (index == 0) {
                         return d.replace(/[\\/]$/, '');

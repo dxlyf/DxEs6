@@ -14,7 +14,7 @@ module.exports = {
     path: path.join(root, 'dist'),
   },
   module: {
-    noParse: /jquery|vue|lodash/,
+   // noParse: /jquery|vue|lodash/,
     rules: [
           {
                 test: /\.css$/,

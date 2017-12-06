@@ -57,7 +57,7 @@ components.base = {
 };
 components.data = {
     extends: components.base,
-    data: function () {
+    data () {
 
     },
     props: {
@@ -68,15 +68,15 @@ components.data = {
         dataSource: {}
     },
     methods: {
-        onBeforeLoad: function (d) {
+        onBeforeLoad (d) {
         },
-        onCompleteLoad: function () {
+        onCompleteLoad () {
         },
-        onSuccess: function (d, od) {
+        onSuccess (d, od) {
         },
-        onFail: function (e, s) {
+        onFail (e, s) {
         },
-        initDataSource: function () {
+        initDataSource () {
             var dataSource = this.dataSource;
             if (dataSource) {
                 dataSource = DataSource(dataSource);
@@ -87,13 +87,13 @@ components.data = {
             }
         }
     },
-    created: function () {
+    created () {
         if (_.isFunction(this.initCreated) && this.initCreated() === true) {
             return;
         }
         this.initDataSource();
     },
-    mounted: function () {
+    mounted () {
         this.$nextTick(function () {
             if (this.autoBind && this._dataSource) {
                 this._dataSource.read();
@@ -114,7 +114,7 @@ function broadcast(componentName, eventName, params) {
 
 components.emitter = {
     methods: {
-        dispatch: function (componentName, eventName, params) {
+        dispatch (componentName, eventName, params) {
             var parent = this.$parent || this.$root;
             var name = parent.$options.componentName;
 
@@ -129,12 +129,12 @@ components.emitter = {
                 parent.$emit.apply(parent, [eventName].concat(params));
             }
         },
-        broadcast: function (componentName, eventName, params) {
+        broadcast (componentName, eventName, params) {
             broadcast.call(this, componentName, eventName, params);
         }
     }
 };
-components.registerComponent = function (name, component) {
+components.registerComponent = (name, component)=>{
     Vue.component('mjb-' + name, component);
     return component;
 }

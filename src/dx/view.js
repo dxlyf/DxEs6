@@ -58,7 +58,7 @@ export  var View= Observable.extend({
     promise: null,
     events: null,
     Model: null,
-    constructor: function (options) {
+    constructor (options) {
         if (!hasInstanceof(this, View)) return new View(options);
         Observable.call(this);
         var that = this, name;
@@ -74,7 +74,7 @@ export  var View= Observable.extend({
             _.defer(that.__initialize__);
         }
     },
-    __initialize__: function () {
+    __initialize__ () {
         var that = this;
         that._initModel.apply(this, arguments);
         that._createElement();
@@ -82,9 +82,9 @@ export  var View= Observable.extend({
         that.initialize.apply(this, arguments);
     },
     //视图初始化函数,会自动执行
-    initialize: function () {
+    initialize () {
     },
-    _initModel: function () {
+    _initModel () {
         var that = this;
         if (isFunction(that.Model)) {
             that.Model = that.Model.apply(that, arguments);
@@ -96,7 +96,7 @@ export  var View= Observable.extend({
             that.Model = new Vue(that.Model);
         }
     },
-    _createElement: function () {
+    _createElement () {
         var that = this, element;
         if (that.el) {
             that.$el = $(that.el);
@@ -104,7 +104,7 @@ export  var View= Observable.extend({
             that.$el = $(that.template);
         }
     },
-    delegateEvents: function (events) {
+    delegateEvents (events) {
         if (!this.$el) {
             return;
         }
@@ -122,14 +122,14 @@ export  var View= Observable.extend({
         }
         return this;
     },
-    delegate: function (eventName, selector, listener) {
+    delegate (eventName, selector, listener) {
         this.$el.on(eventName + '.delegateEvents' + this.cid, selector, listener);
     },
-    undelegateEvents: function () {
+    undelegateEvents () {
         if (this.$el) this.$el.off('.delegateEvents' + this.cid);
         return this;
     },
-    undelegate: function (eventName, selector, listener) {
+    undelegate (eventName, selector, listener) {
         this.$el.off(eventName + '.delegateEvents' + this.cid, selector, listener);
     }
 });

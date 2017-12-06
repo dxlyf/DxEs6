@@ -1,5 +1,6 @@
 import ELEMENT from 'element-ui'
 import * as core from './core'
+import $,{isPlainObject,isFunction} from 'jquery'
 function showMessageBox(msgAction) {
     return function (message, title, options) {
         var promise = new core.Promise();
@@ -61,9 +62,9 @@ export const message = ELEMENT.Message;
 export const notification = ELEMENT.Notification;
 /*加载动画*/
 var loadingInstance = null;
-export const loading = function loading(options) {
+export const loading =  (options)=> {
     loadingInstance = ELEMENT.Loading.service(options);
 }
-export const hideLoading = function hideLoading() {
+export const hideLoading = ()=> {
     loadingInstance && loadingInstance.close() && (loadingInstance = null);
 }

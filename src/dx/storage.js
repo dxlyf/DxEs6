@@ -5,7 +5,7 @@ var Storage = function (storage) {
 }
 Storage.prototype = {
     constructor: Storage,
-    setItem: function (name, data) {
+    setItem (name, data) {
         var valuetype = Object.prototype.toString.call(data);
         if (_.isObject(data) && !_.isFunction(data)) {
             data = JSON.stringify(data);
@@ -13,7 +13,7 @@ Storage.prototype = {
         this.storage.setItem("_" + name + "_type", valuetype)
         this.storage.setItem(name, data);
     },
-    getItem: function (name) {
+    getItem (name) {
         var value, valuetype;
         if (this.has(name)) {
             value = this.storage.getItem(name)
@@ -24,10 +24,10 @@ Storage.prototype = {
         }
         return value;
     },
-    has: function (name) {
+    has (name) {
         return this.storage.hasOwnProperty(name);
     },
-    removeItem: function (name) {
+    removeItem (name) {
         if (this.has(name)) {
             this.storage.removeItem(name);
             this.storage.removeItem("_" + name + "_type");
@@ -37,10 +37,10 @@ Storage.prototype = {
 export const sessionStorage = new Storage(window.sessionStorage);
 export const localStorage = new Storage(window.localStorage);
 export const tempStorage = {
-    setItem: function (name, data) {
+    setItem (name, data) {
         localStorage.setItem(name, data);
     },
-    getItem: function (name) {
+    getItem (name) {
         var result = exports.localStorage.getItem(name, data);
         localStorage.removeItem(name);
         return result;

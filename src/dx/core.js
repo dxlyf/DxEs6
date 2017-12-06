@@ -1,15 +1,7 @@
 import Vue from 'vue'
-import $ from 'jquery'
+import $,{isPlainObject,isFunction,extend,isArray} from 'jquery'
 import _ from 'lodash'
 import ELEMENT from 'element-ui'
-var
-ArrayProto = Array.prototype,
-extend = $.extend,
-isFunction = $.isFunction,
-isPlainObject = $.isPlainObject,
-isArray = $.isArray,Dx=Object.create(null);
-
-
 function Class() { }
 Class.extend = function (protoProps, staticProps) {
     var parent = this,
@@ -57,13 +49,13 @@ Class.getInstance = function () {
 }
 // 事件观察对象
 var Observable = Class.extend({
-    constructor: function () {
+    constructor () {
         Object.defineProperty(this, "__events__", {
             value: {},
             writable: true
         });
     },
-    on: function (name, handler, one, first) {
+    on (name, handler, one, first) {
         if (isPlainObject(name)) {
             for (var n in name) {
                 this.on(n, name[n], one, first);
@@ -86,11 +78,11 @@ var Observable = Class.extend({
         }
         return this;
     },
-    one: function (name, handler, first) {
+    one (name, handler, first) {
         this.on(name, handler, true, first);
         return this;
     },
-    off: function (name, handler) {
+    off (name, handler) {
         if (!name) {
             this.__events__ = {};
         } else if (name && !handler) {
@@ -106,7 +98,7 @@ var Observable = Class.extend({
         }
         return this;
     },
-    trigger: function (name) {
+    trigger (name) {
         var i, len, result, events = this.__events__[name] || [],
               args = _.slice(arguments, 1),
               allevents = this.__events__["*"] || [];

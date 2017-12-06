@@ -21,7 +21,14 @@ function getDiv()
         age:19,
         address:'ffd'
     };
-     return (<div {...list}>{name}</div>);
+    const user = {
+        firstName: 'Harper',
+        lastName: 'Perez'
+      };
+    function formatName(user) {
+        return user.firstName + ' ' + user.lastName;
+      }
+     return (<div {...list}>{formatName(user)}</div>);
 }
 if (module.hot) {
        module.hot.accept('./print', function() {
