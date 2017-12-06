@@ -1,7 +1,9 @@
+process.env.NODE_ENV="development";
 const merge = require('webpack-merge');
 const common = require('./webpack.common');
 const MinifyPlugin=require('babel-minify-webpack-plugin')
 const webpack=require('webpack')
+
 
 module.exports = merge(common, {
  //   devtool: 'inline-source-map',
@@ -31,10 +33,6 @@ module.exports = merge(common, {
         //          names: ["index"],
         //          minChunks: 2
         // }),
-         new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('dev')
-            }
-        })
+      
    ] 
 });

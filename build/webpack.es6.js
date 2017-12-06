@@ -20,7 +20,7 @@ common.plugins=[]
 common.entry={};
 common.module={};
 console.log(entryFiles);
-module.exports = merge(common, {
+module.exports ={
  //   devtool: 'inline-source-map',
     entry:entryFiles,
     output: {
@@ -29,17 +29,6 @@ module.exports = merge(common, {
         libraryTarget: "umd",
         path: path.resolve(__dirname, '../dist/es6'),
     },
-  //  externals:['lodash','vue'],
-    // externals:{
-    //     lodash:{
-    //         commonjs: "lodash",
-    //         amd: "lodash",
-    //         root:'_'
-    //     }
-    // },
-    // devServer: {
-    //  contentBase: '../dist'
-    // },
     module: {
         noParse: /jquery|vue|lodash/,
         rules: [
@@ -77,4 +66,4 @@ module.exports = merge(common, {
             }
         })
    ] 
-});
+}

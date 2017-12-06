@@ -79,12 +79,23 @@ npm install babel-minify-webpack-plugin --save-dev
 
 
 
-**loader 加载器**
-创建css 加载         
-npm install --save-dev style-loader css-loader    
-文件资源图片或字体加载,假想，现在我们正在下载 CSS，但是我们的背景和图标这些图片，要如何处理呢？使用 file-loader，我们可以轻松地将这些内容混合到 CSS 中：                       
-npm install --save-dev file-loader      
+### loader 加载器     
+#### 文件 
+[文件资源加载](https://github.com/webpack-contrib/file-loader)      指示webpack将所需的对象作为文件发送并返回其公用URL                  
+npm install --save-dev file-loader       
+[文件资源加载](https://github.com/webpack-contrib/url-loader)     该url-loader像作品file-loader，如果该文件是不是一个字节的限制较小，但可以返回一个DataURL。    
+npm install --save-dev url-loader     
+[html加载](https://github.com/webpack-contrib/html-loader) 将HTML导出为字符串。HTML在编译器要求时被最小化。    
+npm i -D html-loader      
+[vue加载](https://github.com/vuejs/vue-loader)        
 
+#### 样式 
+创建css 加载         
+npm install --save-dev style-loader css-loader  
+npm install sass-loader node-sass webpack --save-dev
+npm install --save-dev less-loader less
+
+#### 工具
 创建jsx 解析   
 npm install --save-dev @babel/plugin-syntax-jsx
 
@@ -162,9 +173,9 @@ npm install --save-dev babel-plugin-syntax-object-rest-spread 解析
 ##### ES2015 转换插件
 npm install --save-dev babel-plugin-transform-es2015-typeof-symbol   
 
-##### 插件    
+##### 运行时转换js语法    
 在大多数情况下，您应该将其babel-plugin-transform-runtime作为开发依赖项（with --save-dev）进行安装。  
  npm install --save-dev babel-plugin-transform-runtime   
 
 #### 安装开发依赖
-npm install vue element-ui lodash -S
+npm install vue element-ui lodash vue jquery -S

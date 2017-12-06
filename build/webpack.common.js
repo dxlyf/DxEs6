@@ -1,8 +1,21 @@
 const path = require('path');
+const webpack=require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 //console.log(path.resolve(__dirname, '../dist'));
 //console.log(path.resolve(process.cwd(), 'dist'));
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const extractSass = new ExtractTextPlugin({
+    filename: "[name].[contenthash].css",
+    disable: process.env.NODE_ENV === "development"
+});
+const extractCss = new ExtractTextPlugin({
+  filename: "[name].[contenthash].css",
+  disable: process.env.NODE_ENV === "development"
+});
+console.log(process.env.NODE_ENV );
+
 const root= path.resolve(__dirname,'../');
 console.log( path.join(root, 'dist'));
 module.exports = {
@@ -16,9 +29,24 @@ module.exports = {
   module: {
    // noParse: /jquery|vue|lodash/,
     rules: [
-          {
+      {
+        test: /\.scss$/,
+        use: extractSass.extract({
+            use: [{
+                loader: "css-loader"
+            }, {
+                loader: "sass-loader"
+            }],
+            // use style-loader in development
+            fallback: "style-loader"
+        })
+    }    
+      ,{
                 test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                use: extractCss.extract({
+                  use:['css-loader'],
+                  fallback:'style-loader',
+                })
               },
               {
                   test:/\.js$/,
@@ -51,7 +79,7 @@ module.exports = {
      }
   },
  resolve: {
-       extensions: ['.js', '.html', '.ts','.css'],
+     //  extensions: ['.js', '.html', '.ts','.css'],
        alias: {
            'template': '../template/',
        }
@@ -65,6 +93,7 @@ module.exports = {
     //     // (with more entries, this ensures that no other module
     //     //  goes into the vendor chunk)
     //   }),
+    extractCss,
     new CleanWebpackPlugin(['dist'],{
         root: root, // 根目录
         verbose:true,// //  将日志写入控制台。
@@ -78,10 +107,18 @@ module.exports = {
         allowExternal:false 
     }),
     new HtmlWebpackPlugin({
+              filename:'app.html',
+              template:'./examples/index.html',
+              inject:'head',
               title: '开发',
             //   files:{
             //     js: [ "vue"],
             //   }
-     })
+     }),
+     new webpack.DefinePlugin({
+      'process.env': {
+          'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }
+  })
   ]
 };

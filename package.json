@@ -4,8 +4,9 @@
   "description": "开发",
   "main": "index.js",
   "scripts": {
+    "test":"node build/test",
     "build": "webpack --config  build/webpack.prod.js",
-    "dev": "webpack --config  build/webpack.dev.js",
+    "dev": "webpack --config  build/webpack.dev.js ",
     "es6": "webpack --config  build/webpack.es6.js",
     "server": "node build/server.js",
     "hotserver": "node build/dev-server.js",
