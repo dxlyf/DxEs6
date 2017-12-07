@@ -185,6 +185,29 @@ npm install --save-dev babel-plugin-transform-es2015-typeof-symbol
 #### 安装开发依赖
 npm install vue element-ui lodash vue jquery -S
 
+#### 类属性声明定义转换
+npm install --save-dev babel-plugin-transform-class-properties  转换          
+npm install --save-dev babel-plugin-syntax-class-properties   解析    
+      
+                class Bork {
+                //Property initializer syntax
+                instanceProperty = "bork";
+                boundFunction = () => {
+                return this.instanceProperty;
+                }
+
+                //Static class properties
+                static staticProperty = "babelIsCool";
+                static staticFunction = function() {
+                return Bork.staticProperty;
+                }
+                }
+
+
+
+
+
+
 
 ### vs code 调试  "Control+Space"   
                 以下属性对于每个启动配置都是必需的：

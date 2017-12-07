@@ -275,7 +275,13 @@
         }
     
  
-export const dom={loadImage}
+export const dom={
+    loadImage,
+    getBoundingClientRect(element)
+    {
+         return element.getBoundingClientRect();
+    }
+}
 export const  strings = {
             format (str) {
                 var arr_params = _.slice(arguments, 1);

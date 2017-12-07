@@ -139,6 +139,22 @@ function getUrlParams (name,url) {
     }
     return result;
 }
+var _requestAnimationFrame = (function () {
+    var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
+        return setTimeout(callback, 1000 / 60);
+    };
+    return function(callback){
+        return requestAnimationFrame(callback);
+    }
+}());
+var _cancelAnimationFrame=(function () {
+    var cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || function (timeoutId) {
+        return clearTimeout(timeoutId);
+    };
+    return function(timeoutId){
+        return cancelAnimationFrame(timeoutId);
+    }
+}());
 export function hasInstanceof(obj, target) {
     return obj instanceof target;
 }
@@ -179,5 +195,7 @@ export  var  {
     },
     cloneObject=  (obj)=> {
         return JSON.parse(JSON.stringify(obj));
-    }
+    },
+    requestAnimationFrame=_requestAnimationFrame,
+    cancelAnimationFrame=_cancelAnimationFrame
 }={};

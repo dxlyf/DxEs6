@@ -26,3 +26,6 @@ function  templates(basket={count:43,onSale:54}) {
     are on sale!
   `);
 }
+//ES5 对字符串对象提供charAt方法，返回字符串给定位置的字符。该方法不能识别码点大于0xFFFF的字符。
+var a2='abc'.charAt(0) // "a"
+var a3='𠮷'.charAt(0) // "\uD842"

@@ -1,6 +1,7 @@
-import {Observable,hasInstanceof} from './core'
+import {Observable,hasInstanceof,requestAnimationFrame} from './core'
 import _ from 'lodash'
-import $,{extend} from 'jquery'
+import $,{extend,isPlainObject} from 'jquery'
+import { type } from 'os';
 var  widgets = {};
 var noop = $.noop,
    support = (function () {
@@ -138,8 +139,14 @@ function extendWidget(name, proto, parent, noRegister) {
     if (widgets[name]) {
         throw "already exist";
     }
-    var prentWidget = _.isString(parent) ? widgets[parent] || Widget : Widget;
-    var widget = typeof proto == "function" ? proto(prentWidget) : prentWidget.extend(proto);
+    if(typeof parent=="boolean")
+    {
+        noRegister=parent;
+        parent=null;
+    }
+    var prentWidget = _.isString(parent)&&parent!=null ? widgets[parent] || Widget : Widget;
+    proto = typeof proto == "function" ? proto(prentWidget) : proto;
+    let widget=prentWidget.extend(proto);
     widget.prototype.widgetType = name;
     widgets[name] = widget;
     if (!noRegister) {
@@ -149,20 +156,30 @@ function extendWidget(name, proto, parent, noRegister) {
 }
 function registerPlugin(name, Plugin) {
     var prexName = name;
-    $.fn[prexName] = function (options) {
-        var widget, element, widgets = [];
-        if (this.length) {
-            for (var i = 0; i < this.length; i++) {
-                element = $(this[i]);
-                widget = element.data(prexName);
-                if (!widget) {
-                    widget = new Plugin(element, options);
-                    element.data(prexName, widget);
-                }
-                widgets.push(widget);
-            }
+    $.fn[prexName] = function (name,options) {
+        if(isPlainObject(name))
+        {
+            options=name;
+            name="";
         }
-        return widgets[0];
+        if(typeof name=="string"&&name!="")
+        {
+            this.each(function(){
+                let element=$(this);
+                let widget = element.data(prexName);
+                if (widget&&widget[name]) {
+                    widget[name](options);
+                }
+            });
+        }else{
+            this.each(function(){
+                let element=$(this);
+                let widget = element.data(prexName);
+                if (!widget) {
+                    element.data(prexName, new Plugin(element, options));
+                }
+            });
+         }
     }
 }
 extendWidget('PanelMinus', {
@@ -215,4 +232,117 @@ extendWidget('PanelMinus', {
     }
 });
 
+extendWidget('AnchorMenu', function () {
+    var template = _.template(`<div class="float-anchors">
+    <div class="float-anchors-menu">
+        <div class="float-anchors-item">
+            <span class="glyphicon glyphicon-th"></span>
+            <%if(menus.length>0){%>
+            <div class="float-anchor-navs">
+                <ul class="float-anchor-navsul">
+                    <%for(var i=0,len=menus.length;i<len;i++){%>
+                        <li><a href="javascript:;" data-index="<%=i%>" ><%-menus[i].text%></a></li>
+                    <%}%>
+                </ul>
+            </div>
+            <%}%>
+        </div>
+        <div class="float-anchors-item">
+            <span class="glyphicon glyphicon-chevron-up">
+            </span>
+        </div>
+    </div>
+</div>`);
+    return {
+        events:['onScroll'],
+        options: {
+            always:false,
+            menus:[],
+            offset:0
+        },
+        initialize: function (element, options) {
+            this.apply('initialize', element, options);
+            this.$anchors = $(template({ menus: this.options.menus })).hide().appendTo(document.body);
+            this.delegateEvents(this.$anchors, 'click', '.float-anchor-navsul a', _.bind(this.onToTarget, this));
+            this.delegateEvents(this.$anchors, 'click', '.glyphicon-chevron-up', _.bind(this.onToTop, this));
+            this.$win = $(window);
+            this.isScroll = false;
+            this.isShow = false;
+            if (!this.options.always) {
+                this.delegateEvents(this.$win, 'scroll', _.bind(this.onScroll, this));
+                this.doScroll();
+            } else {
+                this.$anchors.show();
+            }
+        },
+        show:function()
+        {
+            this.isShow = true;
+            this.$anchors.fadeIn();
+        },
+        hide:function()
+        {
+            this.isShow = false;
+            this.$anchors.fadeOut();
+        },
+        scrollTo:function(top)
+        {
+            $('html,body').animate({
+                scrollTop: top 
+            }, 1000);
+        },
+        onToTop:function()
+        {
+            this.scrollTo(0);
+        },
+        onToTarget:function(e)
+        {
+            var item=this.options.menus[e.currentTarget.getAttribute('data-index')],offset=item.offset||0;
+            this.scrollTo($(item.target).offset().top+offset);
+        },
+        getScrollData:function()
+        {
+            var sTop = this.$win.scrollTop(), offset = this.options.offset, element = this.element, top = element.offset().top, pTop = top - sTop;
+            return {
+                offset: offset,
+                top: top,
+                sTop: sTop,
+                pTop: pTop,
+                isShow:offset>=pTop
+            };    
+
+        },
+        doScroll:function()
+        {
+            var data = this.getScrollData();
+            if (data.isShow && this.isShow || !data.isShow &&!this.isShow)
+            {
+                return;
+            }
+            if (data.isShow)
+            {
+               this.show();
+            }else{
+               this.hide();
+            }
+        },
+        onScroll:function(e)
+        {
+            if (this.isScroll)
+            {
+                return;
+            }
+            this.isScroll = true;
+            var that = this;
+            requestAnimationFrame(function () {
+                that.doScroll(e);
+                that.isScroll = false;
+            });
+        },
+        destroy:function()
+        {
+            this.undelegateEvents();
+        }
+    };
+});
 export {Widget,extendWidget}
