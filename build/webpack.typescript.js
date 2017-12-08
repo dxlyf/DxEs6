@@ -29,11 +29,11 @@ module.exports=function(env)
         output: {
             filename: '[name].js',
             chunkFilename: '[name].bundle.js',
-         //   libraryTarget: "umd",
-            path: path.resolve(__dirname, '../tsdist/singles'),
+            libraryTarget: "this",
+            path: path.resolve(__dirname, '../distts/singles'),
         },
         resolve:{
-            extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+            extensions: [".ts", ".tsx", ".js"]
         },
         module: {
            // noParse: /jquery|vue|lodash/,
@@ -46,22 +46,17 @@ module.exports=function(env)
                           test:/\.tsx?$/,
                           exclude: /(node_modules|bower_components)/,
                           include:[path.resolve(__dirname,'../src_ts')],
-                          use:{
-                                loader:'ts-loader',
-                                options:{
-                                   
-                                }
-                          }
+                          use:['ts-loader']
                       }
                     ]
         },
         plugins: [
-            new CleanWebpackPlugin(['tsdist/singles'],{
+            new CleanWebpackPlugin(['distts/singles'],{
                 root: path.resolve(__dirname,'../')
             }),
-            new webpack.optimize.CommonsChunkPlugin({
-                     name: 'common', // 指定公共 bundle 的名称。
-            }),
+            // new webpack.optimize.CommonsChunkPlugin({
+            //          name: 'common', // 指定公共 bundle 的名称。
+            // }),
              new webpack.DefinePlugin({
                 'process.env': {
                     'NODE_ENV': JSON.stringify('dev')

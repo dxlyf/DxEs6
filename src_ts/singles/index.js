@@ -1,3 +1,4 @@
+"use strict";
 var Base = (function () {
     function Base() {
         this.name = "没有初始化";
@@ -10,8 +11,7 @@ var Base = (function () {
     };
     return Base;
 }());
-function P() {
+function P(img) {
     return new Promise(function (resolve, reject) {
     });
 }
-//# sourceMappingURL=index.js.map
