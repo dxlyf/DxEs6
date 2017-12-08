@@ -14,3 +14,14 @@ console.log( process.env.NODE_ENV );
 // });
 // console.log(files.map((file)=>({[path.basename(file,'.js')]:'./src/es6/'+file})));
 
+
+
+// const dir=path.resolve(__dirname,'../','src/es6');
+// var files=fs.readdirSync(dir,{
+//     encoding:"utf8"
+// });
+// var entryFiles={};   //{['babel-polyfill']:'babel-polyfill'};
+// files.forEach((file)=>{   
+//     console.log(file);
+//     entryFiles[path.basename(file,'.js')]='./src/es6/'+file;
+// });

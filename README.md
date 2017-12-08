@@ -281,3 +281,10 @@ npm install --save-dev babel-plugin-syntax-class-properties   解析
 
                 processId - 调试器在发送USR1信号后尝试附加到这个过程。通过这个设置，调试器可以附加到一个已经运行的进程，这个进程在调试模式下没有启动。当使用该processId属性时，调试端口将根据node.js版本（和使用的协议）自动确定，并且不能被明确配置。所以不要指定一个port属性。
 
+
+### Typescript语法编译
+npm install --save-dev typescript ts-loader
+tsc --init **生成typescript.json**
+
+### gulp 打包
+npm install --save-dev gulp
