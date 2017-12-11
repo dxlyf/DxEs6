@@ -234,24 +234,23 @@ extendWidget('PanelMinus', {
 
 extendWidget('AnchorMenu', function () {
     var template = _.template(`<div class="float-anchors">
-    <div class="float-anchors-menu">
-        <div class="float-anchors-item">
-            <span class="glyphicon glyphicon-th"></span>
-            <%if(menus.length>0){%>
-            <div class="float-anchor-navs">
-                <ul class="float-anchor-navsul">
-                    <%for(var i=0,len=menus.length;i<len;i++){%>
-                        <li><a href="javascript:;" data-index="<%=i%>" ><%-menus[i].text%></a></li>
-                    <%}%>
-                </ul>
-            </div>
+    <ul class="float-anchors-menu">
+        <%if(menus.length>0){%>
+        <%for(var i=0,len=menus.length;i<len;i++){%>
+            <li>
+               <span data-command=""  data-index="<%=i%>" class="<%=menus[i].className==""?menus[i].html?"":"fa fa-anchor":menus[i].className%>">
+                   <%=menus[i].html||""%>
+                </span>
+                <span class="float-anchor-navs" ><%-menus[i].text%></span> 
+            </li>
             <%}%>
-        </div>
-        <div class="float-anchors-item">
-            <span class="glyphicon glyphicon-chevron-up">
-            </span>
-        </div>
-    </div>
+            <%}%>
+            <li>
+                <span class="glyphicon glyphicon-chevron-up float-anchor-top" title="">
+                </span>
+                <span class="float-anchor-navs" >顶部</span> 
+            </li>
+    </ul>
 </div>`);
     return {
         events:['onScroll'],
@@ -263,11 +262,12 @@ extendWidget('AnchorMenu', function () {
         initialize: function (element, options) {
             this.apply('initialize', element, options);
             this.$anchors = $(template({ menus: this.options.menus })).hide().appendTo(document.body);
-            this.delegateEvents(this.$anchors, 'click', '.float-anchor-navsul a', _.bind(this.onToTarget, this));
-            this.delegateEvents(this.$anchors, 'click', '.glyphicon-chevron-up', _.bind(this.onToTop, this));
+            this.delegateEvents(this.$anchors, 'click', 'span[data-command]',_.bind(this.onToTarget, this));
+            this.delegateEvents(this.$anchors, 'click', '.float-anchor-top', _.bind(this.onToTop, this));
             this.$win = $(window);
             this.isScroll = false;
-            this.isShow = false;
+            this._data = null;
+            this._oldData = null;
             if (!this.options.always) {
                 this.delegateEvents(this.$win, 'scroll', _.bind(this.onScroll, this));
                 this.doScroll();
@@ -277,12 +277,10 @@ extendWidget('AnchorMenu', function () {
         },
         show:function()
         {
-            this.isShow = true;
             this.$anchors.fadeIn();
         },
         hide:function()
         {
-            this.isShow = false;
             this.$anchors.fadeOut();
         },
         scrollTo:function(top)
@@ -300,31 +298,38 @@ extendWidget('AnchorMenu', function () {
             var item=this.options.menus[e.currentTarget.getAttribute('data-index')],offset=item.offset||0;
             this.scrollTo($(item.target).offset().top+offset);
         },
-        getScrollData:function()
+        calculScrollData:function()
         {
-            var sTop = this.$win.scrollTop(), offset = this.options.offset, element = this.element, top = element.offset().top, pTop = top - sTop;
-            return {
+            var 
+            offset = this.options.offset,
+            sTop = this.$win.scrollTop(),
+            element = this.element,
+            top = element.offset().top,
+            pTop = top - sTop;
+            this._oldData = this._data;
+            this._data= {
                 offset: offset,
                 top: top,
                 sTop: sTop,
                 pTop: pTop,
-                isShow:offset>=pTop
-            };    
-
+                isShow: offset >= pTop,
+                direction: this._oldData?sTop>this._oldData.sTop?'down':'up':''
+            };      
         },
         doScroll:function()
         {
-            var data = this.getScrollData();
-            if (data.isShow && this.isShow || !data.isShow &&!this.isShow)
-            {
+            this.calculScrollData();
+            var data = this._data;
+            if (this._oldData && this._data.isShow == this._oldData.isShow) {
                 return;
             }
-            if (data.isShow)
-            {
+            if (this._data.isShow)
+            {       
                this.show();
-            }else{
+            } else {
                this.hide();
             }
+            this.trigger('onScroll',this._data);
         },
         onScroll:function(e)
         {
