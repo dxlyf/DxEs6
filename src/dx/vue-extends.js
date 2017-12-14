@@ -7,7 +7,7 @@ var components = Object.create(null);
 Vue.directive('authorize', (function () {
     var permissions = window.GLOBALREQUIRECONFIGS.permissions || [];
     function update(el, name) {
-        var item = _.find(permissions, { Keys: name });
+        var item = _.find(permissions, { keys: name });
         if (item && item.vals == 1) {
             el.style.display = el.__orgDisplay;
         } else if (item && item.vals == 0) {
@@ -17,11 +17,11 @@ Vue.directive('authorize', (function () {
         }
     }
     return {
-        bind: function (el, binding, vnode, oldVnode) {
+        bind (el, binding, vnode, oldVnode) {
             el.__orgDisplay = el.style.display === 'none' ? '' : el.style.display
             update(el, binding.value);
         },
-        update: function (el, binding, vnode, oldVnode) {
+        update (el, binding, vnode, oldVnode) {
             update(el, binding.value);
         }
     }
