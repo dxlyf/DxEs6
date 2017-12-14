@@ -155,8 +155,13 @@ var _cancelAnimationFrame=(function () {
         return cancelAnimationFrame(timeoutId);
     }
 }());
+
+var OBJECT_CORE={};
 export function hasInstanceof(obj, target) {
     return obj instanceof target;
+}
+export function hasOwnProperty(object,key){
+    return OBJECT_CORE.hasOwnProperty.call(object,key);
 }
 export {  
     Class,

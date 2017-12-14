@@ -24,34 +24,40 @@ Vue.directive('authorize', (function () {
         }
     }
 }()));
-function flatDeepArgs(args) {
-    return _.flattenDeep(_.toArray(args))
-}
+
 components.base = {
     methods: {
         _cloeProps: function (options) {
             return _.extend({}, this.$props, options);
         },
         _cloneListeners: function () {
-            if (!this._cacheCloneListeners) {
-                var that = this, keys = _.uniq(_.keys(that.$listeners).concat(flatDeepArgs(arguments))), ons = {};
-                _.each(keys, function (name) {
-                    ons[name] = _.bind(function () {
-                        this.$emit.apply(this, arguments);
-                    }, that, name);
-                });
-                this._cacheCloneListeners = ons;
+            var  that = this;
+            function callListener()
+            {
+                this.$emit.apply(this, arguments);
             }
-            return this._cacheCloneListeners;
-        },
-        _extendListeners: function () {
-            var that = this, keys = flatDeepArgs(arguments), ons = {};
-            _.each(keys, function (name) {
-                ons[name] = _.bind(function () {
-                    that.$emit.apply(that, arguments);
-                }, that, name);
-            });
-            return ons;
+            function praseListener(listeners)
+            {
+                var result={},value,isObj;
+                for(var i=0,len=listeners.length;i<len;i++){
+                    value=listeners[i];
+                    isObj=_.isPlainObject(value);
+                    if(!isObj&&!result.hasOwnProperty(value))
+                    {
+                        result[value]=_.bind(callListener, that, value);
+                    }else if(isObj&&!result.hasOwnProperty(value.name)) {
+                        result[value.name]=value.handler?value.handler:_.bind(callListener, that, value.alias||value.name);
+                    }
+                }
+                return result;
+            }
+            function flatDeepArgs() {
+                return _.flattenDeep(_.toArray(arguments))
+            }           
+            if (!that._cacheCloneListeners) {      
+                that._cacheCloneListeners =  praseListener(flatDeepArgs(arguments,_.map(that.$listeners,(handler,name)=>({name,handler}))));
+            }
+            return that._cacheCloneListeners;
         }
     }
 };
