@@ -12,6 +12,8 @@ Vue.directive('authorize', (function () {
             el.style.display = el.__orgDisplay;
         } else if (item && item.vals == 0) {
             el.style.display = "none";
+        }else{
+            el.style.display = "none";
         }
     }
     return {
