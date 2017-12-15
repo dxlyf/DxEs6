@@ -1,7 +1,10 @@
 # DxEs6
 ## ES6 开发编译环境
 - [webpack plugins](#innerPlugin)
-- [wepack loader](#loader)
+- [wepack loader](#loader) 
+- [compile](#compile)
+- [hot development](#hot)
+
 ### 安装编译环境  [webpack](https://doc.webpack-china.org/)
 npm install webpack  --save-dev  [编译](https://www.npmjs.com/package/webpack)
 npm install webpack-merge  --save-dev  [配置合并](https://www.npmjs.com/package/webpack-merge)   
@@ -151,7 +154,625 @@ npm install babel-minify-webpack-plugin --save-dev
 - polymer-loader 使用选择预处理器(preprocessor)处理，并且 require() 类似一等模块(first-class)的 Web 组件
 - angular2-template-loader 加载和转译 Angular 组件
 
+### [webpack 开发编译工具](https://doc.webpack-china.org/guides/development/#-source-map) {#compile}
+每次要编译代码时，手动运行 `npm run build` 就会变得很麻烦。
 
+webpack 中有几个不同的选项，可以帮助你在代码发生变化后自动编译代码
+:    webpack's Watch Mode 观察模式
+webpack-dev-server 静态服务
+webpack-dev-middleware 中间件
+
+多数场景中，你可能需要使用 webpack-dev-server，但是不妨探讨一下以上的所有选项。
+使用观察模式
+
+#### 使用观察模式
+你可以指示 webpack "watch" 依赖图中的所有文件以进行更改。如果其中一个文件被更新，代码将被重新编译，所以你不必手动运行整个构建。
+
+我们添加一个用于启动 webpack 的观察模式的 npm script 脚本：
+###### package.json
+```
+  {
+    "name": "development",
+    "version": "1.0.0",
+    "description": "",
+    "main": "webpack.config.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
++     "watch": "webpack --watch",
+      "build": "webpack"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "clean-webpack-plugin": "^0.1.16",
+      "css-loader": "^0.28.4",
+      "csv-loader": "^2.1.1",
+      "file-loader": "^0.11.2",
+      "html-webpack-plugin": "^2.29.0",
+      "style-loader": "^0.18.2",
+      "webpack": "^3.0.0",
+      "xml-loader": "^1.2.1"
+    }
+  }
+```
+现在，你可以在命令行中运行 npm run watch，就会看到 webpack 编译代码，然而却不会退出命令行。这是因为 script 脚本还在观察文件。
+
+现在，webpack 观察文件的同时，我们先移除我们之前引入的错误：
+```
+src/print.js
+
+  export default function printMe() {
+-   console.error('I get called from print.js!');
++   console.log('I get called from print.js!');
+  }
+```
+现在,保存文件并检查终端窗口。应该可以看到 webpack 自动重新编译修改后的模块！
+
+唯一的缺点是，为了看到修改后的实际效果，你需要刷新浏览器。如果能够自动刷新浏览器就更好了，可以尝试使用 webpack-dev-server，恰好可以实现我们想要的功能。
+
+使用 webpack-dev-server
+webpack-dev-server 为你提供了一个简单的 web 服务器，并且能够实时重新加载(live reloading)。让我们设置以下：
+
+npm install --save-dev webpack-dev-server
+修改配置文件，告诉开发服务器(dev server)，在哪里查找文件：
+
+webpack.config.js
+
+  const path = require('path');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+  module.exports = {
+    entry: {
+      app: './src/index.js',
+      print: './src/print.js'
+    },
+    devtool: 'inline-source-map',
++   devServer: {
++     contentBase: './dist'
++   },
+    plugins: [
+      new CleanWebpackPlugin(['dist']),
+      new HtmlWebpackPlugin({
+        title: 'Development'
+      })
+    ],
+    output: {
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    }
+  };
+以上配置告知 webpack-dev-server，在 localhost:8080 下建立服务，将 dist 目录下的文件，作为可访问文件。
+
+让我们添加一个 script 脚本，可以直接运行开发服务器(dev server)：
+
+package.json
+
+  {
+    "name": "development",
+    "version": "1.0.0",
+    "description": "",
+    "main": "webpack.config.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "watch": "webpack --progress --watch",
++     "start": "webpack-dev-server --open",
+      "build": "webpack"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "clean-webpack-plugin": "^0.1.16",
+      "css-loader": "^0.28.4",
+      "csv-loader": "^2.1.1",
+      "file-loader": "^0.11.2",
+      "html-webpack-plugin": "^2.29.0",
+      "style-loader": "^0.18.2",
+      "webpack": "^3.0.0",
+      "xml-loader": "^1.2.1"
+    }
+  }
+现在，我们可以在命令行中运行 npm start，就会看到浏览器自动加载页面。如果现在修改和保存任意源文件，web 服务器就会自动重新加载编译后的代码。试一下！
+
+webpack-dev-server 带有许多可配置的选项。转到相关文档以了解更多。
+
+现在，服务器正在运行，你可能需要尝试模块热替换(Hot Module Replacement)！
+使用 webpack-dev-middleware
+webpack-dev-middleware 是一个中间件容器(wrapper)，它将通过 webpack 处理后的文件发布到一个服务器(server)。在内部 webpack-dev-server 它使用，然而，它可以作为一个单独的包来提供，可以进行更多的自定义设置来实现更多需求。接下来是一个 webpack-dev-middleware 配合 express server 的示例。
+
+首先，安装 express 和 webpack-dev-middleware：
+
+npm install --save-dev express webpack-dev-middleware
+接下来我们需要对 webpack 的配置文件做一些调整，以确保中间件(middleware)功能能够正确启用：
+
+###### webpack.config.js
+```
+  const path = require('path');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const CleanWebpackPlugin = require('clean-webpack-plugin');
+
+  module.exports = {
+    entry: {
+      app: './src/index.js',
+      print: './src/print.js'
+    },
+    devtool: 'inline-source-map',
+    plugins: [
+      new CleanWebpackPlugin(['dist']),
+      new HtmlWebpackPlugin({
+        title: 'Output Management'
+      })
+    ],
+    output: {
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, 'dist'),
++     publicPath: '/'
+    }
+  };
+```
+publicPath 也会在服务器脚本用到，以确保文件资源能够在 http://localhost:3000 下正确访问，我们稍后再设置端口号。下一步就是设置我们自定义的 express 服务：
+
+###### project
+```
+  webpack-demo
+  |- package.json
+  |- webpack.config.js
++ |- server.js
+  |- /dist
+  |- /src
+    |- index.js
+    |- print.js
+  |- /node_modules
+server.js
+
+const express = require('express');
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+
+const app = express();
+const config = require('./webpack.config.js');
+const compiler = webpack(config);
+
+// Tell express to use the webpack-dev-middleware and use the webpack.config.js
+// configuration file as a base.
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath
+}));
+
+// Serve the files on port 3000.
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!\n');
+});
+```
+现在，添加一个 npm script，以使我们更方便地运行服务：
+
+###### package.json
+```
+  {
+    "name": "development",
+    "version": "1.0.0",
+    "description": "",
+    "main": "webpack.config.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "watch": "webpack --progress --watch",
+      "start": "webpack-dev-server --open",
++     "server": "node server.js",
+      "build": "webpack"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+      "clean-webpack-plugin": "^0.1.16",
+      "css-loader": "^0.28.4",
+      "csv-loader": "^2.1.1",
+      "express": "^4.15.3",
+      "file-loader": "^0.11.2",
+      "html-webpack-plugin": "^2.29.0",
+      "style-loader": "^0.18.2",
+      "webpack": "^3.0.0",
+      "webpack-dev-middleware": "^1.12.0",
+      "xml-loader": "^1.2.1"
+    }
+  }
+``` 
+现在，在你的终端执行 npm run server，将会有类似如下信息输出：
+
+现在，打开浏览器，跳转到 http://localhost:3000，你应该看到你的webpack 应用程序已经运行！
+
+### 模块热替换 {#hot}
+模块热替换
+编辑此页
+本指南示例代码延用开发指南的示例代码。
+模块热替换(Hot Module Replacement 或 HMR)是 webpack 提供的最有用的功能之一。它允许在运行时更新各种模块，而无需进行完全刷新。本页面重点介绍实现，而概念页面提供了更多关于它的工作原理以及为什么它有用的细节。
+
+HMR 不适用于生产环境，这意味着它应当只在开发环境使用。更多详细信息，请查看生产环境构建指南。
+启用 HMR
+启用此功能实际上相当简单。而我们要做的，就是更新 webpack-dev-server 的配置，和使用 webpack 内置的 HMR 插件。我们还要删除掉 print.js 的入口起点，因为它现在正被 index.js 模式使用。
+
+如果你使用了 webpack-dev-middleware 而没有使用 webpack-dev-server，请使用 webpack-hot-middleware package 包，以在你的自定义服务或应用程序上启用 HMR。
+###### webpack.config.js
+```
+
+  const path = require('path');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const CleanWebpackPlugin = require('clean-webpack-plugin');
++ const webpack = require('webpack');
+
+  module.exports = {
+    entry: {
+-      app: './src/index.js',
+-      print: './src/print.js'
++      app: './src/index.js'
+    },
+    devtool: 'inline-source-map',
+    devServer: {
+      contentBase: './dist',
++     hot: true
+    },
+    plugins: [
+      new CleanWebpackPlugin(['dist']),
+      new HtmlWebpackPlugin({
+        title: 'Hot Module Replacement'
+      }),
++     new webpack.NamedModulesPlugin(),
++     new webpack.HotModuleReplacementPlugin()
+    ],
+    output: {
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    }
+  };
+```
+你可以通过命令来修改 webpack-dev-server 的配置：webpack-dev-server --hotOnly。
+注意，我们还添加了 NamedModulesPlugin，以便更容易查看要修补(patch)的依赖。在起步阶段，我们将通过在命令行中运行 npm start 来启动并运行 dev server。
+
+现在，我们来修改 index.js 文件，以便当 print.js 内部发生变更时可以告诉 webpack 接受更新的模块。
+
+###### index.js
+```
+  import _ from 'lodash';
+  import printMe from './print.js';
+
+  function component() {
+    var element = document.createElement('div');
+    var btn = document.createElement('button');
+
+    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+
+    btn.innerHTML = 'Click me and check the console!';
+    btn.onclick = printMe;
+
+    element.appendChild(btn);
+
+    return element;
+  }
+
+  document.body.appendChild(component());
++
++ if (module.hot) {
++   module.hot.accept('./print.js', function() {
++     console.log('Accepting the updated printMe module!');
++     printMe();
++   })
++ }
+更改 print.js 中 console.log 的输出内容，你将会在浏览器中看到如下的输出。
+
+print.js
+
+  export default function printMe() {
+-   console.log('I get called from print.js!');
++   console.log('Updating print.js...')
+  }
+```
+通过 Node.js API
+当使用 webpack dev server 和 Node.js API 时，不要将 dev server 选项放在 webpack 配置对象(webpack config object)中。而是，在创建选项时，将其作为第二个参数传递。例如：
+
+>new WebpackDevServer(compiler, options)
+
+想要启用 HMR，还需要修改 webpack 配置对象，使其包含 HMR 入口起点。webpack-dev-server package 中具有一个叫做 addDevServerEntrypoints 的方法，你可以通过使用这个方法来实现。这是关于如何使用的一个小例子：
+
+>dev-server.js
+```
+const webpackDevServer = require('webpack-dev-server');
+const webpack = require('webpack');
+
+const config = require('./webpack.config.js');
+const options = {
+  contentBase: './dist',
+  hot: true,
+  host: 'localhost'
+};
+
+webpackDevServer.addDevServerEntrypoints(config, options);
+const compiler = webpack(config);
+const server = new webpackDevServer(compiler, options);
+
+server.listen(5000, 'localhost', () => {
+  console.log('dev server listening on port 5000');
+});
+```
+如果你使用WebPACK开发中间件，看看WebPACK热中间件封装使HMR你自定义的开发服务器。
+问题
+模块热替换可能比较难掌握。为了说明这一点，我们回到刚才的示例中。如果你继续点击示例页面上的按钮，你会发现控制台仍在打印这旧的 printMe 功能。
+
+这是因为按钮的 onclick 事件仍然绑定在旧的 printMe 函数上。
+
+为了让它与 HRM 正常工作，我们需要使用 module.hot.accept 更新绑定到新的 printMe 函数上：
+
+>index.js
+```
+
+  import _ from 'lodash';
+  import printMe from './print.js';
+
+  function component() {
+    var element = document.createElement('div');
+    var btn = document.createElement('button');
+
+    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+
+    btn.innerHTML = 'Click me and check the console!';
+    btn.onclick = printMe;  // onclick 事件绑定原始的 printMe 函数上
+
+    element.appendChild(btn);
+
+    return element;
+  }
+
+- document.body.appendChild(component());
++ let element = component(); // 当 print.js 改变导致页面重新渲染时，重新获取渲染的元素
++ document.body.appendChild(element);
+
+  if (module.hot) {
+    module.hot.accept('./print.js', function() {
+      console.log('Accepting the updated printMe module!');
+-     printMe();
++     document.body.removeChild(element);
++     element = component(); // 重新渲染页面后，component 更新 click 事件处理
++     document.body.appendChild(element);
+    })
+  }
+```
+这只是一个例子，但还有很多其他地方可以轻松地让人犯错。幸运的是，存在很多 loader（其中一些在下面提到），使得模块热替换的过程变得更容易。
+
+HMR 修改样式表
+借助于 style-loader 的帮助，CSS 的模块热替换实际上是相当简单的。当更新 CSS 依赖模块时，此 loader 在后台使用 module.hot.accept 来修补(patch) <style> 标签。
+
+所以，可以使用以下命令安装两个 loader ：
+
+npm install --save-dev style-loader css-loader
+接下来我们来更新 webpack 的配置，让这两个 loader 生效。
+
+>webpack.config.js
+```
+  const path = require('path');
+  const HtmlWebpackPlugin = require('html-webpack-plugin');
+  const webpack = require('webpack');
+
+  module.exports = {
+    entry: {
+      app: './src/index.js'
+    },
+    devtool: 'inline-source-map',
+    devServer: {
+      contentBase: './dist',
+      hot: true
+    },
++   module: {
++     rules: [
++       {
++         test: /\.css$/,
++         use: ['style-loader', 'css-loader']
++       }
++     ]
++   },
+    plugins: [
+      new CleanWebpackPlugin(['dist'])
+      new HtmlWebpackPlugin({
+        title: 'Hot Module Replacement'
+      }),
+      new webpack.HotModuleReplacementPlugin()
+    ],
+    output: {
+      filename: '[name].bundle.js',
+      path: path.resolve(__dirname, 'dist')
+    }
+  };
+  ```
+热加载样式表，与将其导入模块一样简单：
+
+>project
+```
+
+  webpack-demo
+  | - package.json
+  | - webpack.config.js
+  | - /dist
+    | - bundle.js
+  | - /src
+    | - index.js
+    | - print.js
++   | - styles.css
+styles.css
+
+body {
+  background: blue;
+}
+index.js
+
+  import _ from 'lodash';
+  import printMe from './print.js';
++ import './styles.css';
+
+  function component() {
+    var element = document.createElement('div');
+    var btn = document.createElement('button');
+
+    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+
+    btn.innerHTML = 'Click me and check the console!';
+    btn.onclick = printMe;  // onclick event is bind to the original printMe function
+
+    element.appendChild(btn);
+
+    return element;
+  }
+
+  let element = component();
+  document.body.appendChild(element);
+
+  if (module.hot) {
+    module.hot.accept('./print.js', function() {
+      console.log('Accepting the updated printMe module!');
+      document.body.removeChild(element);
+      element = component(); // Re-render the "component" to update the click handler
+      document.body.appendChild(element);
+    })
+  }
+```
+将 body 上的样式修改为 background: red;，您应该可以立即看到页面的背景颜色随之更改，而无需完全刷新。
+
+>styles.css
+```
+  body {
+-   background: blue;
++   background: red;
+  }
+ ```
+其他代码和框架
+
+社区还有许多其他 loader 和示例，可以使 HMR 与各种框架和库(library)平滑地进行交互……
+:    React Hot Loader：实时调整 react 组件。
+Vue Loader：此 loader 支持用于 vue 组件的 HMR，提供开箱即用体验。
+Elm Hot Loader：支持用于 Elm 程序语言的 HMR。
+Redux HMR：无需 loader 或插件！只需对 main store 文件进行简单的修改。
+Angular HMR：No loader necessary! A simple change to your main NgModule file is all that's required to have full control over the HMR APIs.没有必要使用 loader！只需对主要的 NgModule 文件进行简单的修改，由 HMR API 完全控制。
+
+### 模块热替换(Hot Module Replacement)
+如果已经通过 HotModuleReplacementPlugin 启用了模块热替换(Hot Module Replacement)，则它的接口将被暴露在 module.hot 属性下面。通常，用户先要检查这个接口是否可访问，然后再开始使用它。举个例子，你可以这样 accept 一个更新的模块：
+```
+if (module.hot) {
+  module.hot.accept('./library.js', function() {
+    // 使用更新过的 library 模块执行某些操作...
+  })
+}
+```
+支持以下方法……
+**accept**
+接受(accept)给定依赖模块的更新，并触发一个 回调函数 来对这些更新做出响应。
+```
+module.hot.accept(
+  dependencies, // 可以是一个字符串或字符串数组
+  callback // 用于在模块更新后触发的函数
+)
+```
+**decline**
+拒绝给定依赖模块的更新，使用 'decline' 方法强制更新失败。
+```
+module.hot.decline(
+  dependencies // 可以是一个字符串或字符串数组
+)
+```
+**dispose（或 addDisposeHandler）**
+添加一个处理函数，在当前模块代码被替换时执行。此函数应该用于移除你声明或创建的任何持久资源。如果要将状态传入到更新过的模块，请添加给定 data 参数。更新后，此对象在更新之后可通过 module.hot.data 调用。
+```
+
+module.hot.dispose(data => {
+  // 清理并将 data 传递到更新后的模块……
+})
+```
+**removeDisposeHandler**
+删除由 dispose 或 addDisposeHandler 添加的回调函数。
+```
+
+module.hot.removeDisposeHandler(callback)
+```
+**status**
+取得模块热替换进程的当前状态。
+```
+
+module.hot.status() // 返回以下字符串之一……
+```
+Status | Description
+--|--
+idle | 该进程正在等待调用 check（见下文）
+check | 该进程正在检查以更新
+prepare | 该进程正在准备更新（例如，下载已更新的模块）
+ready | 此更新已准备并可用
+dispose | 该进程正在调用将被替换模块的 dispose 处理函数
+apply | 该进程正在调用 accept 处理函数，并重新执行自我接受(self-accepted)的模块
+abort | 更新已中止，但系统仍处于之前的状态
+fail | 更新已抛出异常，系统状态已被破坏
+
+**check**
+ 测试所有加载的模块以进行更新，如果有更新，则应用它们。
+```
+
+module.hot.check(autoApply).then(outdatedModules => {
+  // 超时的模块……
+}).catch(error => {
+  // 捕获错误
+});
+```
+`autoApply`参数可以是布尔值，也可以是 options，当被调用时可以传递给 apply 方法。
+
+**apply**
+继续更新进程（只要 module.hot.status() === 'ready'）。
+```
+module.hot.apply(options).then(outdatedModules => {
+  // 超时的模块……
+}).catch(error => {
+  // 捕获错误
+});
+```
+可选的 options 对象可以包含以下属性：
+
+- ignoreUnaccepted (boolean): Ignore changes made to unaccepted modules.
+- ignoreDeclined (boolean): Ignore changes made to declined modules.
+- ignoreErrored (boolean): Ignore errors throw in accept handlers, error - handlers and while reevaulating module.
+- onDeclined (function(info)): Notifier for declined modules
+- onUnaccepted (function(info)): Notifier for unaccepted modules
+- onAccepted (function(info)): Notifier for accepted modules
+- onDisposed (function(info)): Notifier for disposed modules
+- onErrored (function(info)): Notifier for errors
+
+The info parameter will be an object containing some of the following values:
+```
+{
+  type: "self-declined" | "declined" |
+        "unaccepted" | "accepted" |
+        "disposed" | "accept-errored" |
+        "self-accept-errored" | "self-accept-error-handler-errored",
+  moduleId: 4, // The module in question.
+  dependencyId: 3, // For errors: the module id owning the accept handler.
+  chain: [1, 2, 3, 4], // For declined/accepted/unaccepted: the chain from where the update was propagated.
+  parentId: 5, // For declined: the module id of the declining parent
+  outdatedModules: [1, 2, 3, 4], // For accepted: the modules that are outdated and will be disposed
+  outdatedDependencies: { // For accepted: The location of accept handlers that will handle the update
+    5: [4]
+  },
+  error: new Error(...), // For errors: the thrown error
+  originalError: new Error(...) // For self-accept-error-handler-errored:
+                                // the error thrown by the module before the error handler tried to handle it.
+}
+```
+**addStatusHandler**
+注册一个函数来监听 status的变化。
+```
+
+module.hot.addStatusHandler(status => {
+  // 响应当前状态……
+})
+```
+**removeStatusHandler**
+移除一个注册的状态处理函数。
+```
+module.hot.removeStatusHandler(callback)
+```
 
 #### 工具
 创建jsx 解析   

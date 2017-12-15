@@ -69,8 +69,7 @@ module.exports = {
 
       {
         test: /\.html$/,
-        test: "\.html$"
-
+        test: "\.html$",
         use: [
           // 应用多个 loader 和选项
           "htmllint-loader",
@@ -162,7 +161,6 @@ module.exports = {
 
   stats: "errors-only",
   // 精确控制要显示的 bundle 信息
-
   devServer: {
     proxy: { // proxy URLs to backend development server
       '/api': 'http://localhost:3000'

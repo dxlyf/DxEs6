@@ -25,7 +25,7 @@ module.exports=function(env)
             extensions: [".ts", ".tsx", ".js"]
         },
         module: {
-           // noParse: /jquery|vue|lodash/,
+           // noParse: /jquery|vue|lodash/,cls
             rules: [
                     {
                         test: /\.css$/,
