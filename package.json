@@ -15,7 +15,7 @@
     "dx:ug": "webpack --config  build/webpack.dx.js --env.production",
     "start": "webpack-dev-server --open --config  build/webpack.dev.js",
     "flow": "flow check",
-    "ts": "webpack --config  build/webpack.typescript.js"
+    "ts": "webpack --config  build/webpack.typescript.js --progress"
   },
   "repository": {
     "type": "git",

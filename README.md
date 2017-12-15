@@ -1,12 +1,9 @@
 # DxEs6
 ## ES6 开发编译环境
-### 安装编译环境
-#### 打包插件webpack
-npm install --save-dev webpack  
-配置合并  
-npm install --save-dev webpack-merge     
-[压缩代码](https://github.com/webpack-contrib/babel-minify-webpack-plugin)   
-npm install babel-minify-webpack-plugin --save-dev   
+### 安装编译环境  [webpack](https://doc.webpack-china.org/)
+npm install webpack  --save-dev  [编译](https://www.npmjs.com/package/webpack)
+npm install webpack-merge  --save-dev  [配置合并](https://www.npmjs.com/package/webpack-merge)   
+npm install babel-minify-webpack-plugin --save-dev   [压缩代码](https://github.com/webpack-contrib/babel-minify-webpack-plugin)   
 
         const MinifyPlugin = require("babel-minify-webpack-plugin");
         module.exports = {
@@ -17,7 +14,7 @@ npm install babel-minify-webpack-plugin --save-dev
         ]
         }
 
-**插件** 
+#### webpack NPM插件
 清除文件夹         
 npm install clean-webpack-plugin --save-dev   
 创建HTML文件      
@@ -27,8 +24,13 @@ npm install --save-dev express webpack-dev-middleware
 提取外部css    
 npm install --save-dev extract-text-webpack-plugin
 创建 公共js 
- webpack.optimize.CommonsChunkPlugin  
+#### webpack 内部插件
+webpack.optimize.CommonsChunkPlugin  
+>fdffd
+>>4343
+[id]: http://example.com/ "Optional Title Here"
 
+...CommonsChunkPlugin配置
             {
         name: string, // or
         names: string[],

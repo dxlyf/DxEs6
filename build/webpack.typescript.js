@@ -1,36 +1,25 @@
-
-
+const merge = require('webpack-merge');
+const common = require('./webpack.common');
+const MinifyPlugin=require('babel-minify-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const webpack=require('webpack')
+const fs=require('fs')
+const path=require('path')
+var root=path.resolve(__dirname,'../');
 module.exports=function(env)
 {
 
-    const merge = require('webpack-merge');
-    const common = require('./webpack.common');
-    const MinifyPlugin=require('babel-minify-webpack-plugin')
-    const CleanWebpackPlugin = require('clean-webpack-plugin');
-    const webpack=require('webpack')
-    const fs=require('fs')
-    const path=require('path')
-    
-    const dir=path.resolve(__dirname,'../','src_ts/singles');
-    var files=fs.readdirSync(dir,{
-        encoding:"utf8"
-    });
-    var entryFiles={};   //{['babel-polyfill']:'babel-polyfill'};
-    files.forEach((file)=>{   
-        entryFiles[path.basename(file,'.js')]='./src_ts/singles/'+file;
-    });
-    //cls
     common.plugins=[]
     common.entry={};
     common.module={};
     return {
      //   devtool: 'inline-source-map',
-        entry:entryFiles,
+        entry:'./src/typescript/index.ts',
         output: {
             filename: '[name].js',
             chunkFilename: '[name].bundle.js',
             libraryTarget: "this",
-            path: path.resolve(__dirname, '../distts/singles'),
+            path: path.join(root, 'dist/typescript'),
         },
         resolve:{
             extensions: [".ts", ".tsx", ".js"]
@@ -45,14 +34,14 @@ module.exports=function(env)
                       {
                           test:/\.tsx?$/,
                           exclude: /(node_modules|bower_components)/,
-                          include:[path.resolve(__dirname,'../src_ts')],
+                     //     include:[path.resolve(__dirname,'../src_ts')],
                           use:['ts-loader']
                       }
                     ]
         },
         plugins: [
-            new CleanWebpackPlugin(['distts/singles'],{
-                root: path.resolve(__dirname,'../')
+            new CleanWebpackPlugin(['dist/typescript'],{
+                root: root
             }),
             // new webpack.optimize.CommonsChunkPlugin({
             //          name: 'common', // 指定公共 bundle 的名称。
