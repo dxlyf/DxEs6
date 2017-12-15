@@ -98,6 +98,7 @@ npm install --save-dev less-loader less
 #### 工具
 创建jsx 解析   
 npm install --save-dev @babel/plugin-syntax-jsx
+#### 测试插件
 
 #### 安装es6编译插件 
 npm install --save-dev babel-loader babel-core

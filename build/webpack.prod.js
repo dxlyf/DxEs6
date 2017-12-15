@@ -6,7 +6,6 @@ const webpack=require('webpack')
 
 module.exports = merge(common, {
     plugins: [
-       //  new MinifyPlugin(),
-    
+
    ] 
 });

@@ -15,7 +15,7 @@ module.exports = merge(common,{
     filename: '[name].bundle.js',
   },
   devServer: {
-    contentBase: '../dist',
+    contentBase: '../dist/babel',
     hot:true
 },
   plugins: [

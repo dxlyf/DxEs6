@@ -20,11 +20,12 @@ const root= path.resolve(__dirname,'../');
 console.log( path.join(root, 'dist'));
 module.exports = {
   entry: {
-        index:'./src/index.js',
+    index:'./src/babel/index.js',
   },
   output: {
     filename: 'index.js',
-    path: path.join(root, 'dist'),
+    path: path.join(root, 'dist/babel'),
+   // libraryTarget: "umd"
   },
   module: {
    // noParse: /jquery|vue|lodash/,
@@ -95,11 +96,11 @@ module.exports = {
     //     //  goes into the vendor chunk)
     //   }),
     extractCss,
-    new CleanWebpackPlugin(['dist'],{
+    new CleanWebpackPlugin(['dist/babel'],{
         root: root, // 根目录
         verbose:true,// //  将日志写入控制台。
         dry:false,// 模拟删除
-        exclude:  ['dx','es6'], // 排除
+       // exclude:  ['dx','es6'], // 排除
          //  如果为true，则删除重新编译的文件。 
         //  默认：false
         watch:false,     

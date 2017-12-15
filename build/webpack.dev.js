@@ -8,12 +8,12 @@ const webpack=require('webpack')
 module.exports = merge(common, {
  //   devtool: 'inline-source-map',
     entry: {
-        index:'./src/index.js',
+        index:'./src/babel/index.js',
       //  common:['lodash','vue'],
    },
     output: {
-        filename: '[name].[chunkhash].js',
-        chunkFilename: '[name].bundle.js',
+      //  filename: '[name].[chunkhash].js',
+      //  chunkFilename: '[name].bundle.js',
         libraryTarget: "umd"
     },
   //  externals:['lodash','vue'],
@@ -25,7 +25,7 @@ module.exports = merge(common, {
     //     }
     // },
     devServer: {
-     contentBase: '../dist'
+     contentBase: '../dist/babel'
     },
     plugins: [
         // new webpack.optimize.CommonsChunkPlugin({

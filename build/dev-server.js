@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const config = require('./webpack.hot.js');
 
 const options = {
-  contentBase: '../dist',
+  contentBase: '../dist/babel',
   hot: true,
   host: 'localhost'
 };
