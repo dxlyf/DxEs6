@@ -247,8 +247,8 @@ webpack.config.js
 
 让我们添加一个 script 脚本，可以直接运行开发服务器(dev server)：
 
-package.json
-
+>package.json
+```
   {
     "name": "development",
     "version": "1.0.0",
@@ -274,6 +274,7 @@ package.json
       "xml-loader": "^1.2.1"
     }
   }
+  ```
 现在，我们可以在命令行中运行 npm start，就会看到浏览器自动加载页面。如果现在修改和保存任意源文件，web 服务器就会自动重新加载编译后的代码。试一下！
 
 webpack-dev-server 带有许多可配置的选项。转到相关文档以了解更多。
