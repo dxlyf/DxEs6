@@ -3,7 +3,7 @@
 - [webpack plugins](#innerPlugin)
 - [wepack loader](#loader) 
 - [compile](#compile)
-- [hot development](#hot)
+- [hot development](#模块热替换)
 
 ### 安装编译环境  [webpack](https://doc.webpack-china.org/)
 npm install webpack  --save-dev  [编译](https://www.npmjs.com/package/webpack)
@@ -384,7 +384,7 @@ app.listen(3000, function () {
 
 现在，打开浏览器，跳转到 http://localhost:3000，你应该看到你的webpack 应用程序已经运行！
 
-#### 模块热替换 {#hot}
+#### 模块热替换
 模块热替换
 编辑此页
 本指南示例代码延用开发指南的示例代码。
