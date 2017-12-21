@@ -169,7 +169,7 @@ export function  asyncQueue(queues) {
             function next()
             {
                 context = this;
-                result.push(Array.from(arguments));
+                result.push(_.toArray(arguments));
                 dequeue();
             }
             function end() {

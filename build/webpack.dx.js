@@ -118,7 +118,7 @@ module.exports = (env)=>{
                                 plugins:['syntax-jsx'],
                                 presets:[['env',{
                                         targets:{
-                                            chrome:50
+                                        //    chrome:50
                                         }
                                 }]]
                                // plugins:['transform-es2015-typeof-symbol','transform-object-rest-spread']
