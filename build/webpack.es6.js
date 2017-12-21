@@ -46,7 +46,7 @@ module.exports ={
                               //  plugins:['syntax-jsx'],
                                 presets:[['env',{
                                     targets:{
-                                        "chrome": 30
+                                        chrome:41
                                     }
                                   //  useBuiltIns:true
                                 }]],

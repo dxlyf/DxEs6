@@ -4,6 +4,7 @@
 - [wepack loader](#loader) 
 - [compile](#compile)
 - [hot development](#模块热替换)
+- [babel-core](#babel-core)
 
 ### 安装编译环境  [webpack](https://doc.webpack-china.org/)
 npm install webpack  --save-dev  [编译](https://www.npmjs.com/package/webpack)
@@ -170,7 +171,7 @@ webpack-dev-middleware 中间件
 
 我们添加一个用于启动 webpack 的观察模式的 npm script 脚本：
 ###### package.json
-```
+```javascript
   {
     "name": "development",
     "version": "1.0.0",
@@ -218,7 +219,7 @@ npm install --save-dev webpack-dev-server
 修改配置文件，告诉开发服务器(dev server)，在哪里查找文件：
 
 webpack.config.js
-
+```javascript
   const path = require('path');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -243,12 +244,13 @@ webpack.config.js
       path: path.resolve(__dirname, 'dist')
     }
   };
+```
 以上配置告知 webpack-dev-server，在 localhost:8080 下建立服务，将 dist 目录下的文件，作为可访问文件。
 
 让我们添加一个 script 脚本，可以直接运行开发服务器(dev server)：
 
 >package.json
-```
+```javascript
   {
     "name": "development",
     "version": "1.0.0",
@@ -289,7 +291,7 @@ npm install --save-dev express webpack-dev-middleware
 接下来我们需要对 webpack 的配置文件做一些调整，以确保中间件(middleware)功能能够正确启用：
 
 ###### webpack.config.js
-```
+```javascript
   const path = require('path');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -316,7 +318,7 @@ npm install --save-dev express webpack-dev-middleware
 publicPath 也会在服务器脚本用到，以确保文件资源能够在 http://localhost:3000 下正确访问，我们稍后再设置端口号。下一步就是设置我们自定义的 express 服务：
 
 ###### project
-```
+```javascript
   webpack-demo
   |- package.json
   |- webpack.config.js
@@ -350,7 +352,7 @@ app.listen(3000, function () {
 现在，添加一个 npm script，以使我们更方便地运行服务：
 
 ###### package.json
-```
+```javascript
   {
     "name": "development",
     "version": "1.0.0",
@@ -396,8 +398,7 @@ HMR 不适用于生产环境，这意味着它应当只在开发环境使用。�
 
 如果你使用了 webpack-dev-middleware 而没有使用 webpack-dev-server，请使用 webpack-hot-middleware package 包，以在你的自定义服务或应用程序上启用 HMR。
 ###### webpack.config.js
-```
-
+```javascript
   const path = require('path');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -434,7 +435,7 @@ HMR 不适用于生产环境，这意味着它应当只在开发环境使用。�
 现在，我们来修改 index.js 文件，以便当 print.js 内部发生变更时可以告诉 webpack 接受更新的模块。
 
 ###### index.js
-```
+```javascript
   import _ from 'lodash';
   import printMe from './print.js';
 
@@ -477,7 +478,7 @@ print.js
 想要启用 HMR，还需要修改 webpack 配置对象，使其包含 HMR 入口起点。webpack-dev-server package 中具有一个叫做 addDevServerEntrypoints 的方法，你可以通过使用这个方法来实现。这是关于如何使用的一个小例子：
 
 >dev-server.js
-```
+```javascript
 const webpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 
@@ -505,7 +506,7 @@ server.listen(5000, 'localhost', () => {
 为了让它与 HRM 正常工作，我们需要使用 module.hot.accept 更新绑定到新的 printMe 函数上：
 
 >index.js
-```
+```javascript
 
   import _ from 'lodash';
   import printMe from './print.js';
@@ -549,7 +550,7 @@ npm install --save-dev style-loader css-loader
 接下来我们来更新 webpack 的配置，让这两个 loader 生效。
 
 >webpack.config.js
-```
+```javascript
   const path = require('path');
   const HtmlWebpackPlugin = require('html-webpack-plugin');
   const webpack = require('webpack');
@@ -587,7 +588,7 @@ npm install --save-dev style-loader css-loader
 热加载样式表，与将其导入模块一样简单：
 
 >project
-```
+```javascript
 
   webpack-demo
   | - package.json
@@ -638,7 +639,7 @@ index.js
 将 body 上的样式修改为 background: red;，您应该可以立即看到页面的背景颜色随之更改，而无需完全刷新。
 
 >styles.css
-```
+```css
   body {
 -   background: blue;
 +   background: red;
@@ -742,7 +743,7 @@ module.hot.apply(options).then(outdatedModules => {
 - onErrored (function(info)): Notifier for errors
 
 The info parameter will be an object containing some of the following values:
-```
+```json
 {
   type: "self-declined" | "declined" |
         "unaccepted" | "accepted" |
@@ -783,7 +784,7 @@ npm install --save-dev @babel/plugin-syntax-jsx
 #### 安装es6编译插件 
 npm install --save-dev babel-loader babel-core 创建.babelrc配置文件 Env预设
 npm install babel-preset-env --save-dev
-```
+```json
 {
 "presets": ["env",{
 "targets":{
@@ -798,7 +799,9 @@ npm install babel-preset-env --save-dev
 }
 ```
 没有任何配置选项，babel-preset-env与babel-preset-latest（或者babel-preset-es2015，babel-preset-es2016和babel-preset-es2017一起）的行为完全相同。
-##### babel-core 
+
+#### babel-core
+
 ```
 可选参数	默认值	描述
 ast	true	返回值对象中包含 AST
@@ -836,7 +839,7 @@ sourceType	"module"	设置 babel 解析代码的模式。可以设置为 “scri
 wrapPluginVisitorMethod	null	可用于包装访问者模式的可选回调。注意: 这对于自我检查这样的事是有必要的，并且不需要实现任何方法。具体调用为 wrapPluginVisitorMethod(pluginAlias, visitorType, callback) 。
 ```
 
-##### 安装babel-es2015 
+##### 安装babel-es2015 {#babel}
 [es2015](https://babeljs.cn/docs/plugins/preset-es2015/)     
 npm install --save-dev babel-preset-es2015     
 
@@ -869,7 +872,7 @@ npm install vue element-ui lodash vue jquery -S
 #### 类属性声明定义转换
 npm install --save-dev babel-plugin-transform-class-properties  转换          
 npm install --save-dev babel-plugin-syntax-class-properties   解析    
- ```     
+ ```javascript     
 class Bork {
 //Property initializer syntax
 instanceProperty = "bork";

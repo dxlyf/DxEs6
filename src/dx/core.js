@@ -163,6 +163,29 @@ export function hasInstanceof(obj, target) {
 export function hasOwnProperty(object,key){
     return OBJECT_CORE.hasOwnProperty.call(object,key);
 }
+export function  asyncQueue(queues) {
+      return $.Deferred(({resolve, reject})=>{
+            var result = [], context,fn;            
+            function next()
+            {
+                context = this;
+                result.push(Array.from(arguments));
+                dequeue();
+            }
+            function end() {
+                reject.call(context, arguments);
+            }
+            function dequeue() {
+                fn = queues.shift();
+                if (fn) {
+                    fn(next, end);
+                } else {
+                    resolve.call(context, result)
+                }
+            }
+            return dequeue();
+     });
+}    
 export {  
     Class,
     Observable,

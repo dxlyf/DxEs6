@@ -72,11 +72,11 @@
         function getTime(date) {
             return parse(date).getTime();
         }
-        function differDay(begin, end) {
-            begin = parse(format(begin));
-            end = parse(format(end));
+        function differDay(begin, end,isFormat=true) {
+            begin = parse(isFormat?format(begin):begin);
+            end = parse(isFormat?format(end):end);
             var bTime = begin.getTime(), eTime = end.getTime(), t = Math.abs((eTime - bTime)) / (24 * 3600 * 1000);
-            return t;
+            return Math.floor(t);
         }
         function differMonth(begin, end) {
             begin = parse(format(begin));

@@ -114,10 +114,11 @@ module.exports = (env)=>{
                             loader:'babel-loader',
                             options:{
                                 babelrc:false,
-                              //  plugins:['syntax-jsx'],
-                                presets:[['env',{
-
-                                }]],
+                                plugins:['syntax-jsx'],
+                                presets:[['es2015',{
+                                        targets:{
+                                        }
+                                }]]
                                // plugins:['transform-es2015-typeof-symbol','transform-object-rest-spread']
                             }
                       }

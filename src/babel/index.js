@@ -21,7 +21,13 @@ function getDiv() {
   function formatName(user) {
     return user.firstName + ' ' + user.lastName;
   }
-  return (<div {...list}>{formatName(user)}</div>);
+  var data=[1,2,3,4,5,6,7,8];
+  var data2=[1,2,3,4,5,6,7,8];
+  function getItems()
+  {
+    return data2;
+  }
+  return <div {...list}>{data.map((item,index)=><p>{getItems()[index]}</p>)}</div>;
 }
 if (module.hot) {
   module.hot.accept('./print', function () {
