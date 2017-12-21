@@ -109,7 +109,8 @@ var Source = Observable.extend({
 });
 var remoteSource = Source.extend({
     requestOptions: {
-        inShowLoading: false
+        inShowLoading: false,
+        isCustomerError:true
     },
     initialize (options) {
         this.orgData = null;
