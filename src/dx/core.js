@@ -163,28 +163,30 @@ export function hasInstanceof(obj, target) {
 export function hasOwnProperty(object,key){
     return OBJECT_CORE.hasOwnProperty.call(object,key);
 }
-export function  asyncQueue(queues) {
-      return $.Deferred(({resolve, reject})=>{
-            var result = [], context,fn;            
-            function next()
-            {
-                context = this;
-                result.push(_.toArray(arguments));
-                dequeue();
-            }
-            function end() {
-                reject.call(context, arguments);
-            }
-            function dequeue() {
-                fn = queues.shift();
-                if (fn) {
-                    fn(next, end);
-                } else {
-                    resolve.call(context, result)
-                }
-            }
-            return dequeue();
-     });
+export function  asyncQueue(queues,context=this) {
+    return $.Deferred(({resolveWith, rejectWith})=>{
+          var result = [], rcontext,fn;            
+          function next()
+          {
+              result.push(_.toArray(arguments));
+              dequeue();
+          }
+          function end() {
+              result.push(_.toArray(arguments));
+              rejectWith(context,[result]);
+          }
+          function dequeue() {
+              fn = queues.shift();
+              if (fn&&fn.then) {
+                fn.then(next, end);
+              } else if (fn) {
+                  fn(next, end);
+              } else {
+                resolveWith(context, [result]);
+              }
+          }
+          return dequeue();
+   });
 }    
 export {  
     Class,
