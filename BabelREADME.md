@@ -2,6 +2,7 @@
 - [babel-core](#options)
 - [语法转换](#插件语法转换情况)
 - [类型转换](#类型转换)
+- [所有插件](#所有插件)
 
 ## babel-core 选项 {#options}
 ```
@@ -1312,3 +1313,138 @@ module.exports = Object.assign({}, es2015, es2016, es2017, proposals);
   "transform-unicode-property-regex": {}
 }
 ```
+## 所有插件
+
+* ES3
+  * es3-member-expression-literals
+  * es3-property-literals  
+* ES5
+  * es5-property-mutators
+* ES2015
+  * check-es2015-constants
+  * es2015-arrow-functions
+  * es2015-block-scoped-functions
+  * es2015-block-scoping
+  * es2015-classes
+  * es2015-computed-properties
+  * es2015-destructuring
+  * es2015-duplicate-keys
+  * es2015-for-of
+  * es2015-function-name
+  * es2015-literals
+  * es2015-object-super
+  * es2015-parameters
+  * es2015-shorthand-properties
+  * es2015-spread
+  * es2015-sticky-regex
+  * es2015-template-literals
+  * es2015-typeof-symbol
+  * es2015-unicode-regex
+
+* ES2016
+  * exponentiation-operator
+  * ES2017
+  * async-to-generator
+* 模块
+  * es2015-modules-amd
+  * es2015-modules-commonjs
+  * es2015-modules-systemjs
+  * es2015-modules-umd
+* 实验阶段
+  * async-generator-functions
+  * async-to-module-method
+  * class-constructor-call (不推荐)
+  * class-properties
+  * decorators
+  * do-expressions
+  * export-extensions
+  * function-bind
+  * object-rest-spread
+  * Minification
+请查看基于 Babel 的 minifier !
+
+* 这些 plugin 都存在于 minify 项目中。
+  * inline-environment-variables
+  * inline-consecutive-adds
+  * member-expression-literals
+  * merge-sibling-variables
+  * minify-booleans
+  * minify-constant-folding
+  * minify-dead-code-elimination
+  * minify-flip-comparisons
+  * minify-guarded-expressions
+  * minify-infinity
+  * minify-mangle-names
+  * minify-numeric-literals
+  * minify-replace
+  * minify-simplify
+  * minify-type-constructors
+  * node-env-inline
+  * property-literals
+  * regexp-constructors
+  * remove-console
+  * remove-debugger
+  * simplify-comparison-operators
+  * undefined-to-void
+* React
+  * react-constant-elements
+  * react-display-name
+  * react-inline-elements
+  * react-jsx
+  * react-jsx-compat
+  * react-jsx-self
+  * react-jsx-source
+* 其它
+  * eval
+  * flow-comments
+  * flow-strip-types
+  * jscript
+  * object-assign
+  * object-set-prototype-of-to-assign
+  * proto-to-assign
+  * regenerator
+  * runtime
+  * strict-mode
+  * 混合 Plugin
+  * external-helpers
+* 混合 Plugin
+  * external-helpers
+
+语法 Plugins
+这些 plugin 允许 Babel 解析特定类型的语法(不转译)。
+
+注意: 转译 plugin 会自动继承/使用语法插件，因此如果已经使用了相应的转译 plugin ，则不需要指定语法 plugin 。
+
+你也可以从 babylon 中提供任意 plugin 选项:
+
+```javascript
+Copy
+// .babelrc
+{
+  "parserOpts": {
+    "plugins": ["jsx", "flow"]
+  }
+}
+```
+* 实验性的
+  * async-generators
+  * class-properties
+  * decorators
+  * do-expressions
+  * dynamic-import
+  * export-extensions
+  * flow
+  * function-bind
+  * function-sent
+  * jsx
+  * object-rest-spread
+
+
+- 默认启用
+这些 plugin 已经不起作用了，因为较新版本的 babylon 默认已经启用了它们。
+  - async-functions (自 babylon 6.9.1 起)
+  - exponentiation-operator (自从 babylon 6.9.1 起)
+  - trailing-function-commas (自从 babylon 6.9.1 起)
+
+* 不推荐
+  * class-constructor-call

@@ -46,11 +46,11 @@ module.exports ={
                               //  plugins:['syntax-jsx'],
                                 presets:[['env',{
                                     targets:{
-                                        chrome:41
+                                       // chrome:52
                                     }
                                   //  useBuiltIns:true
                                 }]],
-                                plugins:['transform-object-rest-spread','transform-class-properties']
+                                plugins:['transform-object-rest-spread','transform-class-properties','transform-runtime']
                               //  plugins:['transform-es2015-typeof-symbol']
                             }
                       }

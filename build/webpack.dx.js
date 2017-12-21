@@ -30,7 +30,8 @@ module.exports = (env)=>{
    }
     //console.log(env.production);
     return {
-    entry:'./src/dx/main.js',
+   // entry:['babel-polyfill','./src/dx/main.js'],
+   entry:'./src/dx/main.js',
     output: {
         filename: env.production?'index.min.js':'index.js',
         chunkFilename: '[name].bundle.js',
@@ -115,8 +116,9 @@ module.exports = (env)=>{
                             options:{
                                 babelrc:false,
                                 plugins:['syntax-jsx'],
-                                presets:[['es2015',{
+                                presets:[['env',{
                                         targets:{
+                                            chrome:50
                                         }
                                 }]]
                                // plugins:['transform-es2015-typeof-symbol','transform-object-rest-spread']

@@ -743,7 +743,7 @@ module.hot.apply(options).then(outdatedModules => {
 - onErrored (function(info)): Notifier for errors
 
 The info parameter will be an object containing some of the following values:
-```json
+```javascript
 {
   type: "self-declined" | "declined" |
         "unaccepted" | "accepted" |
@@ -784,7 +784,33 @@ npm install --save-dev @babel/plugin-syntax-jsx
 #### 安装es6编译插件 
 npm install --save-dev babel-loader babel-core 创建.babelrc配置文件 Env预设
 npm install babel-preset-env --save-dev
-```json
+
+1. Babel-types: Babel Types 是一个为 AST 节点提供的 lodash 类的实用程序库。
+2. Babel-register: 需要钩子的节点会被自动绑定到对应的钩子上，并且能自动即时编译。
+1. Babel-template: 从一个字符串模板中生成 AST。
+1. Babel-helpers: Babel 转换的帮助函数集合。
+1. Babel-code-frame: 生成能指向出现错误原因的代码框架
+1. Babylon: Babylon 是一个用于 Babel 的 JavaScript 解析器。
+
+* preses
+  * env
+  * es2015
+  * es2016
+  * es2017
+  * latest (不推荐, 请使用 env)
+  * react
+  * flow
+
+>不稳定
+这些提案可能会有所改动，因此请谨慎使用，尤其是第 3 阶段以前的提案。我们计划会在每次 TC39 会议结束后更新对应的 stage-x preset。
+
+* TC39 将提案分为以下几个阶段:
+  * Stage 0 - 稻草人: 只是一个想法，可能是 babel 插件。
+  * Stage 1 - 提案: 初步尝试。
+  * Stage 2 - 初稿: 完成初步规范。
+  * Stage 3 - 候选: 完成规范和浏览器初步实现。
+  * Stage 4 - 完成: 将被添加到下一年度发布。
+```javascript
 {
 "presets": ["env",{
 "targets":{
@@ -797,6 +823,32 @@ npm install babel-preset-env --save-dev
         "plugins": [],
         "ignore": []
 }
+/*Plugin/Preset 排序
+插件中每个访问者都有排序问题。
+这意味着如果两次转译都访问相同的”程序”节点，则转译将按照 plugin 或 preset 的规则进行排序然后执行。
+Plugin 会运行在 Preset 之前。
+Plugin 会从第一个开始顺序执行。ordering is first to last.
+Preset 的顺序则刚好相反(从最后一个逆序执行)。
+例如:*/
+Copy
+{
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties"
+  ]
+}
+/*将先执行 transform-decorators-legacy 再执行 transform-class-properties.
+一定要记得 preset 的顺序是反向的。举个例子:*/
+Copy
+{
+  "presets": [
+    "es2015",
+    "react",
+    "stage-2"
+  ]
+}
+/*按以下顺序运行: stage-2， react， 最后 es2015 。
+这主要是为了保证向后兼容，因为大多数用户会在 “stage-0” 之前列出 “es2015” 。欲了解相关更多信息，请查看 关于隐式遍历 API 变化的说明 。*/
 ```
 没有任何配置选项，babel-preset-env与babel-preset-latest（或者babel-preset-es2015，babel-preset-es2016和babel-preset-es2017一起）的行为完全相同。
 
@@ -845,9 +897,18 @@ npm install --save-dev babel-preset-es2015
 
 ##### 填充  
 es6语法填充它会仿效一个完整的 ES2015+ 环境，并意图运行于一个应用中而不是一个库/工具。这个 polyfill 会在使用 babel-node 时自动加载。
-这意味着你可以使用新的内置对象比如 Promise 或者 WeakMap, 静态方法比如 Array.from 或者 Object.assign, 实例方法比如 Array.prototype.includes 和生成器函数（提供给你使用 regenerator 插件）。为了达到这一点， polyfill 添加到了全局范围，就像原生类型比如 String 一样。     
+这意味着你可以使用新的内置对象比如 Promise 或者 WeakMap, 静态方法比如 Array.from 或者 Object.assign, 实例方法比如 Array.prototype.includes 和生成器函数（提供给你使用 regenerator 插件）。为了达到这一点， polyfill 添加到了全局范围，就像原生类型比如 String 一样。 
+polyfill 相当在你的JS中，使用兼容性写法，去用es2015的语法去填充浏览器不支持的es2016的语法    
 npm install --save babel-polyfill 
-
+```javascript
+import "babel-polyfill";
+  //在 webpack.config.js 中，将 babel-polyfill 加到你的 entry 数组中：
+  import "babel-polyfill";
+ // 或者
+  module.exports = {
+    entry: ["babel-polyfill", "./app/js"]
+  };
+```
 ##### flow 类型转换  
 npm install --save-dev babel-preset-flow  
 npm install --save-dev flow-bin
@@ -866,6 +927,29 @@ npm install --save-dev babel-plugin-transform-es2015-typeof-symbol
 在大多数情况下，您应该将其babel-plugin-transform-runtime作为开发依赖项（with --save-dev）进行安装。  
  npm install --save-dev babel-plugin-transform-runtime   
 
+```javascript
+/**
+ Babel使用非常小的助手来执行常见的功能_extend。默认情况下，这将被添加到每个需要它的文件。这种重复有时是不必要的，特别是当你的应用程序分散在多个文件上时。
+这是transform-runtime插件来的地方：所有的助手都会引用模块，babel-runtime以避免编译后的输出重复。运行时将被编译到您的版本中。
+这个转换器的另一个目的是为你的代码创建一个沙盒环境。如果您使用的巴贝尔，填充工具，它提供了诸如内置插件Promise，Set和Map那些会污染全局范围。虽然这对于应用程序或命令行工具来说可能是好的，但是如果你的代码是一个你打算发布给其他人使用的库，或者如果你不能完全控制你的代码运行的环境，那么这就成了一个问题。
+变压器将使用这些内置插件，core-js以便无缝地使用它们，而无需使用polyfill。
+有关如何工作的更多信息以及发生的转换类型，请参阅技术详细信息部分。
+*/
+{
+  "plugins": [
+    ["transform-runtime", {
+      /*boolean，默认为true。切换是否内联通天佣工（classCallCheck，extends，等）被替换为调用moduleName。*/
+      "helpers": false, 
+      /*boolean，默认为true。切换是否没有新的内置插件（Promise，Set，Map等）转化为使用非全球污染填充工具。有关更多信息，请参见core-js别名。*/
+      "polyfill": false,
+      /*boolean，默认为true。切换是否将生成器函数转换为使用不会污染全局作用域的再生器运行时。有关更多信息，请参阅再生器别名。*/
+      "regenerator": true,
+      //string，默认为"babel-runtime"。设置导入助手时使用的模块的名称/路径。
+      "moduleName": "babel-runtime"
+    }]
+  ]
+}
+```
 #### 安装开发依赖
 npm install vue element-ui lodash vue jquery -S
 
@@ -887,6 +971,7 @@ return Bork.staticProperty;
 }
 }
 ```
+
 ### vs code 调试  "Control+Space"   
 ```
 以下属性对于每个启动配置都是必需的：
