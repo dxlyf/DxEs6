@@ -98,6 +98,14 @@ latest除非使用该--tag选项，否则发布程序包会将标记设置为已
 * `npm install --save-optional` 安装optionalDependencies 下面程序包
 * @scope 可选
 * `npm install [<@scope>/]<name>@<tag>` 安装指定标签引用的包的版本。如果标签不存在于该包的注册表数据中，则将失败。
+
+### data-tag
+```bash
+npm dist-tag add <pkg>@<version> [<tag>]
+npm dist-tag rm <pkg> <tag>
+npm dist-tag ls [<pkg>]
+aliases: dist-tags
+```
 ## 安装依赖
 * -P, --save-prod：包会出现在你的dependencies。这是默认的，除非-D或-O存在。
 * -D, --save-dev：包会出现在你的devDependencies。
@@ -116,7 +124,10 @@ latest除非使用该--tag选项，否则发布程序包会将标记设置为已
 > npm link [<@scope>/]<pkg>[@<version>]
 alias: npm ln
 ```
-* npm link 在一个包文件夹中，将在全局文件夹中创建一个符号链接 ，链接到npm link执行该命令的包
+如果需要require全局包，可以先npm link到local。
+无论你在哪个文件夹 执行 npm link xxx , 如果没有xxx模块, 那么xxx就会先安装在全局, 然后再从全局link过来
+
+* npm link 在一个包文件夹中，将在全局文件夹中创建一个符号链接 ，链接到npm link执行该命令的包.如果下面有package.json 会安装文件里面的依赖
 * npm link package-name 将创建一个从全局安装package-name到node_modules/ 当前文件夹的符号链接。
 ## 更新
 ```bash

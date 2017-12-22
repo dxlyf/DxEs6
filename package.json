@@ -4,6 +4,7 @@
   "description": "开发",
   "main": "index.js",
   "scripts": {
+    "yo":"npm install -g yo yeoman-generator",
     "webserver": "node build/web-server",
     "test": "node build/test",
     "build": "webpack --config  build/webpack.prod.js",
