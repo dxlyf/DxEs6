@@ -1,6 +1,16 @@
 {
     "flowide.pathToFlow": "${workspaceRoot}/node_modules/.bin/flow",
-    "javascript.validate.enable": true,
-    "sync.gist": "158a81d761e94b6a02ba76ed917c36186f15cb40"
-    
+    "javascript.validate.enable": true ,
+    "files.autoSave": "off",
+    "sync.gist": "eb1187c5cd5eae1ec2e958c2fe12adff",
+    "sync.lastUpload": "2017-12-25T04:30:11.410Z",
+    "sync.autoDownload": false,
+    "sync.autoUpload": false,
+    "sync.lastDownload": "",
+    "sync.forceDownload": false,
+    "sync.anonymousGist": false,
+    "sync.host": "",
+    "sync.pathPrefix": "",
+    "sync.quietSync": false,
+    "sync.askGistName": false
 }
