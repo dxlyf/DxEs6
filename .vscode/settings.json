@@ -1,4 +1,6 @@
 {
     "flowide.pathToFlow": "${workspaceRoot}/node_modules/.bin/flow",
-    "javascript.validate.enable": true
+    "javascript.validate.enable": true,
+    "sync.gist": "158a81d761e94b6a02ba76ed917c36186f15cb40"
+    
 }
