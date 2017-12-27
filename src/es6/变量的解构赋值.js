@@ -1,6 +1,8 @@
 // 数据解构
 
 (function(){
+  var a2 = ['a', 'b', 'c'];
+  var b2 = [...a2, 'foo'];
     let [foo, [[bar], baz]] = [1, [[2], 3]];
     let [ , , third] = ["foo", "bar", "baz"];
     let [head, ...tail] = [1, 2, 3, 4];

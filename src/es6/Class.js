@@ -1,7 +1,7 @@
 class Base
 {
-  name="没有初始化";
-  name;
+    name="没有初始化";
+    name;
     constructor()
     {
         this.name="基类"

@@ -4,11 +4,10 @@
 .*/build/.*
 .*/assets/.*
 .*/examples/.*
-
 [include]
 
 [libs]
-flow
+/flow
 
 [options]
 all=false
