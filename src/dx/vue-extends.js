@@ -7,12 +7,13 @@ var components = Object.create(null);
 Vue.directive('authorize', (function () {
     var permissions = window.GLOBALREQUIRECONFIGS.permissions || [];
     function update(el, name) {
-        var item = _.find(permissions, { keys: name });
-        if (item && item.vals == 1) {
+        name = _.isArray(name) ? name : [name];
+        var item = _.find(permissions, function (item) {
+            return _.indexOf(name, item.keys)!=-1 && item.vals == 1;
+        });
+        if (item) {
             el.style.display = el.__orgDisplay;
-        } else if (item && item.vals == 0) {
-            el.style.display = "none";
-        }else{
+        } else {
             el.style.display = "none";
         }
     }

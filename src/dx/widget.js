@@ -8,9 +8,7 @@ var noop = $.noop,
        var el = document.createElement('div'), name;
        var Names = {
            WebkitTransition: ['webkitTransitionEnd', 'webkitAnimationEnd', 'webkitTransition'],
-           MozTransition: ['transitionend', 'animationend mozAnimationEnd', 'transition'],
-           OTransition: ['oTransitionEnd otransitionend', 'oAnimationend', 'oTransition'],
-           transition: ['transitionend', 'animationend MSAnimationEnd', 'transition']
+           transition: ['transitionend', 'animationend', 'transition']
        }
        for (name in Names) {
            if (el.style[name] !== undefined) {

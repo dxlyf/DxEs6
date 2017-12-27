@@ -38,13 +38,11 @@ var Source = Observable.extend({
     then (success, fail) {
         if (this.data != null) {
             success.call(this, this.data, this.orgData);
-            return this;
         }
         this.on('onSuccess', success);
         if (isFunction(fail)) {
             if (this.errorMessages.length > 0) {
                 fail.call(this, this.errorMessages);
-                return;
             }
             this.on('onFail', fail);
         }
