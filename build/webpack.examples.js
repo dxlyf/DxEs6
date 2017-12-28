@@ -2,6 +2,11 @@ const path = require('path');
 
 module.exports = {
   entry: "./app/entry", // string | object | array
+  entry: ["./app/entry1", "./app/entry2"],
+  entry: {
+    a: "./app/entry-a",
+    b: ["./app/entry-b1", "./app/entry-b2"]
+  },
   // 这里应用程序开始执行
   // webpack 开始打包
 
@@ -13,18 +18,63 @@ module.exports = {
     // 必须是绝对路径（使用 Node.js 的 path 模块）
 
     filename: "bundle.js", // string
+    filename: "[name].js", // 用于多个入口点(entry point)（出口点？）
+    filename: "[chunkhash].js", // 用于长效缓存
     // 「入口分块(entry chunk)」的文件名模板（出口分块？）
 
     publicPath: "/assets/", // string
+    publicPath: "",
+    publicPath: "https://cdn.example.com/",
     // 输出解析文件的目录，url 相对于 HTML 页面
 
     library: "MyLibrary", // string,
     // 导出库(exported library)的名称
 
     libraryTarget: "umd", // 通用模块定义
+        libraryTarget: "umd2", // 通用模块定义
+        libraryTarget: "commonjs2", // exported with module.exports
+        libraryTarget: "commonjs-module", // 使用 module.exports 导出
+        libraryTarget: "commonjs", // 作为 exports 的属性导出
+        libraryTarget: "amd", // 使用 AMD 定义方法来定义
+        libraryTarget: "this", // 在 this 上设置属性
+        libraryTarget: "var", // 变量定义于根作用域下
+        libraryTarget: "assign", // 盲分配(blind assignment)
+        libraryTarget: "window", // 在 window 对象上设置属性
+        libraryTarget: "global", // property set to global object
+        libraryTarget: "jsonp", // jsonp wrapper
     // 导出库(exported library)的类型
 
     /* 高级输出配置（点击显示） */
+
+    pathinfo: true, // boolean
+    // 在生成代码时，引入相关的模块、导出、请求等有帮助的路径信息。
+
+    chunkFilename: "[id].js",
+    chunkFilename: "[chunkhash].js", // 长效缓存(/guides/caching)
+    // 「附加分块(additional chunk)」的文件名模板
+
+    jsonpFunction: "myWebpackJsonp", // string
+    // 用于加载分块的 JSONP 函数名
+
+    sourceMapFilename: "[file].map", // string
+    sourceMapFilename: "sourcemaps/[file].map", // string
+    // 「source map 位置」的文件名模板
+
+    devtoolModuleFilenameTemplate: "webpack:///[resource-path]", // string
+    // 「devtool 中模块」的文件名模板
+
+    devtoolFallbackModuleFilenameTemplate: "webpack:///[resource-path]?[hash]", // string
+    // 「devtool 中模块」的文件名模板（用于冲突）
+
+    umdNamedDefine: true, // boolean
+    // 在 UMD 库中使用命名的 AMD 模块
+
+    crossOriginLoading: "use-credentials", // 枚举
+    crossOriginLoading: "anonymous",
+    crossOriginLoading: false,
+    // 指定运行时如何发出跨域请求问题
+
+    /* 专家级输出配置（自行承担风险） */
   },
 
   module: {
@@ -64,6 +114,19 @@ module.exports = {
         options: {
           presets: ["es2015"]
         },
+        parser: {
+          amd: false, // 禁用 AMD
+          commonjs: false, // 禁用 CommonJS
+          system: false, // 禁用 SystemJS
+          harmony: false, // 禁用 ES2015 Harmony import/export
+          requireInclude: false, // 禁用 require.include
+          requireEnsure: false, // 禁用 require.ensure
+          requireContext: false, // 禁用 require.context
+          browserify: false, // 禁用特殊处理的 browserify bundle
+          requireJs: false, // 禁用 requirejs.*
+          node: false, // 禁用 __dirname, __filename, module, require.extensions, require.main 等。
+          node: {} // 在模块级别(module level)上重新配置 node 层(layer)
+        }
         // loader 的可选项
       },
 
@@ -95,11 +158,29 @@ module.exports = {
       { resource: [ /* 条件 */ ] },
       // 任意条件匹配时匹配（默认为数组）
 
-      { resource: { not: /* 条件 */ } }
+      { resource: { not:true /* 条件 */ } }
       // 条件不匹配时匹配
     ],
 
     /* 高级模块配置（点击展示） */
+
+    noParse: [
+      /special-library\.js$/
+    ],
+    // 不解析这里的模块
+
+    unknownContextRequest: ".",
+    unknownContextRecursive: true,
+    unknownContextRegExp: /^\.\/.*$/,
+    unknownContextCritical: true,
+    exprContextRequest: ".",
+    exprContextRegExp: /^\.\/.*$/,
+    exprContextRecursive: true,
+    exprContextCritical: true,
+    wrappedContextRegExp: /.*/,
+    wrappedContextRecursive: true,
+    wrappedContextCritical: false,
+    // specifies default behavior for dynamic requests
   },
 
   resolve: {
@@ -129,12 +210,63 @@ module.exports = {
       // 模块别名相对于当前上下文导入
     },
     /* 可供选择的别名语法（点击展示） */
+    alias: [
+      {
+        name: "module",
+        // 旧的请求
+
+        alias: "new-module",
+        // 新的请求
+
+        onlyModule: true
+        // 如果为 true，只有 "module" 是别名
+        // 如果为 false，"module/inner/path" 也是别名
+      }
+    ],
 
     /* 高级解析选项（点击展示） */
+
+    symlinks: true,
+    // 遵循符号链接(symlinks)到新位置
+
+    descriptionFiles: ["package.json"],
+    // 从 package 描述中读取的文件
+
+    mainFields: ["main"],
+    // 从描述文件中读取的属性
+    // 当请求文件夹时
+
+    aliasFields: ["browser"],
+    // 从描述文件中读取的属性
+    // 以对此 package 的请求起别名
+
+    enforceExtension: false,
+    // 如果为 true，请求必不包括扩展名
+    // 如果为 false，请求可以包括扩展名
+
+    moduleExtensions: ["-module"],
+    enforceModuleExtension: false,
+    // 类似 extensions/enforceExtension，但是用模块名替换文件
+
+    unsafeCache: true,
+    unsafeCache: {},
+    // 为解析的请求启用缓存
+    // 这是不安全，因为文件夹结构可能会改动
+    // 但是性能改善是很大的
+
+    cachePredicate: (path, request) => true,
+    // predicate function which selects requests for caching
+
+    plugins: [
+      // ...
+    ]
+    // 应用于解析器的附加插件
   },
 
   performance: {
     hints: "warning", // 枚举
+    hints: "error", // 性能提示中抛出错误
+    hints: false, // 关闭性能提示
     maxAssetSize: 200000, // 整数类型（以字节为单位）
     maxEntrypointSize: 400000, // 整数类型（以字节为单位）
     assetFilter: function(assetFilename) {
@@ -144,6 +276,12 @@ module.exports = {
   },
 
   devtool: "source-map", // enum
+  devtool: "inline-source-map", // 嵌入到源文件中
+  devtool: "eval-source-map", // 将 SourceMap 嵌入到每个模块中
+  devtool: "hidden-source-map", // SourceMap 不在源文件中引用
+  devtool: "cheap-source-map", // 没有模块映射(module mappings)的 SourceMap 低级变体(cheap-variant)
+  devtool: "cheap-module-source-map", // 有模块映射(module mappings)的 SourceMap 低级变体
+  devtool: "eval", // 没有模块映射，而是命名模块。以牺牲细节达到最快。
   // 通过在浏览器调试工具(browser devtools)中添加元信息(meta info)增强调试
   // 牺牲了构建速度的 `source-map' 是最详细的。
 
@@ -153,14 +291,42 @@ module.exports = {
   // 相对于此目录解析
 
   target: "web", // 枚举
+  target: "webworker", // WebWorker
+  target: "node", // node.js 通过 require
+  target: "async-node", // Node.js 通过 fs and vm
+  target: "node-webkit", // nw.js
+  target: "electron-main", // electron，主进程(main process)
+  target: "electron-renderer", // electron，渲染进程(renderer process)
+  target: (compiler) => { /* ... */ }, // 自定义
   // 包(bundle)应该运行的环境
   // 更改 块加载行为(chunk loading behavior) 和 可用模块(available module)
 
   externals: ["react", /^@angular\//],
+  externals: "react", // string（精确匹配）
+  externals: /^[a-z\-]+($|\/)/, // 正则
+  externals: { // 对象
+    angular: "this angular", // this["angular"]
+    react: { // UMD
+      commonjs: "react",
+      commonjs2: "react",
+      amd: "react",
+      root: "React"
+    }
+  },
+  externals: (request) => { /* ... */ return "commonjs " + request },
   // 不要遵循/打包这些模块，而是在运行时从环境中请求他们
 
   stats: "errors-only",
+  stats: { //object
+    assets: true,
+    colors: true,
+    errors: true,
+    errorDetails: true,
+    hash: true,
+    // ...
+  },
   // 精确控制要显示的 bundle 信息
+
   devServer: {
     proxy: { // proxy URLs to backend development server
       '/api': 'http://localhost:3000'
@@ -174,31 +340,8 @@ module.exports = {
     // ...
   },
 
-// 在配置中添加插件
   plugins: [
-    // 构建优化插件
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor-[hash].min.js',
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        drop_console: false,
-      }
-    }),
-    new ExtractTextPlugin({
-      filename: 'build.min.css',
-      allChunks: true,
-    }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    // 编译时(compile time)插件
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"',
-    }),
-    // webpack-dev-server 强化插件
-    new DashboardPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
+    // ...
   ],
   // 附加插件列表
 

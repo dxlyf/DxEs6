@@ -4,7 +4,6 @@
   "description": "开发",
   "main": "index.js",
   "scripts": {
-    "yo":"npm install -g yo yeoman-generator",
     "webserver": "node build/web-server",
     "test": "node build/test",
     "build": "webpack --config  build/webpack.prod.js",
@@ -16,7 +15,8 @@
     "dx:ug": "webpack --config  build/webpack.dx.js --env.production",
     "start": "webpack-dev-server --open --config  build/webpack.dev.js",
     "flow": "flow check",
-    "ts": "webpack --config  build/webpack.typescript.js --progress"
+    "ts": "webpack --config  build/webpack.typescript.js --progress",
+    "mvvm": "node build/webpack.mvvm.js"
   },
   "repository": {
     "type": "git",
