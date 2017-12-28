@@ -10,6 +10,7 @@
 - [babel-core](#babel-core)
 
 ### 安装编译环境  [webpack](https://doc.webpack-china.org/)
+npm install -g nodemon  [自动重启](#https://www.npmjs.com/package/nodemon)
 npm install webpack  --save-dev  [编译](https://www.npmjs.com/package/webpack)
 npm install webpack-merge  --save-dev  [配置合并](https://www.npmjs.com/package/webpack-merge)   
  

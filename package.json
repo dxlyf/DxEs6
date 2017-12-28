@@ -16,7 +16,7 @@
     "start": "webpack-dev-server --open --config  build/webpack.dev.js",
     "flow": "flow check",
     "ts": "webpack --config  build/webpack.typescript.js --progress",
-    "mvvm": "node build/webpack.mvvm.js"
+    "mvvm": "nodemon --watch build/webpack.mvvm.js --exec \"webpack-dev-server --config build/webpack.mvvm.js\" "
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/fanyonglong/DxEs6#readme",
   "devDependencies": {
+    "@types/webpack-env": "^1.13.3",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-minify-webpack-plugin": "^0.2.0",
