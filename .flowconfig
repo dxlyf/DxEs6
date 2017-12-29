@@ -4,7 +4,10 @@
 .*/build/.*
 .*/assets/.*
 .*/examples/.*
+.*/src/dx-mvvm/.*
+
 [include]
+../src/**/*.js
 
 [libs]
 /flow

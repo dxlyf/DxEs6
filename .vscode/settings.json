@@ -1,6 +1,6 @@
 {
     "flowide.pathToFlow": "${workspaceRoot}/node_modules/.bin/flow",
-    "javascript.validate.enable": true ,
+    "javascript.validate.enable": false,
     "files.autoSave": "off",
     "sync.gist": "eb1187c5cd5eae1ec2e958c2fe12adff",
     "sync.lastUpload": "2017-12-25T04:30:11.410Z",

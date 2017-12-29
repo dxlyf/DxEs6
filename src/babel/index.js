@@ -1,4 +1,3 @@
-
 /* @flow */
 
 import printMe from './print';
@@ -7,6 +6,7 @@ import '../../assets/index.css'
 if (process.env.NODE_ENV !== 'production') {
   console.log('Looks like we are in development mode!');
 }
+var aa:number=43;
 
 function getDiv() {
   var { name, ...list } = {

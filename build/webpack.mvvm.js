@@ -15,9 +15,9 @@ var config={
       // 所有输出文件的目标路径
       // 必须是绝对路径（使用 Node.js 的 path 模块）
   
-      filename: "dx-mvvm.js", // string
+      filename: "dx-mvvm.[hash].js", // string
       // 「入口分块(entry chunk)」的文件名模板（出口分块？）
-
+      chunkFilename: "[chunkhash].js", // 长效缓存(/guides/caching)
   //    publicPath: "/assets/", // string
       // 输出解析文件的目录，url 相对于 HTML 页面
   
@@ -29,7 +29,7 @@ var config={
   
       /* 高级输出配置（点击显示） */
     },
-    devtool: 'inline-source-map', // 开发
+  //  devtool: 'inline-source-map', // 开发
     resolve:{
         extensions: [".ts", ".tsx", ".js"]
     },
@@ -55,26 +55,27 @@ var config={
             root:root
         }),
         new webpack.DefinePlugin({
+            PRODUCTION: JSON.stringify(true), 
             'process.env': {
                 'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
             }
         }),
       //  new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
+     //   new webpack.HotModuleReplacementPlugin()
     ],
     // 会进行css热更新,js 自动刷新
     devServer: {
         contentBase: path.join(root, "dist"),
         compress: true, //启用gzip压缩
-        port: 9000,
-        open:'Chrome',
+       // port: 9000,
+     //   open:'Chrome',
         index: 'app.html',
         before(app){
             app.get('/scripts/*.js', function(req, res) {
                 res.sendFile(path.join(root,req.path));
             });
         },
-        hot:true
+       // hot:true
      },
      watch:false, // webpack-dev-server  和 webpack-dev-middleware 里 Watch 模式默认开启。
     watchOptions:{

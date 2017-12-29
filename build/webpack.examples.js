@@ -16,7 +16,15 @@ module.exports = {
     path: path.resolve(__dirname, "dist"), // string
     // 所有输出文件的目标路径
     // 必须是绝对路径（使用 Node.js 的 path 模块）
-
+    /***
+     * 模板	描述
+      [hash]模块标识符(module identifier)的 hash
+      [chunkhash]chunk 内容的 hash
+      [name] 模块名称
+      [id]模块标识符(module identifier)
+      [query]模块的 query，例如，文件名 ? 后面的字符串
+     * 
+    */
     filename: "bundle.js", // string
     filename: "[name].js", // 用于多个入口点(entry point)（出口点？）
     filename: "[chunkhash].js", // 用于长效缓存

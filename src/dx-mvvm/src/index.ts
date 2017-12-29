@@ -1,5 +1,6 @@
 
-import main from './main'
+/* @flow */
+
 var mess:string="",index:number=0;
 export class Greeter  {
     greeting: string;
@@ -11,10 +12,19 @@ export class Greeter  {
     }
 }
 
+if(PRODUCTION)
+{
+    console.log('1111111111111111');
+}
+
+ if(process.env.NODE_ENV='development')
+ {
+     console.log('8885545888438');
+ }
  if (module.hot) {
-     module.hot.accept('./main', function() {
+     module.hot.accept('../scripts/main.js', function() {
        mess="更新了"+(index++);
        console.log('main.js更新');
-       main(Greeter);
+    
      })
  }
