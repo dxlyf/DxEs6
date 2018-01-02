@@ -216,6 +216,8 @@ compiler.run((err, stats) => {
 
 
 
+
+
 #### webpack NPM插件
 - npm install babel-minify-webpack-plugin --save-dev   [压缩代码](https://github.com/webpack-contrib/babel-minify-webpack-plugin)     
 - npm install clean-webpack-plugin --save-dev   清除文件夹    

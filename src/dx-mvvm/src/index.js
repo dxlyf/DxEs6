@@ -1,13 +1,12 @@
-import {update} from './main'
+import {update} from './main.js'
 import 'css/index.css'
 
-var mess:string="",index:number=0;
+var mess="",index=0;
 export class Greeter  {
-    private name: string;
-    constructor(name: string) {
+   name="43";
+    constructor(name) {
         this.name = name;
     }
-
     update()
     {
         update(this.name+":"+Date.now())
@@ -20,9 +19,9 @@ console.log('55555555555555555555555');
  {
      console.log('8885545888438');
  }if (module.hot) {
-    module.hot.accept('./main.ts', function() {
+    module.hot.accept('./main.js', function() {
       console.log('main.js更新');
-      _Greeter.update();
+     // _Greeter.update();
      // update('555');
     });
 

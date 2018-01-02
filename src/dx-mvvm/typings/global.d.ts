@@ -3,5 +3,4 @@
         NODE_ENV?:string
     }
 }
-
-declare var PRODUCTION:boolean
+declare var __webpack_hash__:string;

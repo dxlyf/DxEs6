@@ -1,7 +1,5 @@
 {
     "presets": ["env"],
-    "plugins": ["syntax-jsx","npm install --save-dev babel-preset-flow",["transform-runtime",{
-        "polyfill":false
-    }]]
-      
+    "plugins": [[
+        "transform-class-properties"]]
 }

@@ -21,6 +21,13 @@
                 "build/webpack.mvvm.js"
             ]
  
+        },
+        {
+            "type":"node",
+            "request": "launch",
+            "name": "dx-mvvm-hot",
+            "program": "${workspaceFolder}/build/webpack.mvvm.hot.js"
         }
+
     ]
 }

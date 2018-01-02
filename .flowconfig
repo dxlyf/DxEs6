@@ -5,7 +5,8 @@
 .*/assets/.*
 .*/examples/.*
 <PROJECT_ROOT>/src/\(dx-mvvm\|dx\|es6\|dx-typescript\|typescript\)/.*
-
+<PROJECT_ROOT>/node_modules/.*
+.*\.ts$
 
 [include]
 
