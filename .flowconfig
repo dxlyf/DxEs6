@@ -4,10 +4,11 @@
 .*/build/.*
 .*/assets/.*
 .*/examples/.*
-.*/src/dx-mvvm/.*
+<PROJECT_ROOT>/src/\(dx-mvvm\|dx\|es6\|dx-typescript\|typescript\)/.*
+
 
 [include]
-../src/**/*.js
+
 
 [libs]
 /flow
