@@ -20,8 +20,8 @@ console.log('55555555555555555555555');
  {
      console.log('8885545888438');
  }if (module.hot) {
-    module.hot.accept('./main.ts', function() {
-      console.log('main.js更新');
+    module.hot.accept('./main', function() {
+      console.log('main.ts更新');
       _Greeter.update();
      // update('555');
     });

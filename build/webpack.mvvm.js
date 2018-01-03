@@ -23,7 +23,7 @@ var root=path.resolve(__dirname,'../src/dx-mvvm');
 */
 var config={
     context:root,
-    entry:{app:"./src/index.js"}, // string | object | array
+    entry:{app:"./src/index.ts"}, // string | object | array
     output: {
       // webpack 如何输出结果的相关选项 
       path: path.resolve(root, "dist"), // string
@@ -36,13 +36,14 @@ var config={
    //   chunkFilename: "[chunkhash].js", // 长效缓存(/guides/caching)
   //    publicPath: "/assets/", // string
       // 输出解析文件的目录，url 相对于 HTML 页面
-  
+      hotUpdateChunkFilename: "[id].[hash].hot-update.js",//自定义热更新 chunk 的文件名。可选的值的详细信息，请查看 output.filename 选项。
       library: "dx", // string,
       // 导出库(exported library)的名称
-  
+    
       libraryTarget: "umd", // 通用模块定义
       // 导出库(exported library)的类型
-  
+      umdNamedDefine:true,
+      publicPath:"/"
       /* 高级输出配置（点击显示） */
     },
   //  devtool: 'cheap-module-eval-source-map', // 开发

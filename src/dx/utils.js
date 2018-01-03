@@ -280,7 +280,16 @@ export const dom={
     getBoundingClientRect(element)
     {
          return element.getBoundingClientRect();
-    }
+    },
+    isSelf()
+    {
+        return window.top===window.self;
+    } ,
+    windowSize(top=false)
+    {
+        var {innerWidth:width,innerHeight:height}=top?window.top:window.self;
+        return {width,height}
+    }   
 }
 export const  strings = {
             format (str) {
