@@ -227,5 +227,17 @@ export  var  {
         return JSON.parse(JSON.stringify(obj));
     },
     requestAnimationFrame=_requestAnimationFrame,
-    cancelAnimationFrame=_cancelAnimationFrame
-}={};
+    cancelAnimationFrame=_cancelAnimationFrame,
+    merge
+}={
+    merge(target,...sources)
+    {
+        return _.mergeWith(target,...sources,(objValue, srcValue)=>{
+            if(Array.isArray(srcValue))
+            {
+                return _.clone(srcValue);
+            }
+        })
+    }
+
+};
