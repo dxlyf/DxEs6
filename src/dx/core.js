@@ -156,6 +156,51 @@ var _cancelAnimationFrame=(function () {
     }
 }());
 
+export  let runAsync = function (func, cb) {
+    cb = cb || function () {}; 
+    return function () {
+      var async = false;
+      var args = arguments;
+      var promise = $.Deferred(function (deferred) {
+        var resolve=deferred.resolve,reject=deferred.reject;
+        var answer = func.apply({
+          async: function () {
+            async = true;
+            return function (err, value) {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(value);
+              }
+            };
+          }
+        }, Array.prototype.slice.call(args));
+  
+        if (!async) {
+          if (answer&&answer.then) {
+            answer.then(resolve, reject);
+          } else {
+            resolve(answer);
+          }
+        }
+      }); 
+      promise.then(cb.bind(null, null), cb); 
+      return promise;
+    }
+  };
+  runAsync.cb = function (func, cb) {
+    return runAsync(function () {
+      var args = Array.prototype.slice.call(arguments);
+      if (args.length === func.length - 1) {
+        args.push(this.async());
+      }
+      return func.apply(this, args);
+    }, cb);
+  };
+  
+
+
+
 var OBJECT_CORE={};
 export function hasInstanceof(obj, target) {
     return obj instanceof target;
@@ -241,3 +286,5 @@ export  var  {
     }
 
 };
+
+
