@@ -1,7 +1,11 @@
 class Base
 {
+    static age=43;
+    static mmm()
+    {
+
+    }
     name="没有初始化";
-    name;
     constructor()
     {
         this.name="基类"

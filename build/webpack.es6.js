@@ -10,7 +10,9 @@ const dir=path.resolve(__dirname,'../','src/es6');
 var files=fs.readdirSync(dir,{
     encoding:"utf8"
 });
-var entryFiles={};   //{['babel-polyfill']:'babel-polyfill'};
+var entryFiles={
+   // polyfill:'babel-polyfill'
+};   //{['babel-polyfill']:'babel-polyfill'};
 files.forEach((file)=>{
     
     entryFiles[path.basename(file,'.js')]='./src/es6/'+file;
@@ -46,10 +48,16 @@ module.exports ={
                               //  plugins:['syntax-jsx'],
                                 presets:[['env',{
                                     targets:{
-                                       // chrome:52
+                                        "browsers": ["last 2 versions"]
                                     }
                                   //  useBuiltIns:true
                                 }]],
+                                // plugins:[['transform-runtime',{
+                                //     "helpers":false, //boolean，默认为true。
+                                //     "polyfill": true,
+                                //     "regenerator": true,
+                                //     "moduleName": "babel-runtime"
+                                // }],'transform-object-rest-spread','transform-class-properties']
                                 plugins:['transform-object-rest-spread','transform-class-properties'] //'transform-runtime'
                               //  plugins:['transform-es2015-typeof-symbol']
                             }
@@ -62,7 +70,9 @@ module.exports ={
             root: path.resolve(__dirname,'../')
         }),
         new webpack.optimize.CommonsChunkPlugin({
-                 name: 'common', // 指定公共 bundle 的名称。
+             //   names:['babel-polyfill'].concat(Object.keys(entryFiles)),
+               name: 'common', // 指定公共 bundle 的名称。
+               // chunks:['babel-polyfill'] // 过滤
         }),
          new webpack.DefinePlugin({
             'process.env': {

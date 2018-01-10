@@ -1097,7 +1097,7 @@ npm install --save-dev babel-preset-es2015
 es6语法填充它会仿效一个完整的 ES2015+ 环境，并意图运行于一个应用中而不是一个库/工具。这个 polyfill 会在使用 babel-node 时自动加载。
 这意味着你可以使用新的内置对象比如 Promise 或者 WeakMap, 静态方法比如 Array.from 或者 Object.assign, 实例方法比如 Array.prototype.includes 和生成器函数（提供给你使用 regenerator 插件）。为了达到这一点， polyfill 添加到了全局范围，就像原生类型比如 String 一样。 
 polyfill 相当在你的JS中，使用兼容性写法，去用es2015的语法去填充浏览器不支持的es2016的语法    
-npm install --save babel-polyfill 
+npm install --save babel-polyfill  
 ```javascript
 import "babel-polyfill";
   //在 webpack.config.js 中，将 babel-polyfill 加到你的 entry 数组中：
@@ -1129,9 +1129,16 @@ npm install --save-dev babel-plugin-transform-es2015-typeof-symbol
 /**
  Babel使用非常小的助手来执行常见的功能_extend。默认情况下，这将被添加到每个需要它的文件。这种重复有时是不必要的，特别是当你的应用程序分散在多个文件上时。
 这是transform-runtime插件来的地方：所有的助手都会引用模块，babel-runtime以避免编译后的输出重复。运行时将被编译到您的版本中。
-这个转换器的另一个目的是为你的代码创建一个沙盒环境。如果您使用的巴贝尔，填充工具，它提供了诸如内置插件Promise，Set和Map那些会污染全局范围。虽然这对于应用程序或命令行工具来说可能是好的，但是如果你的代码是一个你打算发布给其他人使用的库，或者如果你不能完全控制你的代码运行的环境，那么这就成了一个问题。
+这个转换器的另一个目的是为你的代码创建一个沙盒环境。如果您使用的bael-polyfill，它提供了诸如内置插件Promise，Set和Map那些会污染全局范围。虽然这对于应用程序或命令行工具来说可能是好的，但是如果你的代码是一个你打算发布给其他人使用的库，或者如果你不能完全控制你的代码运行的环境，那么这就成了一个问题。
 变压器将使用这些内置插件，core-js以便无缝地使用它们，而无需使用polyfill。
 有关如何工作的更多信息以及发生的转换类型，请参阅技术详细信息部分。
+
+该runtime变压器插件做了三两件事：
+babel-runtime/regenerator当您使用生成器/异步函数时自动需要。
+自动需要babel-runtime/core-js并映射ES6静态方法和内置插件。
+删除内联Babel助手并使用该模块babel-runtime/helpers。
+这究竟意味着什么呢？基本上，你可以使用内置的插件，如Promise，Set，Symbol，等，以及使用所有需要填充工具无缝连接，无需全球污染通天特点，使其非常适合于图书馆。
+确保你包含babel-runtime一个依赖项。
 */
 {
   "plugins": [

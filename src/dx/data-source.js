@@ -103,7 +103,8 @@ var Source = Observable.extend({
     },
     filter (predicate) {
         return _.filter(this.data, predicate);
-    }
+    },
+    abort(){}
 });
 var remoteSource = Source.extend({
     requestOptions: {
@@ -112,6 +113,7 @@ var remoteSource = Source.extend({
     },
     initialize (options) {
         this.orgData = null;
+        this._xhr=null;
         this.requestOptions = extend({}, this.requestOptions, options.transport);
         this.requestData = this.requestOptions.data;
         if (isFunction(this.requestData)) {
@@ -137,7 +139,15 @@ var remoteSource = Source.extend({
     _fetch (data) {
         var requestOptions = this.requestOptions;
         requestOptions.data = data;
-        request(requestOptions).then(this._dataHandler, this._fail);
+        this._xhr=request(requestOptions);
+        this._xhr.then(this._dataHandler, this._fail);
+    },
+    abort()
+    {
+        if(this._xhr&&this._xhr.abort)
+        {
+            this._xhr.abort();
+        }
     }
 });
 var localSource = Source.extend({
