@@ -114,31 +114,7 @@ var Observable = Class.extend({
         return result === true;
     }
 });
-function preventDefault() {
-    this._defaultPrevented = true;
-}
-function isDefaultPrevented() {
-    return this._defaultPrevented === true;
-}
-function hasInstanceof(obj, target) {
-    return obj instanceof target;
-}
-function  template (template) {
-    return _.template(template);
-}
-function getUrlParams (name,url) {
-    url = url || location.search;
-    var sname = name + "=",
-        len = sname.length,
-        index = url.indexOf(sname),
-        result = '', lastIndex;
-    if (index != -1) {
-        index += len;
-        lastIndex = url.indexOf("&", index);
-        result = lastIndex == -1 ? url.substring(index) : url.substring(index, lastIndex);
-    }
-    return result;
-}
+
 var _requestAnimationFrame = (function () {
     var requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
         return setTimeout(callback, 1000 / 60);

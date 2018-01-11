@@ -3,10 +3,16 @@
         "targets": {
              "browsers": ["last 2 versions", "safari >= 7"]
         },
-        "modules":"commonjs", //"amd" | "umd" | "systemjs" | "commonjs" | false， 默认为 "commonjs".
+        "loose":false,
+        "modules":"commonjs", 
         "debug":false,
-        "include":[]
+        "include":[],
+        "exclude":[]
     }]],
-    "plugins": [[
-        "transform-class-properties"]]
+    "plugins": ["transform-decorators-legacy","transform-class-properties","transform-object-rest-spread"],
+    "ignore": [
+    "dist/**/*.js",
+    "packages/**/*.js",
+    "node_modules/**/*.js"
+  ]
 }

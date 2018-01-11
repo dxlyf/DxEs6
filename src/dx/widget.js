@@ -1,7 +1,6 @@
 import {Observable,hasInstanceof,requestAnimationFrame} from './core'
 import _ from 'lodash'
 import $,{extend,isPlainObject} from 'jquery'
-import { type } from 'os';
 var  widgets = {};
 var noop = $.noop,
    support = (function () {

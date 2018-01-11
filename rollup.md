@@ -23,7 +23,7 @@ npm install --save-dev rollup
 ```
 ## 语法转换
 npm install --save-dev rollup-plugin-babel
-
+npm install --save-dev rollup-plugin-replace
 
 ## 文档
 - [介绍](#介绍)

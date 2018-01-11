@@ -3,6 +3,7 @@
 - [语法转换](#插件语法转换情况)
 - [类型转换](#类型转换)
 - [所有插件](#所有插件)
+- [插件/预设排序](#插件/预设排序)
 
 ## 默认转换情况
 Babel 默认只转换新的 JavaScript 句法（syntax），而不转换新的 API ，比如 Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise 等全局对象，以及一些定义在全局对象上的方法（比如 Object.assign）都不会转码。Babel 默认不转码的 API 非常多，详细清单可以查看 definitions.js 文件
@@ -1483,3 +1484,115 @@ Copy
 
 * 不推荐
   * class-constructor-call
+
+### 插件/预设排序
+
+为插件中的每个访问者排序。
+
+这意味着如果两次转换都访问“程序”节点，则转换将以插件或预设顺序运行。
+
+- 插件在预设之前运行。
+- 插件排序是第一个持续。
+- 预设顺序颠倒（从上到下）。
+
+例如：
+复制
+```json
+{
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties"
+  ]
+}
+```
+将运行transform-decorators-legacy然后transform-class-properties。
+
+记住预设的顺序是相反的。下列：
+
+复制
+```json
+{
+  "presets": [
+    "es2015",
+    "react",
+    "stage-2"
+  ]
+}
+```
+将按照以下顺序运行：stage-2，react，然后es2015。
+
+这主要是为了确保向后兼容性，因为大多数用户在“stage-0”之前列出“es2015”。有关更多信息，请参阅有关可能的遍历API更改的注释。
+
+### 插件/预设选项
+插件和预设都可以通过将名称和选项对象包含在配置中的数组中指定选项。
+
+例如：
+
+
+复制
+```json
+{
+  "plugins": [
+    ["transform-async-to-module-method", {
+      "module": "bluebird",
+      "method": "coroutine"
+    }]
+  ]
+}
+```
+预设的设置选项完全相同：
+
+
+复制
+```json
+{
+  "presets": [
+    ["es2015", {
+      "loose": true,
+      "modules": false
+    }]
+  ]
+}
+```
+### 插件开发
+请参阅优秀的babel手册来学习如何创建自己的插件。
+
+颠倒名称的简单插件（从主页）：
+
+
+尝试
+
+复制
+```js
+export default function () {
+  return {
+    visitor: {
+      Identifier(path) {
+        const name = path.node.name;
+        // reverse the name: JavaScript -> tpircSavaJ
+        path.node.name = name.split("").reverse().join("");
+      }
+    }
+  };
+}
+```
+### 创建预设
+要制作自己的预设，只需要导出一个配置。
+
+
+尝试
+
+复制
+```js
+// Presets can contain other presets, and plugins with options.
+module.exports = {
+  presets: [
+    require("babel-preset-es2015"),
+  ],
+  plugins: [
+    [require("babel-plugin-transform-es2015-template-literals"), { spec: true }],
+    require("babel-plugin-transform-es3-member-expression-literals"),
+  ],
+};
+```
+有关更多信息，请查看关于预设的babel手册部分或仅查看es2015预设回购作为示例。
