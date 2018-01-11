@@ -28,8 +28,13 @@ npm install --save-dev rollup-plugin-babel
 ## 文档
 - [介绍](#介绍)
     - [概述](#Overview)
-    - [快速入门指南](#快速入门指南)
-    - [使用插件](#使用插件)
+    - [快速入门指南](#快速入门指南-quick-start)
+    - [使用插件](#使用插件-using-plugins))
+- [命令行](#命令行)
+    - [配置文件](#配置文件configuration-files)
+    - [命令行的参数](#命令行的参数command-line-flags))
+- [JavaScript API](#javascript-api)
+- [大选项列表](#大选项列表)
 ### 介绍
 #### 概述(Overview)
 Rollup 是一个 JavaScript 模块打包器，可以将小块代码编译成大块复杂的代码，例如 library 或应用程序。Rollup 对代码模块使用新的标准化格式，这些标准都包含在 JavaScript 的 ES6 版本中，而不是以前的特殊解决方案，如 CommonJS 和 AMD。ES6 模块可以使你自由、无缝地使用你最喜爱的 library 中那些最有用独立函数，而你的项目不必携带其他未使用的代码。ES6 模块最终还是要由浏览器原生实现，但当前 Rollup 可以使你提前体验。
@@ -213,7 +218,7 @@ npm install --save-dev rollup-plugin-json
 （我们用的是 --save-dev 而不是 --save，因为代码实际执行时不依赖这个插件——只是在打包时使用。）
 
 更新 src/main.js 文件，从 package.json 而非 src/foo.js 中读取数据：
-
+```js
 // src/main.js
 import { version } from '../package.json';
 
@@ -244,18 +249,19 @@ var main = function () {
 };
 
 module.exports = main;
+```
 （注意只有我们实际需要的数据——name 和 devDependencies 和 package.json 中的其它数据被忽略了。这是 tree-shaking 起了作用。）
 
-命令行
+### 命令行
 我们一般在命令行中使用Rollup。你也可以提供一份配置文件（可要可不要）来简化命令行操作，同时还能启用Rollup的高级特性
 
-配置文件(Configuration files)
+#### 配置文件(Configuration files)
 Rollup的配置文件是可选的，但是使用配置文件的作用很强大，而且很方便，因此我们推荐你使用
 
 配置文件是一个ES6模块，它对外暴露一个对象，这个对象包含了一些Rollup需要的一些选项。通常，我们把这个配置文件叫做rollup.config.js，它通常位于项目的根目录
 
 仔细查阅这个包办大量选项的清单，你可以根据你自己的需要把它配置到你的配置文件中
-
+```js
 // rollup.config.js
 export default {
   // 核心选项
@@ -296,15 +302,16 @@ export default {
     strict
   },
 };
+```
 你必须使用配置文件才能执行以下操作：
 
 把一个项目打包，然后输出多个文件
 使用Rollup插件, 例如 rollup-plugin-node-resolve 和 rollup-plugin-commonjs 。这两个插件可以让你加载Node.js里面的CommonJS模块
 如果你想使用Rollup的配置文件，记得在命令行里加上--config或者-c @@2
 
-命令行的参数(Command line flags)
+#### 命令行的参数(Command line flags)
 配置文件中的许多选项和命令行的参数是等价的。如果你使用这里的参数，那么将重写配置文件。想了解更多的话，仔细查阅这个包办大量选项的清单
-
+```bash
 -i, --input                 要打包的文件（必须）
 -o, --output.file           输出的文件 (如果没有这个参数，则直接输出到控制台)
 -f, --output.format [es]    输出的文件类型 (amd, cjs, es, iife, umd)
@@ -322,26 +329,27 @@ export default {
 --banner                    在打包好的文件的块的外部(wrapper外部)的最顶部插入一段内容
 --footer                    在打包好的文件的块的外部(wrapper外部)的最底部插入一段内容
 --interop                   包含公共的模块（这个选项是默认添加的）
+```
 此外，还可以使用以下参数：
 
--h/--help
+`-h/--help`
 打印帮助文档。
 
--v/--version
+`-v/--version`
 打印已安装的Rollup版本号。
 
--w/--watch
+`-w/--watch`
 监听源文件是否有改动，如果有改动，重新打包
 
---silent
+`--silent`
 不要将警告打印到控制台。
 
-JavaScript API
+### JavaScript API
 Rollup 提供 JavaScript 接口那样可以通过 Node.js 来使用。你可以很少使用，而且很可能使用命令行接口，除非你想扩展 Rollup 本身，或者用于一些难懂的任务，例如用代码把文件束生成出来。
 
-rollup.rollup
+#### rollup.rollup
 The rollup.rollup 函数返回一个 Promise，它解析了一个 bundle 对象，此对象带有不同的属性及方法，如下：
-
+```js
 const rollup = require('rollup');
 
 // see below for details on the options
@@ -362,11 +370,11 @@ async function build() {
   // or write the bundle to disk
   await bundle.write(outputOptions);
 }
-
 build();
-输入参数(inputOptions)
+```
+##### 输入参数(inputOptions)
 inputOptions 对象包含下列属性 (查看big list of options 以获得这些参数更详细的资料):
-
+```js
 const inputOptions = {
   // 核心参数
   input, // 唯一必填参数
@@ -383,7 +391,8 @@ const inputOptions = {
   moduleContext,
   legacy
 };
-输出参数(outputOptions)
+```
+##### 输出参数(outputOptions)
 outputOptions 对象包括下列属性 (查看 big list of options 以获得这些参数更详细的资料):
 
 const outputOptions = {
@@ -409,9 +418,9 @@ const outputOptions = {
   indent
   strict
 };
-rollup.watch
+#### rollup.watch
 Rollup 也提供了 rollup.watch 函数，当它检测到磁盘上单个模块已经改变，它会重新构建你的文件束。 当你通过命令行运行 Rollup，并带上 --watch 标记时，此函数会被内部使用。
-
+```js
 const rollup = require('rollup');
 
 const watchOptions = {...};
@@ -441,6 +450,7 @@ const watchOptions = {
     exclude
   }
 };
+```
 查看以上文档知道更多 inputOptions 和 outputOptions 的细节, 或查询 big list of options 关 chokidar, include 和 exclude 的资料。
 
 Rollup 与其他工具集成
@@ -451,16 +461,17 @@ npm packages
 
 npm install the-answer # or `npm i the-answer`
 如果修改我们的 src/main.js 入口文件...
-
+```
 // src/main.js
 import answer from 'the-answer';
 
 export default function () {
   console.log('the answer is ' + answer);
 }
+```
 ...然后执行 Rollup...
 
-npm run build
+`npm run build`
 ...我们将会看到下面这些警告：
 
 (!) Unresolved dependencies
@@ -469,11 +480,13 @@ the-answer (imported by main.js)
 打包后的bundle.js仍然会在 Node.js 中工作，因为import声明转变成了 CommonJS中的 require 语句，但是the-answer不包含在包中。因此，我们需要一个插件。
 
 rollup-plugin-node-resolve
-这个 rollup-plugin-node-resolve 插件可以告诉 Rollup 如何查找外部模块。 安装它...
-
+这个 rollup-plugin-node-resolve 插件可以告诉 Rollup 如何查找外部模块。 安装它
+```bash
+...
 npm install --save-dev rollup-plugin-node-resolve
 ...将它加入到你的配置文件中:
-
+```
+```js
 // rollup.config.js
 import resolve from 'rollup-plugin-node-resolve';
 
@@ -485,6 +498,7 @@ export default {
   },
   plugins: [ resolve() ]
 };
+```
 这次，当你运行 npm run build, 再没有警告输出 - 打包文件 bundle 包含了引用的模块。
 
 rollup-plugin-commonjs
@@ -494,7 +508,7 @@ rollup-plugin-commonjs
 
 请注意，rollup-plugin-commonjs应该用在其他插件转换你的模块之前 - 这是为了防止其他插件的改变破坏CommonJS的检测。
 
-Peer dependencies
+#### Peer dependencies
 假设你正在构建一个具有对等依赖关系（peer dependency）的库，例如React或Lodash。 如果你如上所述设置外部引用（externals），你的 Rollup 将把 所有 imports 的模块打包在一起：
 
 import answer from 'the-answer';
@@ -502,7 +516,7 @@ import _ from 'lodash';
 你可以微调哪些导入是想要打包的，哪些是外部的引用（externals）。 对于这个例子，我们认为lodash是外部的引用（externals），而不是the-answer。
 
 这是配置文件:
-
+```js
 // rollup.config.js
 import resolve from 'rollup-plugin-node-resolve';
 
@@ -521,6 +535,7 @@ export default {
   // 指出应将哪些模块视为外部模块
   external: ['lodash']
 };
+```
 这样，“lodash”现在将被视为外部的（externals），不会与你的库打包在一起。
 
 external 接受一个模块名称的数组或一个接受模块名称的函数，如果它被视为外部引用（externals）则返回true。 例如：
@@ -690,17 +705,16 @@ increment();
 console.log(count); // 1
 
 count += 1; // Error — 只有 incrementer.js 可以改变这个值。
-大选项列表
-核心功能(Core functionality)
-输入(input -i/--input)
+### 大选项列表
+#### 核心功能(Core functionality)
+##### 输入(input `-i/--input`)
 String 这个包的入口点 (例如：你的 main.js 或者 app.js 或者 index.js)
 
-文件(file -o/--output.file)
+##### 文件(file `-o/--output.file`)
 String 要写入的文件。也可用于生成 sourcemaps，如果适用
 
-格式(format -f/--output.format)
+##### 格式(format `-f/--output.format`)
 String 生成包的格式。 下列之一:
-
 amd – 异步模块定义，用于像RequireJS这样的模块加载器
 cjs – CommonJS，适用于 Node 和 Browserify/Webpack
 es – 将软件包保存为ES模块文件
@@ -708,7 +722,7 @@ iife – 一个自动执行的功能，适合作为<script>标签。（如果要
 umd – 通用模块定义，以amd，cjs 和 iife 为一体
 生成包名称(name -n/--name)
 String 变量名，代表你的 iife/umd 包，同一页上的其他脚本可以访问它。
-
+```js
 // rollup.config.js
 export default {
   ...,
@@ -718,11 +732,11 @@ export default {
     name: 'MyBundle'
   }
 };
-
+```
 // -> var MyBundle = (function () {...
-插件(plugins)
+#### 插件(plugins)
 插件对象 数组 Array (或一个插件对象) – 有关详细信息请参阅 插件入门。记住要调用导入的插件函数(即 commonjs(), 而不是 commonjs).
-
+```js
 // rollup.config.js
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
@@ -734,11 +748,13 @@ export default {
     commonjs()
   ]
 };
-外链(external -e/--external)
+```
+#### 外链(external -e/--external)
 两者任一 Function 需要一个 id 并返回 true（外部引用）或 false（不是外部的引用）， 或者 Array 应该保留在bundle的外部引用的模块ID。ID应该是：
 
 外部依赖的名称
 一个已被找到路径的ID（像文件的绝对路径）
+```js
 // rollup.config.js
 import path from 'path';
 
@@ -749,15 +765,18 @@ export default {
     path.resolve( './src/some-local-file-that-should-not-be-bundled.js' )
   ]
 };
+```
 当作为命令行参数给出时，它应该是以逗号分隔的ID列表：
-
+```bash
 rollup -i src/main.js ... -e foo,bar,baz
-全局模块(globals -g/--globals)
+```
+#### 全局模块(globals -g/--globals)
 Object 形式的 id: name 键值对，用于umd/iife包。例如：在这样的情况下...
-
+```js
 import $ from 'jquery';
+```
 ...我们想告诉 Rollup jquery 模块的id等同于 $ 变量:
-
+```js
 // rollup.config.js
 export default {
   ...,
@@ -773,15 +792,17 @@ var MyBundle = (function ($) {
   // 代码到这里
 }(window.jQuery));
 */.
+```
 或者，提供将外部模块ID转换为全局模块的功能。
 
 当作为命令行参数给出时，它应该是一个逗号分隔的“id：name”键值对列表：
-
+```bash
 rollup -i src/main.js ... -g jquery:$,underscore:_
-高功功能(Advanced functionality)
+```
+#### 高功功能(Advanced functionality)
 路径(paths)
 Function，它获取一个ID并返回一个路径，或者id：path对的Object。在提供的位置，这些路径将被用于生成的包而不是模块ID，从而允许您（例如）从CDN加载依赖关系：
-
+```js
 // app.js
 import { selectAll } from 'd3';
 selectAll('p').style('color', 'purple');
@@ -807,7 +828,8 @@ define(['https://d3js.org/d3.v4.min'], function (d3) {
   // ...
 
 });
-banner/footer
+```
+#### banner/footer
 String 字符串以 前置/追加 到文件束(bundle)。(注意:“banner”和“footer”选项不会破坏sourcemaps)
 
 // rollup.config.js
@@ -816,21 +838,22 @@ export default {
   banner: '/* my-library version ' + version + ' */',
   footer: '/* follow me on Twitter! @rich_harris */'
 };
-intro/outro
+#### intro/outro
 String类似于 banner和footer，除了代码在内部任何特定格式的包装器(wrapper)
-
+```js
 export default {
   ...,
   intro: 'var ENVIRONMENT = "production";'
 };
-缓存(cache)
+```
+#### 缓存(cache)
 Object 以前生成的包。使用它来加速后续的构建——Rollup只会重新分析已经更改的模块。
 
-onwarn
+##### onwarn
 Function 将拦截警告信息。如果没有提供，警告将被复制并打印到控制台。
 
 警告是至少有一个code 和 message属性的对象，这意味着您可以控制如何处理不同类型的警告：
-
+```js
 onwarn (warning) {
   // 跳过某些警告
   if (warning.code === 'UNUSED_EXTERNAL_IMPORT') return;
@@ -852,49 +875,51 @@ onwarn ({ loc, frame, message }) {
     console.warn(message);
   }
 }
-sourcemap -m/--sourcemap
+```
+##### sourcemap -m/--sourcemap
 如果 true，将创建一个单独的sourcemap文件。如果 inline，sourcemap将作为数据URI附加到生成的output文件中。
 
-sourcemapFile
+##### sourcemapFile
 String生成的包的位置。如果这是一个绝对路径，sourcemap中的所有源代码路径都将相对于它。 map.file属性是sourcemapFile的基本名称(basename)，因为sourcemap的位置被假定为与bundle相邻
 
 如果指定 output，sourcemapFile 不是必需的，在这种情况下，将通过给bundle输出文件添加 “.map” 后缀来推断输出文件名。
 
-interop
+##### interop
 Boolean 是否添加'interop块'。默认情况下（interop：true），为了安全起见，如果需要区分默认和命名导出，则Rollup会将任何外部依赖项“default”导出到一个单独的变量。这通常只适用于您的外部依赖关系（例如与Babel）（如果您确定不需要它），则可以使用“interop：false”来节省几个字节。
 
-危险区域(Danger zone)
+### 危险区域(Danger zone)
 你可能不需要使用这些选项，除非你知道你在做什么!
 
-treeshake
+#### treeshake
 是否应用tree-shaking。建议您省略此选项（默认为treeshake：true），除非您发现由tree-shaking算法引起的bug，在这种情况下，请使用“treeshake：false”，一旦您提交了问题！
 
-acorn
+#### acorn
 任何应该传递给Acorn的选项，例如allowReserved：true。
 
-context
+#### context
 默认情况下，模块的上下文 - 即顶级的this的值为undefined。在极少数情况下，您可能需要将其更改为其他内容，如 'window'。
 
-moduleContext
+#### moduleContext
 和options.context一样，但是每个模块可以是id: context对的对象，也可以是id => context函数。
 
-legacy
+#### legacy
 为了增加对诸如IE8之类的旧版环境的支持，通过剥离更多可能无法正常工作的现代化的代码，其代价是偏离ES6模块环境所需的精确规范。
 
-exports
+#### exports
 String 使用什么导出模式。默认为auto，它根据entry模块导出的内容猜测你的意图：
 
 default – 如果你使用 export default ... 仅仅导出一个东西，那适合用这个
 named – 如果你导出多个东西，适合用这个
 none – 如果你不导出任何内容 (例如，你正在构建应用程序，而不是库)，则适合用这个
 default 和 named之间的区别会影响其他人如何使用文件束(bundle)。如果您使用default，则CommonJS用户可以执行此操作，例如
-
+```js
 var yourLib = require( 'your-lib' );
+```
 使用 named，用户可以这样做：
 
 var yourMethod = require( 'your-lib' ).yourMethod;
 有点波折就是如果你使用named导出，但是同时也有一个default导出，用户必须这样做才能使用默认的导出：
-
+```js
 var yourMethod = require( 'your-lib' ).yourMethod;
 var yourLib = require( 'your-lib' )['default'];
 amd --amd.id and --amd.define
@@ -922,30 +947,31 @@ export default {
     define: 'def'
   }
 };
-
+```
 // -> def(['dependency'],...
-indent
+#### indent
 String 是要使用的缩进字符串，对于需要缩进代码的格式（amd，iife，umd）。也可以是false（无缩进）或true（默认 - 自动缩进）
-
+```js
 // rollup.config.js
 export default {
   ...,
   indent: false
 };
-strict
+```
+#### strict
 true或false（默认为true） - 是否在生成的非ES6软件包的顶部包含'use strict'pragma。严格来说（geddit？），ES6模块始终都是严格模式，所以你应该没有很好的理由来禁用它。
 
-Watch options
+#### Watch options
 这些选项仅在运行 Rollup 时使用 --watch 标志或使用 rollup.watch 时生效。
 
-watch.chokidar
+#### watch.chokidar
 一个 Boolean 值表示应该使用 chokidar 而不是内置的 fs.watch，或者是一个传递给 chokidar 的选项对象。
 
 如果你希望使用它，你必须单独安装chokidar。
 
 watch.include
 限制文件监控至某些文件：
-
+```js
 // rollup.config.js
 export default {
   ...,
@@ -953,9 +979,10 @@ export default {
     include: 'src/**'
   }
 };
-watch.exclude
+```
+#### watch.exclude
 防止文件被监控：
-
+```js
 // rollup.config.js
 export default {
   ...,
@@ -963,3 +990,4 @@ export default {
     exclude: 'node_modules/**'
   }
 };
+```
