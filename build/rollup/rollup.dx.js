@@ -3,7 +3,18 @@ let root=path.resolve(__dirname,'../../');
 import replace from 'rollup-plugin-replace';
 import babel from 'rollup-plugin-babel';
 import alias from 'rollup-plugin-alias';
+import minify from 'rollup-plugin-babel-minify';
 var argv=require('yargs').boolean('ug').argv;
+var plugins=[];
+if(argv.ug)
+{
+    console.log('444444');
+    plugins.push(minify({
+        comments:false,  // comments（默认：）：true表示注释是否应保存在源代码中
+       // banner（默认undefined：）：应该被预置到已转换束的注释
+       sourceMap:false//sourceMap（默认true：）：表示是否应该生成源图
+    }));
+}
 export default {
     //默认情况下，模块的上下文 - 即顶级的this的值为undefined。在极少数情况下，您可能需要将其更改为其他内容，如 'window'。
    // context:'window',
@@ -45,7 +56,7 @@ export default {
                 "element-ui":"ELEMENT"
         }
     },
-    plugins:[alias({
+    plugins:[...plugins,alias({
     }),replace({
       //  include: 'main.js',
         exclude: 'node_modules/**',
