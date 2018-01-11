@@ -1,3 +1,4 @@
+@testable
 class Base
 {
     static age=43;
@@ -17,4 +18,9 @@ class Base
     static extend(params) {
         
     }
+}
+
+function testable()
+{
+    
 }

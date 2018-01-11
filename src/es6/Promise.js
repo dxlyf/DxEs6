@@ -1,3 +1,5 @@
+import Promise from 'babel-runtime/core-js/promise'
+
 function LoadImage(src)
 {
     var img=new Image();

@@ -44,22 +44,22 @@ module.exports ={
                       use:{
                             loader:'babel-loader',
                             options:{
-                                babelrc:false,
-                              //  plugins:['syntax-jsx'],
-                                presets:[['env',{
-                                    targets:{
-                                        "browsers": ["last 2 versions"]
-                                    }
-                                  //  useBuiltIns:true
-                                }]],
-                                // plugins:[['transform-runtime',{
-                                //     "helpers":false, //boolean，默认为true。
-                                //     "polyfill": true,
-                                //     "regenerator": true,
-                                //     "moduleName": "babel-runtime"
-                                // }],'transform-object-rest-spread','transform-class-properties']
-                                plugins:['transform-object-rest-spread','transform-class-properties'] //'transform-runtime'
-                              //  plugins:['transform-es2015-typeof-symbol']
+                            //     babelrc:false,
+                            //   //  plugins:['syntax-jsx'],
+                            //     presets:[['env',{
+                            //         targets:{
+                            //             "browsers": ["last 3 versions"]
+                            //         }
+                            //       //  useBuiltIns:true
+                            //     }]],
+                            //     // plugins:[['transform-runtime',{
+                            //     //     "helpers":false, //boolean，默认为true。
+                            //     //     "polyfill": true,
+                            //     //     "regenerator": true,
+                            //     //     "moduleName": "babel-runtime"
+                            //     // }],'transform-object-rest-spread','transform-class-properties']
+                            //     plugins:['transform-object-rest-spread','transform-class-properties','transform-decorators'] //'transform-runtime'
+                            //   //  plugins:['transform-es2015-typeof-symbol']
                             }
                       }
                   }

@@ -4,6 +4,10 @@
 - [类型转换](#类型转换)
 - [所有插件](#所有插件)
 
+## 默认转换情况
+Babel 默认只转换新的 JavaScript 句法（syntax），而不转换新的 API ，比如 Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise 等全局对象，以及一些定义在全局对象上的方法（比如 Object.assign）都不会转码。Babel 默认不转码的 API 非常多，详细清单可以查看 definitions.js 文件
+
+
 ## babel-core 选项 {#options}
 ```
 targets
@@ -1313,7 +1317,38 @@ module.exports = Object.assign({}, es2015, es2016, es2017, proposals);
   "transform-unicode-property-regex": {}
 }
 ```
+
 ## 所有插件
+#### 默认
+babel-runtime
+- map
+- set
+- promise
+- symbol
+在没有任何配置选项的情况下，babel-preset-env 与 babel-preset-latest（或者babel-preset-es2015，babel-preset-es2016和babel-preset-es2017一起）的行为完全相同。
+这个 preset 中包含以下插件:
+
+check-es2015-constants
+transform-es2015-arrow-functions
+transform-es2015-block-scoped-functions
+transform-es2015-block-scoping
+transform-es2015-classes
+transform-es2015-computed-properties
+transform-es2015-destructuring
+transform-es2015-duplicate-keys
+transform-es2015-for-of
+transform-es2015-function-name
+transform-es2015-literals
+transform-es2015-modules-commonjs
+transform-es2015-object-super
+transform-es2015-parameters
+transform-es2015-shorthand-properties
+transform-es2015-spread
+transform-es2015-sticky-regex
+transform-es2015-template-literals
+transform-es2015-typeof-symbol
+transform-es2015-unicode-regex
+transform-regenerator
 
 * ES3
   * es3-member-expression-literals

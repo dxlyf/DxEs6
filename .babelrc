@@ -1,5 +1,12 @@
 {
-    "presets": ["env"],
+    "presets": [["env",{
+        "targets": {
+             "browsers": ["last 2 versions", "safari >= 7"]
+        },
+        "modules":"commonjs", //"amd" | "umd" | "systemjs" | "commonjs" | false， 默认为 "commonjs".
+        "debug":false,
+        "include":[]
+    }]],
     "plugins": [[
         "transform-class-properties"]]
 }
