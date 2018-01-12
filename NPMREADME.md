@@ -4,14 +4,97 @@
 * [npm link](#NPM链接)
 * [npm view](#查看安装包)
 * [查看包版本](#查看版本)
+* [检查过时包](#检查过时包)
 * [搜索包](#搜索)
 * [配置](#配置)
 * [更新](#更新)
 * [卸载](#卸载)
 * [删除多余的包](#删除多余的包)
+* [更新NPM和NODE](#更新npm和node)
 ---
 ## 安装node
 [node下载](#http://nodejs.cn/download/)
+## NPM-CLI 命令
+命令|描述      
+--|--   
+access        | 设置已发布软件包的访问级别
+adduser       |  添加一个注册表用户帐户
+bin           |  显示npm bin文件夹
+bugs          |  在Web浏览器中的一个包的错误也许
+build         |  建立一个包
+bundle        |  REMOVED
+cache         |  操作软件包缓存
+completion    |  标签完成为npm
+config        |  管理npm配置文件
+dedupe        |  减少重复
+deprecate     |  弃用软件包的版本
+dist-tag      |  修改程序包分发标签
+docs          |  文件在网页浏览器中的包也许
+doctor        |  检查你的环境
+edit          |  编辑已安装的软件包
+explore       |  浏览已安装的软件包
+help          |  获得有关npm的帮助
+help-search   |  搜索npm帮助文档
+init          |  交互式创建一个package.json文件
+install       |  安装一个软件包
+install-test|
+link          |  符号链接包文件夹
+logout        |   注销注册表
+ls            |  列出安装的软件包
+npm           |  JavaScript包管理器
+outdated      |  检查过期的软件包
+owner         |   管理包裹所有者
+pack          |   从包中创建一个tarball
+ping          |  Ping npm注册表
+prefix        |   显示前缀
+profile       |   更改注册表配置文件中的设置
+prune         |   删除多余的包
+publish       |  发布一个包
+rebuild       |  重建一个包
+repo          |  在浏览器中打开软件包存储库页面
+restart       |  重新启动一个包
+root          |  显示npm root
+run-script    |  运行任意包脚本
+search        |  搜索包
+shrinkwrap    |  锁定用于发布的依赖版本
+star          |   标记你最喜欢的包
+stars         |   查看标记为收藏的软件包
+start         |   开始一个包
+stop          |   停止一个包裹
+team          |   管理组织团队和团队成员
+test          |   测试一个包
+token         |   管理您的身份验证令牌
+uninstall     |   取出一个包裹
+unpublish     |   从注册表中删除一个包
+update        |   更新软件包
+version       |   撞包版本
+view          |   查看注册表信息
+whoami        |   显示npm用户名
+在命令行上解析下面的短文：
+- -v： --version
+- -h，-?，--help，-H：--usage
+- -s，--silent：--loglevel silent
+- -q，--quiet：--loglevel warn
+- -d： --loglevel info
+- -dd，--verbose：--loglevel verbose
+- -ddd： --loglevel silly
+- -g： --global
+- -C： --prefix
+- -l： --long
+- -m： --message
+- -p，--porcelain：--parseable
+- -reg： --registry
+- -f： --force
+- -desc： --description
+- -S： --save
+- -P： --save-prod
+- -D： --save-dev
+- -O： --save-optional
+- -B： --save-bundle
+- -E： --save-exact
+- -y： --yes
+- -n： --yes false
+- ll和la命令：ls --long
 ###### 检查版本
 ```bash
 > node -v
@@ -263,3 +346,5 @@ depth|int|0|检查依赖关系树的最大
 这个命令删除“无关”的包。如果提供了一个包名称，那么只有与所提供的名称匹配的包才会被删除。
 无关程序包是父程序包的依赖项列表中未列出的程序包。
 如果--production标志被指定或者NODE_ENV环境变量被设置为production，这个命令将删除在你指定的包devDependencies。设置--production=false将取消NODE_ENV设置production。
+
+## 更新NPM和NODE

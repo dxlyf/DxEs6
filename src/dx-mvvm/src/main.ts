@@ -1,5 +1,9 @@
-export function update(text:string)
+export default function update(text:string)
 {
-    //4343546554545454
-    document.getElementById('app').innerHTML=text+Date.now();
+    //225545454
+    let element=document.getElementById('app');
+    if(element!=null)
+    {
+        element.innerHTML=text+Date.now();
+    }
 }

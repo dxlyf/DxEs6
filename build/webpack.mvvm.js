@@ -60,7 +60,12 @@ var config={
             test: /\.tsx?$/,
            // include: [path.resolve(root, "src")],
             exclude:/node_modules/,
-            use:"ts-loader"
+            use:{
+                loader:"ts-loader",
+                options:{
+                    contextAsConfigBasePath:false
+                }
+            }
            },{
                test:/\.css$/,
                exclude:/node_modules/,

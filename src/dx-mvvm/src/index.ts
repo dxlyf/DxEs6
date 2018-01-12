@@ -1,4 +1,6 @@
-import {update} from './main'
+// /// <reference path="../typings/global.d.ts" />
+
+import update from './main'
 import 'css/index.css'
 
 var mess:string="",index:number=0;
@@ -15,20 +17,22 @@ export class Greeter  {
 }
 const _Greeter=new Greeter("李四");
 _Greeter.update();
-console.log('55555555555555555555555');
+console.log('55555555555555555555555:'+process.env.NODE_ENV);
  if(process.env.NODE_ENV=='development')
  {
-     console.log('8885545888438');
- }if (module.hot) {
+   
+ }
+ if (module.hot) {
+    console.log('hot------');
     module.hot.accept('./main', function() {
       console.log('main.ts更新');
-      _Greeter.update();
+        update(String(Date.now()));
      // update('555');
     });
 
-    // module.hot.dispose(data => {
-    //    // 清理并将 data 传递到更新后的模块……
-    //    console.log('dispose');
-    //  })
+    module.hot.dispose(data => {
+       // 清理并将 data 传递到更新后的模块……
+       console.log('dispose');
+     })
 }
  
