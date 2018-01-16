@@ -25,6 +25,7 @@ npm install --save-dev rollup
 npm install --save-dev rollup-plugin-babel
 npm install --save-dev rollup-plugin-replace
 npm install --save-dev babel-code-frame  代码错误位置指示
+npm install --save-dev rollup-plugin-node-resolve  使用节点分辨率算法查找模块，以在第三方模块中使用node_modules
 ## 文档
 - [介绍](#介绍)
     - [概述](#Overview)
