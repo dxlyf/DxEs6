@@ -46,4 +46,7 @@ const o = {
 
   let obj3={aaa:"43",name:"43"};
 
-  let obj4={...obj3,name:"111"}
+  let obj4={...obj3,name:"111"};
+
+
+  

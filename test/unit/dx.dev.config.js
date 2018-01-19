@@ -39,7 +39,7 @@ module.exports = function(config) {
         stats: 'errors-only'
       },
       reporters: ['mocha'],
-      browsers:['PhantomJS'],
+      browsers:['Chrome'],
       frameworks: ['jasmine'],
       files:[
         './index.js'

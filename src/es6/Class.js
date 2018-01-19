@@ -39,3 +39,15 @@ function testable()
         target.isTestable = value;
      }
 }
+
+class VersionedArray extends Array
+{
+    constructor(...args)
+    {
+        super(...args);
+    }
+    pushlist()
+    {
+        
+    }
+}
