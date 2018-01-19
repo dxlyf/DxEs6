@@ -17,10 +17,35 @@
 
 ## 全局化文件夹自定义设置
 ### 创建文件夹
-在nodejs 下面创建两个文件夹。例如:
+在nodejs 下面创建两个文件夹
+- node_cache
+- node_global
 ```
+c:/Program Files/nodejs/node_cache
+c:/Program Files/nodejs/node_global
+```
+### 设置NPM安装路径
+`npm config list` 查看配置
+```bash
+npm config set prefix “D:\SoftWare\NodeJS_Redis\NodeJS\node_modules\node_global”
+npm config set cache “D:\SoftWare\NodeJS_Redis\NodeJS\node_modules\node_cache”
+```
+或者通过打开C:\Program Files\nodejs\node_modules\npm\npmrc 添加
+```
+prefix=C:\Program Files\nodejs\node_global
+cache=C:\Program Files\nodejs\node_cache
+```
+### 设置环境变识别安装路径
+安装到用户变量或者系统变量
+- 当执行node 或npm 命令时,window系统会环境变量PATH中提供的路径去查找可执行程序。
+- 当node 执行命令时，先查找当前目录node_modules，找不到时再查找NODE_PATH提供路径
+#### 用户变量
+- NODE_PATH  C:\Program Files\nodejs\node_global\node_modules
+- PATH  C:\Program Files\nodejs\;C:\Program Files\nodejs\node_global;
 
-```
+#### 系统变量
+- NODE_PATH  C:\Program Files\nodejs\node_global\node_modules
+- PATH  C:\Program Files\nodejs\;C:\Program Files\nodejs\node_global;
 
 ## NPM-CLI 命令
 命令|描述      
