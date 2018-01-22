@@ -19,6 +19,7 @@
     "flow": "flow check",
     "ts": "webpack --config  build/webpack.typescript.js --progress",
     "nodemon-mvvm": "nodemon --watch build/webpack.mvvm.js --watch tsconfig.json --watch package.json  --exec \"webpack-dev-server --compress --inline --hot-only --hot --d --progress --port 9001 --open Chrome --config build/webpack.mvvm.js\" ",
+    "mvvm-build": "webpack --config build/webpack.mvvm.js",
     "mvvm": "webpack-dev-server --compress --inline --hot-only --hot --d --progress --port 9001 --open Chrome --config build/webpack.mvvm.js",
     "mvvm-dev": "node build/webpack.mvvm.dev.js",
     "mvvm-hot": "node build/webpack.mvvm.hot.js"

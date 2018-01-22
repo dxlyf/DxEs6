@@ -2,7 +2,11 @@
 - [ts-loader](#ts-loader)
 - [tsconfig配置](#tsconfig配置)
 
-
+## 声明文件
+引用声明文件
+```
+/// <reference path="../typings/global.d.ts" />
+```
 ## ts-loader 配置
 ```javascript
  // https://www.npmjs.com/package/ts-loader

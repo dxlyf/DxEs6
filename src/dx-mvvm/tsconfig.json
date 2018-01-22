@@ -6,7 +6,7 @@
    //"allowUnreachableCode":true,
     // "lib": [],                             / *指定要包含在编译中的库文件：*/
      "allowJs": false,                       /*允许编译JavaScript文件。*/
-     "outDir":"./dist",
+     "outDir":"./typings",
      "declaration":false,
      // "checkJs": true,                       / *报告.js文件中的错误。 */
     // "jsx": "preserve",                     / *指定JSX代码生成：“preserve”，“react-native”或“react”。 */
@@ -54,13 +54,14 @@
     // "experimentalDecorators": true,        / *启用对ES7修饰器的实验性支持。 */
     // "emitDecoratorMetadata": true,         / *为装饰器启用发射类型元数据的实验支持。 */
   },
-  "include":[],
+  "include":["typings/*.ts"],
   "exclude": [
     "node_modules",
     "dist",
     "typings"
   ],
   "files": [
+   //  "typings/core.d.ts",
     "src/index.ts"
   ]  
 }
