@@ -214,10 +214,9 @@ compiler.run((err, stats) => {
 值得一提的是，被 webpack-dev-server 及众多其他包依赖的 webpack-dev-middleware 就是通过这种方式，将你的文件神秘地隐藏起来，但却仍然可以用它们为浏览器提供服务！
 ### 命令行编译
 
-
-
-
-
+```bash
+webpack lib/index.js dist/index-w.js --output-library HtmlParser2 --output-library-target umd --optimize-minimize
+```
 #### webpack NPM插件
 - npm install babel-minify-webpack-plugin --save-dev   [压缩代码](https://github.com/webpack-contrib/babel-minify-webpack-plugin)     
 - npm install clean-webpack-plugin --save-dev   清除文件夹    
