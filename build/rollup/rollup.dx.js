@@ -35,11 +35,11 @@ export default {
       //代表你的 iife/umd 包，同一页上的其他脚本可以访问它。
        name:"mjb", 
         //字符串以 前置/追加 到文件束(bundle)。(注意:“banner”和“footer”选项不会破坏sourcemaps)
-        banner: '/* Project base tool library */',
-      //  footer: "",//'/* Developer  @fanyonglong */',
+        banner: '/* Project base tool library */', //在打包好的文件的块的外部(wrapper外部)的最顶部插入一段内容
+      //  footer: "",//'/* Developer  @fanyonglong */',//在打包好的文件的块的外部(wrapper外部)的最底部插入一段内容
          //String类似于 banner和footer，除了代码在内部任何特定格式的包装器(wrapper)
-        intro: 'var __non_webpack_require__=require;',
-     //   outro:"",
+        intro: 'var __non_webpack_require__=require;',// 在打包好的文件的块的内部(wrapper内部)的最顶部插入一段内容
+     //   outro:"",//在打包好的文件的块的内部(wrapper内部)的最底部插入一段内容
         sourcemap:false ,//如果 true，将创建一个单独的sourcemap文件。如果 inline，sourcemap将作为数据URI附加到生成的output文件中。
         amd: {
            // id: 'my-bundle'
@@ -54,8 +54,11 @@ export default {
         */
         paths:{
                 "element-ui":"ELEMENT"
-        }
+        },
+        exports:"auto",// 
+        interop:true //包含公共的模块（这个选项是默认添加的）
     },
+  
     plugins:[...plugins,alias({
     }),replace({
       //  include: 'main.js',

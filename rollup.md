@@ -22,6 +22,7 @@ npm install --save-dev rollup
     "rollup-plugin-replace": "^2.0.0",
 ```
 ## 语法转换
+npm install  rollup-plugin-commonjs rollup-plugin-node-resolve
 npm install --save-dev rollup-plugin-babel
 npm install --save-dev rollup-plugin-replace
 npm install --save-dev babel-code-frame  代码错误位置指示
