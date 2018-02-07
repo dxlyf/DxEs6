@@ -27,6 +27,17 @@
             "request": "launch",
             "name": "dx-mvvm-hot",
             "program": "${workspaceFolder}/build/webpack.mvvm.hot.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Yeoman generator",
+            "program": "${workspaceFolder}/node_modules/yo/lib/cli.js",
+            "args": [
+                "generator"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
         }
 
     ]

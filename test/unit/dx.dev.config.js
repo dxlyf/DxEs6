@@ -1,4 +1,5 @@
 // karma.conf.js
+//node ../../node_modules\karma\bin\karma  init my-config.js
 const webpack=require('webpack');
 
 var webpackConfig = {
