@@ -42,7 +42,7 @@ describe('测试webpack-merge',()=>{
           return undefined;
         }
       })({list:[1],name:"00",obj:{age:1}},{list:[2],name:"11",obj:{no:'2',list:{age:43}}});
-      //console.log(result);
+      console.log(result);
     })
 });
   describe('测试merge方法,两个对象合并',()=>{

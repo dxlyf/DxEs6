@@ -17,6 +17,16 @@
 // 对象解构
 function a(){
     let { foo, bar } = { foo: "aaa", bar: "bbb" };
+    let obj={age:43,
+      resolve:{
+        alias:['.js']
+      },
+      modules:{
+        rules:{
+          use:'ts-loader'
+        }
+    }}
+   // Object.assign({},{rule,resolves}=obj)
 }
 function b()
 {

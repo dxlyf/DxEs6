@@ -39,8 +39,8 @@ module.exports = function(config) {
         // i. e.
         stats: 'errors-only'
       },
-      reporters: ['mocha'],
-      browsers:['Chrome'],
+      reporters: ['mocha','progress'],//progress mocha
+      browsers:['PhantomJS'],
       frameworks: ['jasmine'],
       files:[
         './index.js'
@@ -52,6 +52,7 @@ module.exports = function(config) {
         'karma-phantomjs-launcher',
        'karma-mocha-reporter', // 以mocha 风格打印输出控制台
        // 'karma-ie-launcher',
+       'karma-phantomjs-launcher',
         'karma-chrome-launcher',
         'karma-jasmine',
         'karma-webpack',

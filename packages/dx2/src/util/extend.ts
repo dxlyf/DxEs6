@@ -2,7 +2,7 @@
 import * as typecheck from './typecheck'
 import { fail } from 'assert';
 
-export function extend(dep:boolean|object,...sources:object[]) {
+export function extend(this:void,dep:boolean|any,...sources:any[]) {
      let target=dep,len=sources.length,isFirstBool=typecheck.isBoolean(target);
      if(isFirstBool&&len==1)
      {
