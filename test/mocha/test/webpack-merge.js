@@ -48,9 +48,9 @@ describe('测试webpack-merge',()=>{
   describe('测试merge方法,两个对象合并',()=>{
     it('测试mermge 两个对象不受原始对象影响',()=>{
 
-      var a={list:[1],name:"00",obj:{age:1}};
-      var b={list:[2],name:"11",obj:{no:'2'}};
-      var result=merge(a,b);
+      var a={list:[1],name:"00",obj:{age:1,list:[1]}};
+      var b={list:[],name:"11",obj:{no:'2',list:[]}};
+      var result=merge.unique(a,b);
       a.pp='43';
       console.log(result);
     })

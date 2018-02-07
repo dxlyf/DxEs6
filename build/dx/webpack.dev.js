@@ -3,12 +3,16 @@
  * 编译dx2
  * 
 */
+const webpack=require('webpack');
+const CleanWebpackPlugin=require('clean-webpack-plugin');
+const HtmlWebpackPlugin=require('html-webpack-plugin');
 const merge = require('webpack-merge');
 const path=require('path');
+const config=require('../typescript.common');
 const root=path.resolve(__dirname,'../../packages/dx2');
-module.exports={
+module.exports=merge(config,{
     context:root,
-    entry: "./index.ts", 
+    entry: "./src/index.ts", 
     output:{
         path: path.resolve(root, "dist"), // string
         filename: "index.js", // string
@@ -20,8 +24,27 @@ module.exports={
 
         ]
     },
-    resolve:{
-        extensions: [".ts", ".tsx", ".js"]
-    }
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename:'index.html',
+            template:'example/index.html',
+            inject:true,
+            title: '开发',
+        }),
+        new CleanWebpackPlugin(['dist'],{
+            root: root
+        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //          name: 'common', // 指定公共 bundle 的名称。
+        // }),
+         new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('dev')
+            }
+        })
+   ] ,
+   devServer:{
+     //index: 'app.htm'
+   }
 
-};
+});

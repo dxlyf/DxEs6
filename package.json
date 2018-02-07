@@ -22,7 +22,8 @@
     "mvvm-build": "webpack --config build/webpack.mvvm.js",
     "mvvm": "webpack-dev-server --compress --inline --hot-only --hot --d --progress --port 9001 --open Chrome --config build/webpack.mvvm.js",
     "mvvm-dev": "node build/webpack.mvvm.dev.js",
-    "mvvm-hot": "node build/webpack.mvvm.hot.js"
+    "mvvm-hot": "node build/webpack.mvvm.hot.js",
+    "dx2-dev": "webpack-dev-server --color --hot --port 9002 --open Chrome --config ./build/dx/webpack.dev.js"
   },
   "repository": {
     "type": "git",
@@ -60,6 +61,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "flow-bin": "^0.60.1",
     "html-webpack-plugin": "^2.30.1",
+    "jasmine": "^3.0.0",
     "jasmine-core": "^2.8.0",
     "karma": "^2.0.0",
     "karma-chrome-launcher": "^2.2.0",

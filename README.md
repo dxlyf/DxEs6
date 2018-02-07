@@ -8,6 +8,7 @@
 - [compile](#compile)
 - [hot development](#模块热替换)
 - [babel-core](#babel-core)
+- [VSCODE](#VSCODE)
 
 ### 安装编译环境  [webpack](https://doc.webpack-china.org/)
 npm install -g nodemon  [自动重启](#https://www.npmjs.com/package/nodemon)
@@ -1175,7 +1176,19 @@ return Bork.staticProperty;
 }
 }
 ```
-
+## VSCODE
+常用插件
+- gulp shnipperts
+- html css support
+- debugger for chrome 
+- document this
+- javascript es code snippets
+- markdown all in one 所有你需要Markdown（键盘快捷键，目录，自动预览和更多）。
+- markdown preview enhanced 
+- npm 
+- sass
+- vscode-flow-ide
+- vue2 snippets
 ### vs code 调试  "Control+Space"   
 ```
 以下属性对于每个启动配置都是必需的：
