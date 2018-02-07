@@ -3,37 +3,31 @@ import {extend} from '../../../src/util/extend'
 
 describe("测试extend", function() {
     beforeAll(function(){
-        console.log('1');
+      
     });
     beforeEach(function() {
-        console.log('2');
+       
      });
     it("extend 扩展对象", function() {
-        console.log('3');
-        var a={
-                age:'43'
 
+        var a={
+                age:'43',
+                data:{
+                    name:"age"
+                }
         };
         var b={
-            age:'4354'
-
+            age:'4354',
+            data:{
+                age:43
+            }
         };
-        var obj=extend(a,b)
-         expect(obj.age).toBe('4354');
+        var obj=extend(true,a,b);
+        obj.data.age=55;
+        expect(b.data.age).not.toBe(55);
+        expect(b.data.age).toBe(55);
     });
-    it("extend 扩展对象2", function() {
-        console.log('3');
-        var a={
-                age:'43'
-
-        };
-        var b={
-            age:'4354'
-
-        };
-        var obj=extend(a,b)
-         expect(obj.age).toBe('4354');
-    });
+  
  });
 
  
