@@ -216,6 +216,11 @@ latest除非使用该--tag选项，否则发布程序包会将标记设置为已
 * `npm install [<@scope>/]<name>@<tag>` 安装指定标签引用的包的版本。如果标签不存在于该包的注册表数据中，则将失败。
 
 ### data-tag
+添加，删除和枚举包中的分发标签：
+- add：为指定的标签指定版本的包，或者--tag如果未指定， 则为config。您要添加的标签是，latest并且您在验证和写入时拥有双因素身份验证，那么您需要在命令行中包含一个otp --otp。
+- rm：清除软件包中不再使用的标签。
+- ls：显示包的所有dist-tags，默认为当前前缀中的包。
+
 ```bash
 npm dist-tag add <pkg>@<version> [<tag>]
 npm dist-tag rm <pkg> <tag>
@@ -254,6 +259,17 @@ aliases: up, upgrade
 >npm update <package> --save-dev or --dev 更新devDependencies
 >npm update <package> --save-optional  更新optionalDependencies
 ```
+
+### 如何更新全局包
+需要版本2.6.1或更高版本。如果您使用的是旧版本，请参阅下文。
+要更新全局程序包，请键入：
+`npm update -g <package>`
+例如，要更新一个名为jshint的包，你可以输入：
+`npm update -g jshint`
+要找出哪些包需要更新，请键入：
+`npm outdated -g --depth=0 `
+要更新所有全局包，请键入：
+`npm update -g`
 
 ## 卸载
 ```bash
@@ -294,6 +310,8 @@ npm version [<newversion> | major | minor | patch | premajor | preminor | prepat
 * `npm ls <pck> --depth=0` 列出包所有依赖版本
 
 #### 列出来安装的软件包
+`npm ls --global --depth 0` 查看全局安装
+`npm ls --dev --depth 0` 查看本地开发安装
 ```bash
 npm ls [[<@scope>/]<pkg> ...]
 aliases: list, la, ll
