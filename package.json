@@ -23,7 +23,8 @@
     "mvvm": "webpack-dev-server --compress --inline --hot-only --hot --d --progress --port 9001 --open Chrome --config build/webpack.mvvm.js",
     "mvvm-dev": "node build/webpack.mvvm.dev.js",
     "mvvm-hot": "node build/webpack.mvvm.hot.js",
-    "dx2:dev": "webpack-dev-server -d --progress --colors --compress --hot --port 9002 --open Chrome --config ./packages/dx2/build/webpack.dev.js",
+    "dx2:dev": "webpack-dev-server -d --progress --colors --compress --hot --port 9002 --open Chrome --config ./packages/dx2/build/webpack.dev.config.js",
+    "dx2:dev2":"node ./packages/dx2/build/webpack.dev.js",
     "dx2:test": "karma start ./packages/dx2/test/karma/karma.conf.js"
   },
   "repository": {
