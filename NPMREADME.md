@@ -381,6 +381,22 @@ aliases: c
 ```bash
 > npm outdated [[<@scope>/]<pkg> ...]
 ```
+此命令将检查注册表以查看是否有任何（或特定）安装的软件包当前已过时。
+
+在输出中：
+wanted是满足在中指定的semver范围的软件包的最大版本package.json。如果没有可用的semver 范围（即，您正在运行npm outdated --global，或者该软件包未包含在内 package.json），则会wanted显示当前安装的版本。
+latest是在注册表中标记为最新的软件包的版本。npm publish在没有特殊配置的情况下运行将以dist标签发布该软件包latest。这可能是也可能不是软件包的最大版本，也可能不是该软件包的最新发布版本，具体取决于软件包的开发人员如何管理最新的dist-tag。
+location是程序包所在的依赖关系树中的哪个位置。请注意， npm outdated默认深度为0，因此除非您覆盖该深度，否则始终只会看到过时的顶级依赖项。
+package type（使用--long/时-l）会告诉你这个包是a dependency还是a devDependency。未包含的软件包package.json 始终标记dependencies。
+```cmd
+$ npm outdated
+Package      Current   Wanted   Latest  Location
+glob          5.0.15   5.0.15    6.0.1  test-outdated-output
+nothingness    0.0.3      git      git  test-outdated-output
+npm            3.5.1    3.5.2    3.5.1  test-outdated-output
+local-dev      0.0.3   linked   linked  test-outdated-output
+once           1.3.2    1.3.3    1.3.3  test-outdated-output
+```
 配置
 参数|类型|默认|描述
 -|-|-|-

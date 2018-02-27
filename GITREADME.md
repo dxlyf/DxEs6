@@ -1,7 +1,9 @@
 # git
 - [创建仓库](#创建仓库)
 - [分支](#分支)
-
+- [远程分支](#远程分支)
+- [fetch](#fetch)
+- [远程仓库](#远程仓库)
 
 ## 创建仓库
 
@@ -306,12 +308,181 @@ doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 其他连续的星号被认为是无效的。
 ```
 ## 分支
-
+**创建**
 创建分支，并检出设为当前分支
-```
+```bash
 git checkout -b branchname
 ```
-把当前分支添加到远程仓库并设置为本地分支跟踪远程分支
+它是下面两条命令的简写：
+```bash
+$ git branch iss53
+$ git checkout iss53
 ```
- git push -u origin branchname 
+把当前分支添加到远程仓库并设置为本地分支跟踪远程分支
+```bash
+git push -u origin branchname 
+```
+**删除分支**
+```bash
+$ git branch -d hotfix
+```
+**分支的合并**
+```bash
+git checkout master
+git merge <branchname>
+
+git mergetool
+```
+## 远程分支
+
+**推送**
+当你想要公开分享一个分支时，需要将其推送到有写入权限的远程仓库上。 本地的分支并不会自动与远程仓库同步 - 你必须显式地推送想要分享的分支。 这样，你就可以把不愿意分享的内容放到私人分支上，而将需要和别人协作的内容推送到公开分支。
+
+如果希望和别人一起在名为 serverfix 的分支上工作，你可以像推送第一个分支那样推送它。 运行 `git push (remote) (branch)`:
+```bash
+$ git push origin serverfix
+Counting objects: 24, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (15/15), done.
+Writing objects: 100% (24/24), 1.91 KiB | 0 bytes/s, done.
+Total 24 (delta 2), reused 0 (delta 0)
+To https://github.com/schacon/simplegit
+ * [new branch]      serverfix -> serverfix
+```
+这里有些工作被简化了。 Git 自动将 serverfix 分支名字展开为 refs/heads/serverfix:refs/heads/serverfix，那意味着，“推送本地的 serverfix 分支来更新远程仓库上的 serverfix 分支。” 我们将会详细学习 Git 内部原理 的 refs/heads/ 部分，但是现在可以先把它放在儿。 你也可以运行 `git push origin serverfix:serverfix`，它会做同样的事 - 相当于它说，“推送本地的 serverfix 分支，将其作为远程仓库的 serverfix 分支” 可以通过这种格式来推送本地分支到一个命名不相同的远程分支。 如果并不想让远程仓库上的分支叫做 serverfix，可以运行 `git push origin serverfix:awesomebranch` 来将本地的 serverfix 分支推送到远程仓库上的 awesomebranch 分支。
+```txt
+Note
+如何避免每次输入密码
+如果你正在使用 HTTPS URL 来推送，Git 服务器会询问用户名与密码。
+默认情况下它会在终端中提示服务器是否允许你进行推送。
+
+如果不想在每一次推送时都输入用户名与密码，你可以设置一个 “credential cache”。
+最简单的方式就是将其保存在内存中几分钟，
+可以简单地运行 git config --global credential.helper cache 来设置它。
+```
+
+想要了解更多关于不同验证缓存的可用选项，查看 凭证存储。
+**创建分支，并跟踪远程分支。**
+从一个远程跟踪分支检出一个本地分支会自动创建一个叫做 “跟踪分支”（有时候也叫做 “上游分支”）。 跟踪分支是与远程分支有直接关系的本地分支。 如果在一个跟踪分支上输入 git pull，Git 能自动地识别去哪个服务器上抓取、合并到哪个分支。
+
+当克隆一个仓库时，它通常会自动地创建一个跟踪 origin/master 的 master 分支。 然而，如果你愿意的话可以设置其他的跟踪分支 - 其他远程仓库上的跟踪分支，或者不跟踪 master 分支。 最简单的就是之前看到的例子，运行 `git checkout -b [branch] [remotename]/[branch]`。 这是一个十分常用的操作所以 Git 提供了 --track 快捷方式：
+```bash
+$ git checkout -b [branch] [remotename]/[branch]
+$ git checkout --track origin/serverfix 
+Branch serverfix set up to track remote branch serverfix from origin.
+Switched to a new branch 'serverfix'
+```
+如果想要将本地分支与远程分支设置为不同名字，你可以轻松地增加一个不同名字的本地分支的上一个命令：
+```bash
+$ git checkout -b sf origin/serverfix
+Branch sf set up to track remote branch serverfix from origin.
+Switched to a new branch 'sf'
+```
+现在，本地分支 sf 会自动从 origin/serverfix 拉取。
+
+设置已有的本地分支跟踪一个刚刚拉取下来的远程分支，或者想要修改正在跟踪的上游分支，你可以在任意时间使用 -u 或 --set-upstream-to 选项运行 git branch 来显式地设置。
+```bash
+$ git branch -u origin/serverfix
+Branch serverfix set up to track remote branch serverfix from origin.
+```
+**查看分支信息**
+如果想要查看设置的所有跟踪分支，可以使用 git branch 的 -vv 选项。 这会将所有的本地分支列出来并且包含更多的信息，如每一个分支正在跟踪哪个远程分支与本地分支是否是领先、落后或是都有。
+```bash
+$ git branch -vv
+  iss53     7e424c3 [origin/iss53: ahead 2] forgot the brackets
+  master    1ae2a45 [origin/master] deploying index fix
+* serverfix f8674d9 [teamone/server-fix-good: ahead 3, behind 1] this should do it
+  testing   5ea463a trying something new
+```
+**删除远程分支**
+假设你已经通过远程分支做完所有的工作了 - 也就是说你和你的协作者已经完成了一个特性并且将其合并到了远程仓库的 master 分支（或任何其他稳定代码分支）。 可以运行带有 --delete 选项的 git push 命令来删除一个远程分支。 如果想要从服务器上删除 serverfix 分支，运行下面的命令：
+```bash
+$ git push origin --delete serverfix
+To https://github.com/schacon/simplegit
+ - [deleted]         serverfix
+```
+基本上这个命令做的只是从服务器上移除这个指针。 Git 服务器通常会保留数据一段时间直到垃圾回收运行，所以如果不小心删除掉了，通常是很容易恢复的
+
+## fetch
+更新
+```bash
+git fetch origin
+git fetch origin/dev
+git fetch [<options>] [<repository> [<refspec>…​]]
+git fetch [<options>] <group>
+git fetch --multiple [<options>] [(<repository> | <group>)…​]
+git fetch --all [<options>]
+```
+合并
+```bash
+git merge origin/dev
+```
+## 远程仓库
+**获取克隆远程仓库**
+```bash
+$ git clone https://github.com/schacon/ticgit
+```
+你也可以指定选项 -v，会显示需要读写远程仓库使用的 Git 保存的简写与其对应的 URL。
+```bash
+$ git remote -v
+origin	https://github.com/schacon/ticgit (fetch)
+origin	https://github.com/schacon/ticgit (push)
+```
+**添加远程仓库**
+我在之前的章节中已经提到并展示了如何添加远程仓库的示例，不过这里将告诉你如何明确地做到这一点。 运行 `git remote add <shortname> <url>` 添加一个新的远程 Git 仓库，同时指定一个你可以轻松引用的简写：
+```bash
+git remote
+origin
+$ git remote add pb https://github.com/paulboone/ticgit
+$ git remote -v
+origin	https://github.com/schacon/ticgit (fetch)
+origin	https://github.com/schacon/ticgit (push)
+pb	https://github.com/paulboone/ticgit (fetch)
+pb	https://github.com/paulboone/ticgit (push)
+```
+现在你可以在命令行中使用字符串 pb 来代替整个 URL。 例如，如果你想拉取 Paul 的仓库中有但你没有的信息，可以运行 git fetch pb：
+```bash
+$ git fetch pb
+remote: Counting objects: 43, done.
+remote: Compressing objects: 100% (36/36), done.
+remote: Total 43 (delta 10), reused 31 (delta 5)
+Unpacking objects: 100% (43/43), done.
+From https://github.com/paulboone/ticgit
+ * [new branch]      master     -> pb/master
+ * [new branch]      ticgit     -> pb/ticgit
+```
+**从远程仓库中抓取与拉取**
+就如刚才所见，从远程仓库中获得数据，可以执行：
+```bash
+$ git fetch [remote-name]
+```
+这个命令会访问远程仓库，从中拉取所有你还没有的数据。 执行完成后，你将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看。
+
+如果你使用 clone 命令克隆了一个仓库，命令会自动将其添加为远程仓库并默认以 “origin” 为简写。 所以，`git fetch origin` 会抓取克隆（或上一次抓取）后新推送的所有工作。 必须注意 git fetch 命令会将数据拉取到你的本地仓库 - 它并不会自动合并或修改你当前的工作。 当准备好时你必须手动将其合并入你的工作。
+
+如果你有一个分支设置为跟踪一个远程分支（阅读下一节与 Git 分支 了解更多信息），可以使用 git pull 命令来自动的抓取然后合并远程分支到当前分支。 这对你来说可能是一个更简单或更舒服的工作流程；默认情况下，`git clone `命令会自动设置本地 master 分支跟踪克隆的远程仓库的 master 分支（或不管是什么名字的默认分支）。 运行` git pull` 通常会从最初克隆的服务器上抓取数据并自动尝试合并到当前所在的分支。
+**推送到远程仓库**
+当你想分享你的项目时，必须将其推送到上游。 这个命令很简单：`git push [remote-name] [branch-name]`。 当你想要将 master 分支推送到 origin 服务器时（再次说明，克隆时通常会自动帮你设置好那两个名字），那么运行这个命令就可以将你所做的备份到服务器：
+```bash
+$ git push origin master
+```
+**查看远程仓库**
+```bash
+git remote show origin
+```
+**远程仓库的移除与重命名**
+如果想要重命名引用的名字可以运行 git remote rename 去修改一个远程仓库的简写名。 例如，想要将 pb 重命名为 paul，可以用 git remote rename 这样做：
+```bash
+$ git remote rename pb paul
+$ git remote
+origin
+paul
+```
+值得注意的是这同样也会修改你的远程分支名字。 那些过去引用 pb/master 的现在会引用 paul/master。
+
+如果因为一些原因想要移除一个远程仓库 - 你已经从服务器上搬走了或不再想使用某一个特定的镜像了，又或者某一个贡献者不再贡献了 - 可以使用 `git remote rm` ：
+```bash
+$ git remote rm paul
+$ git remote
+origin
 ```
