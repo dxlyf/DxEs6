@@ -36,5 +36,9 @@ export class EventTarget implements  EventTargetInterface {
     {
 
     }
+    on(type:string,name:string,callback:Function)
+    {
+        return  this.addEventListener(type,name,callback);
+    }
 }
-
+var a=new EventTarget();
