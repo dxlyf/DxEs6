@@ -99,7 +99,7 @@ function wrapReuqest(options) {
  * mjb.getRequest('getList',{data:{pageSize:10,pageIndex:1}}).then(sucessCallback,failCallback);
  */
 function request(options) {
-    if (options.name != "*") {
+    if (options.name) {
         options.url = getUrl(options.name);
     }
     return wrapReuqest(options);

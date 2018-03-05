@@ -238,7 +238,7 @@
             current.setDate(1);
             return getWeek(current);
         }
-        export default {
+        export const dates ={
             getMonthFirstWeek: getMonthFirstWeek, // 获取月份第一天是周几
             getDateWeek: getDateWeek, // 获取当前第几周
             getMonthLastDay: getMonthLastDay, // 获取月份最后一天

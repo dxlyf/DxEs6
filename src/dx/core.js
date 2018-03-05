@@ -1,7 +1,8 @@
-import Vue from 'vue'
-import $,{isPlainObject,isFunction,extend,isArray} from 'jquery'
-import _ from 'lodash'
-import ELEMENT from 'element-ui'
+import Vue from 'vue';
+import $,{isPlainObject,isFunction,extend,isArray} from 'jquery';
+import _ from 'lodash';
+import ELEMENT from 'element-ui';
+
 function Class() { }
 Class.extend = function (protoProps, staticProps) {
     var parent = this,
