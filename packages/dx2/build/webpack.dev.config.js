@@ -44,7 +44,7 @@ module.exports=merge(config,{
         })
    ] ,
    devServer:{
-     //index: 'app.htm'
+     // index: 'app.htm'
    }
 
 });
