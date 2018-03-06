@@ -1,7 +1,17 @@
-import {Observable} from './core'
-import $,{extend,isFunction} from 'jquery'
-import _ from 'lodash'
-import {request} from './request'
+import {Observable} from './core';
+import $,{extend,isFunction} from 'jquery';
+import _ from 'lodash';
+import {request} from './request';
+
+/**
+ * @extends Observable
+ * @name DataSource
+ * @class
+ * @constructs
+ * @param {object} options 数据源参数选项
+ * @param {(object|array|function)} options.data 数据
+ * @param {object} options.transport  远程数据请求参数
+ */
 var Source = Observable.extend({
     options: {
         data: null, // 本地数据
@@ -185,7 +195,15 @@ function DataSource(options) {
     })
     return source;
 }
-
+/**
+ * 垂直数组转换树形数据
+ * @function
+ * @param {array<object>} data 数据
+ * @param {string} idField 主键唯一字段名
+ * @param {string} parentField 关联字段名
+ * @param {string} childField 子集字段名，生成后的
+ * @returns {array<object>} 
+ */
 function createTreeData(data, idField, parentField, childField) {
     childField = childField || "children";
     var len = data.length;

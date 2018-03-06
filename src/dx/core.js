@@ -1,20 +1,31 @@
 
-/**
- * @namespace Mjb
- * @module core 
- * @example
- * Mjb.Class.extend({
- * constructor:function()
- * {
- *      //初始化方法
- * }
- * })
+/** 
+ * Vue 变量
+ * @var {function} Vue
+ * @requires Vue
+ * @readonly
  */
-
-
 import Vue from 'vue';
+/** 
+ * jquery 变量
+ * @member {function} $
+ * @requires jQuery
+ * @readonly
+ */
 import $,{isPlainObject,isFunction,extend,isArray} from 'jquery';
+/** 
+ * lodash 变量
+ * @var {function} _
+ * @requires lodash
+ * @readonly
+ */
 import _ from 'lodash';
+/** 
+ * ELEMENT 变量
+ * @var {object} ELEMENT
+ * @requires element-ui
+ * @readonly
+ */
 import ELEMENT from 'element-ui';
 /**
  * 基类 
@@ -270,18 +281,18 @@ export function hasOwnProperty(object,key){
 
 
 /**
- * promise对象或者函数
- * @typedef {function|Promise} promiseAndfunction
+ * queues 集合回调函数
+ * @callback promiseCallback
+ * @param {function} resolve 成功回调
+ * @param {function} reject 失败回调
  */
 
 /**
  * 执行异步队列，当某个函数执行失败。直接返回失败回调
- * @param {array.<promiseAndfunction>} queues  - 类型数组
- * @param {promiseAndfunction} queues[0] - 队列回调函数
- * @param {*} [context=this] - 上下文对象
+ * @param {(array<function>|array<promise>)} queues  - 队列集合
+ * @property  {promiseCallback} queue - 执行队列集合中的回调函数值
+ * @param {any} [context=this] - 上下文对象
  * @returns {Promise}
- * @see [promiseAndfunction]{@link core#promiseAndfunction}
- * @see {@link http://github.com|GitHub}
  */
 export function  asyncQueue(queues,context=this) {
     return $.Deferred(({resolveWith, rejectWith})=>{
@@ -309,7 +320,7 @@ export function  asyncQueue(queues,context=this) {
    });
 }    
 
-export {  
+export { 
     Class,
     Observable,
     Vue,
@@ -321,20 +332,37 @@ export {
 
 export  var  {
     /** 
-     * jquery.Deferred对象
+     * 延迟对象
      * @function
-     * @static
+     * @param {promiseCallback} constructor 回调函数
+     * @returns {Promise}
      */
     Promise=$.Deferred,
       /** 
-     * jquery.when对象
+     * 处理多个Deferred请求对象，当所有返回成功时，再响应
      * @function
-     * @static
+     * @param {...Promise} arguments 
+     * @returns {Promise}
      */
     when= $.when,
+     /** 
+     * html模板解析
+     * @param {string} template html模板
+     * @returns {function} 
+     * @function
+     * @example {@lang javascript}
+     * var temaplte=Mjb.template('<div>{{name}}</div>');
+     * var str=template({name:"李三"})  //return  <div>李三</div>
+     */
     template=  (template)=> {
         return _.template(template);
     },
+    /**
+     * 解析URL,获取URL参数值
+     * @default ''
+     * @returns {string} 
+     * @function
+     */
     getUrlParams= (name, url)=> {
         url = url || location.search;
         var sname = name + "=",
@@ -348,6 +376,11 @@ export  var  {
         }
         return result;
     },
+    /**
+     * 其它类型转换成数字值，如果转换失败返回默认值
+     * @param {any} value 需要转换的值
+     * @param {number} defaultValue 没有转换成功，默认值
+     */
     convertToInt= (value, defaultValue)=>{
         defaultValue = _.isUndefined(defaultValue) ? null : defaultValue;
         value = Number(value);
@@ -356,13 +389,32 @@ export  var  {
         }
         return value;
     },
+    /**
+     * 克隆对象,通过JSON.stringify克隆，所以不会复制function或复杂对象
+     * @returns {object}
+     * @function
+    */
     cloneObject=  (obj)=> {
         return JSON.parse(JSON.stringify(obj));
     },
+    /** 
+     * 参考window.requestAnimationFrame 这里做了兼容性处理
+     * @function
+    */
     requestAnimationFrame=_requestAnimationFrame,
+      /** 
+     * 参考window.cancelAnimationFrame 这里做了兼容性处理
+     * @function
+    */
     cancelAnimationFrame=_cancelAnimationFrame,
     merge
-}={
+    }={
+    /**
+     * 合并对象，如果是数组则克隆覆盖
+     * @param {object} target 
+     * @param {...object} sources 
+     * @returns {object}
+     */
     merge(target,...sources)
     {
         return _.mergeWith(target,...sources,(objValue, srcValue)=>{

@@ -1,6 +1,6 @@
 # 基类
 继承类
-```js
+```javascript
 var Parent=Mjb.Class.extend({
     constructor:function(name)
     {
