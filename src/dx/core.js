@@ -1,9 +1,35 @@
+
+/**
+ * @namespace Mjb
+ * @module core 
+ * @example
+ * Mjb.Class.extend({
+ * constructor:function()
+ * {
+ *      //初始化方法
+ * }
+ * })
+ */
+
+
 import Vue from 'vue';
 import $,{isPlainObject,isFunction,extend,isArray} from 'jquery';
 import _ from 'lodash';
 import ELEMENT from 'element-ui';
-
+/**
+ * 基类 
+ * @class
+ * @hideconstructor
+ * @tutorial class
+ */
 function Class() { }
+/**
+ * 类继承
+ * @extends Class
+ * @param {object} protoProps - 原型属性扩展对象
+ * @param {object} staticProps - 静态属性扩展对象
+ * @returns {function} - newClass extends Class
+ */
 Class.extend = function (protoProps, staticProps) {
     var parent = this,
         member, name, child, fn;
@@ -48,14 +74,34 @@ Class.getInstance = function () {
     })
     return __instance;
 }
-// 事件观察对象
-var Observable = Class.extend({
+
+var Observable = Class.extend(
+    /** @lends Observable.prototype */
+    {
+    /** 
+     * 事件观察
+     * @extends Class
+     * @constructs 
+    */
     constructor () {
+        /**
+         * 事件对象
+         * @memberof Observable.prototype
+         * @member  {object} __events__
+         */
         Object.defineProperty(this, "__events__", {
             value: {},
             writable: true
         });
     },
+    /**
+     * 添加事件监听
+     * @param {string|object} name - 事件名或事件对象
+     * @param {function} handler - 事件回调函数
+     * @param {boolean} one - 是否只执行一次
+     * @param {boolean} first - 是否添加前面
+     * @returns {this} - 返回实例本身
+     */
     on (name, handler, one, first) {
         if (isPlainObject(name)) {
             for (var n in name) {
@@ -79,10 +125,23 @@ var Observable = Class.extend({
         }
         return this;
     },
+    /**
+     * 添加一个只执行一次的事件
+     * @param {string} name 事件名
+     * @param {function} handler 事件函数 
+     * @param {boolean} first 是否添加前面
+     * @returns {this} 返回本身实例
+     */
     one (name, handler, first) {
         this.on(name, handler, true, first);
         return this;
     },
+    /**
+     * 移除事件
+     * @param {string} name 事件名
+     * @param {function} [handler] 事件函数
+     * @returns {this} 返回本身实例
+     */
     off (name, handler) {
         if (!name) {
             this.__events__ = {};
@@ -99,6 +158,11 @@ var Observable = Class.extend({
         }
         return this;
     },
+    /**
+     * 触发监听事件
+     * @param {string} name 事件名 
+     * @return {boolean} 返回最后一个执行函数结果
+     */
     trigger (name) {
         var i, len, result, events = this.__events__[name] || [],
               args = _.slice(arguments, 1),
@@ -133,6 +197,13 @@ var _cancelAnimationFrame=(function () {
     }
 }());
 
+/**
+ * 异步函数
+ * @memberof core
+ * @function 
+ * @param {function} func - 异步执行函数
+ * @param {function} cb - 成功/失败回调函数
+ */
 export  let runAsync = function (func, cb) {
     cb = cb || function () {}; 
     return function () {
@@ -177,14 +248,41 @@ export  let runAsync = function (func, cb) {
   
 
 
-
 var OBJECT_CORE={};
+/**
+ * 判断是否实例对象
+ * @param {constructor} obj  - 实例对象
+ * @param {function} target - 构造函数
+ * @returns {boolean}
+ */
 export function hasInstanceof(obj, target) {
     return obj instanceof target;
 }
+/**
+ * 判断属性是否存在对象中
+ * @param {object} object  - 对象
+ * @param {string} key - 属性名
+ * @returns {boolean}
+ */
 export function hasOwnProperty(object,key){
     return OBJECT_CORE.hasOwnProperty.call(object,key);
 }
+
+
+/**
+ * promise对象或者函数
+ * @typedef {function|Promise} promiseAndfunction
+ */
+
+/**
+ * 执行异步队列，当某个函数执行失败。直接返回失败回调
+ * @param {array.<promiseAndfunction>} queues  - 类型数组
+ * @param {promiseAndfunction} queues[0] - 队列回调函数
+ * @param {*} [context=this] - 上下文对象
+ * @returns {Promise}
+ * @see [promiseAndfunction]{@link core#promiseAndfunction}
+ * @see {@link http://github.com|GitHub}
+ */
 export function  asyncQueue(queues,context=this) {
     return $.Deferred(({resolveWith, rejectWith})=>{
           var result = [], rcontext,fn;            
@@ -210,6 +308,7 @@ export function  asyncQueue(queues,context=this) {
           return dequeue();
    });
 }    
+
 export {  
     Class,
     Observable,
@@ -218,8 +317,20 @@ export {
     _,
     extend
 }
+
+
 export  var  {
+    /** 
+     * jquery.Deferred对象
+     * @function
+     * @static
+     */
     Promise=$.Deferred,
+      /** 
+     * jquery.when对象
+     * @function
+     * @static
+     */
     when= $.when,
     template=  (template)=> {
         return _.template(template);

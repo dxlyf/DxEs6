@@ -24,7 +24,7 @@
     "mvvm-dev": "node build/webpack.mvvm.dev.js",
     "mvvm-hot": "node build/webpack.mvvm.hot.js",
     "dx2:dev": "webpack-dev-server -d --progress --colors --compress --hot --port 9002 --open Chrome --config ./packages/dx2/build/webpack.dev.config.js",
-    "dx2:dev2":"node ./packages/dx2/build/webpack.dev.js",
+    "dx2:dev2": "node ./packages/dx2/build/webpack.dev.js",
     "dx2:test": "karma start ./packages/dx2/test/karma/karma.conf.js"
   },
   "repository": {
@@ -98,6 +98,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "element-ui": "^2.0.7",
+    "ink-docstrap": "^1.3.2",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
     "vue": "^2.5.9"
