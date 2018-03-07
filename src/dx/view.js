@@ -3,61 +3,26 @@ import $,{extend,isFunction} from 'jquery'
 import _ from 'lodash'
 import Vue from 'vue'
 var  delegateEventSplitter = /^(\S+)\s*(.*)$/;
-/***
- * 
- * extends Observable 
- * view 的主要功能,就是让页面的处理业务逻辑的JS代码变的清晰
- * 独立垂直的事件及方法定义声明，可以一目了然的知道你这块的要干什么,如果有复杂的业务，可以通过view 内部的事件机制进行交互
- * @param {string} el 元素
- * @param {object} events   el元素的事件委托 相当$('body').on('click','#btnAddSPU',function)
- * @param {Object,function} Model为null时,不会实例化Vue对象，Model 是对象时，就是一个Vue 实例参数,是函数时,需要返回一个普通对象或一个vue 实例对象 
- * @param {function} initialize 自运行函数  一般在mjb.View({initialize:function(){}}) 定义时重载initialize
- * 一般处理页面中js交互,一个页面一般View就够了
- * 如果页面较复杂,可以多个视图,如果是多个view中el不能是父子关系元素,复杂的业务逻辑可以通过事件机制处理
- * @example
- * <div id="page1">登录名:<input type="text" v-model="value"><button id="btnLogin">登录</button></div>
- * <div id="page2">姓名：{name}</div>
- * var view1=mjb.View({
- * el:"page1", // 登录
- * events:{
- *  'click #btnLogin':"login"
- * }
- * Model:{data:{name:""}},
- * initialize:function(){ 
- *       
- * },
- * loginSuccess:function(d)
- * {
- *      // 登录成功，触发自定义事件
- *      this.trigger('data',d);
- * },
- * login:function()
- * {
- *   mjb.postRequest('login'，{data:{name:this.Model.name}}).then(this.loginSuccess)
- * }
- * })
- * var view2=mjb.View({
- *      el:"page2",// 登录后显示登录账号
- *      Model:{
- *           data:{name:""}
- *      },
- *      initialize:function(){  
- *          view1.on('data',this.showInfo);
- *      },
- *      showInfo:function(d)
- *      {
- *        this.Model.name=d.userName
- *      }
- * })
- * 
- * 
- * */
-export  var View= Observable.extend({
+
+export  var View= Observable.extend(
+    /** @lends View.prototype */
+    {
     el: null,
     $el: null,
     promise: null,
     events: null,
     Model: null,
+    /**
+     * 页面数据渲染视图
+     * @extends Observable
+     * @constructs 
+     * @param {object} options 
+     * @param {function} options.initialize 初始化执行函数
+     * @param {string} options.el 页面元素ID
+     * @param {object} [options.events=null] 事件声明对象
+     * @param {object} [options.Model=null]  创建vue实例对象参数
+     * @param {promise} [options.promise=null] 当不为null,初始化执行函数会等待它，等它返回成功后，才执行initialize函数
+     */
     constructor (options) {
         if (!hasInstanceof(this, View)) return new View(options);
         Observable.call(this);
@@ -122,13 +87,28 @@ export  var View= Observable.extend({
         }
         return this;
     },
+    /**
+     * 上下文元素绑定事件
+     * @param {string} eventName 事件名
+     * @param {string} selector 用于事件触发目标过滤选择符
+     * @param {function} listener 事件执行函数
+     */
     delegate (eventName, selector, listener) {
         this.$el.on(eventName + '.delegateEvents' + this.cid, selector, listener);
     },
+    /** 
+     * 清空所有绑定事件
+    */
     undelegateEvents () {
         if (this.$el) this.$el.off('.delegateEvents' + this.cid);
         return this;
     },
+        /**
+     * 移除上下文元素绑定事件
+     * @param {string} eventName 事件名
+     * @param {string} [selector] 用于事件触发目标过滤选择符
+     * @param {function} [listener] 事件执行函数
+     */
     undelegate (eventName, selector, listener) {
         this.$el.off(eventName + '.delegateEvents' + this.cid, selector, listener);
     }

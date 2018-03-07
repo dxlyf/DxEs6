@@ -29,17 +29,16 @@ import _ from 'lodash';
 import ELEMENT from 'element-ui';
 /**
  * 基类 
+ * @alias Class
  * @class
- * @hideconstructor
- * @tutorial class
  */
 function Class() { }
 /**
  * 类继承
- * @extends Class
  * @param {object} protoProps - 原型属性扩展对象
  * @param {object} staticProps - 静态属性扩展对象
  * @returns {function} - newClass extends Class
+ * @public
  */
 Class.extend = function (protoProps, staticProps) {
     var parent = this,
@@ -87,7 +86,7 @@ Class.getInstance = function () {
 }
 
 var Observable = Class.extend(
-    /** @lends Observable.prototype */
+     /** @lends Observable.prototype */
     {
     /** 
      * 事件观察
@@ -99,6 +98,7 @@ var Observable = Class.extend(
          * 事件对象
          * @memberof Observable.prototype
          * @member  {object} __events__
+         * @private
          */
         Object.defineProperty(this, "__events__", {
             value: {},
@@ -380,6 +380,7 @@ export  var  {
      * 其它类型转换成数字值，如果转换失败返回默认值
      * @param {any} value 需要转换的值
      * @param {number} defaultValue 没有转换成功，默认值
+     * @function
      */
     convertToInt= (value, defaultValue)=>{
         defaultValue = _.isUndefined(defaultValue) ? null : defaultValue;

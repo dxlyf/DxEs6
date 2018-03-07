@@ -1,14 +1,35 @@
+/**
+ * 网络请求
+ * @module request
+ */
 import $ from 'jquery'
 import _ from 'lodash'
 //import configs from 'configs'
 import {loading,hideLoading,alert} from './element'
+/**
+ * ajax响应 retStatus状态码
+ * @readonly
+ * @enum {number}
+ */
 var responseStatus = {
-    'success': "200", // 操作成功
-    'operationForbidden ': "403", // 操作被禁止
-    'validateFailed ': "400", // 验证失败
-    'noFound': "404", // 资源未找到
-    'ServerError': "500" //服务器内部错误
+    /** 操作成功 */
+    'success': "200", 
+    /** 操作被禁止 */
+    'operationForbidden': "403", 
+    /** 验证失败 */
+    'validateFailed': "400",
+    /** 资源未找到 */
+    'noFound': "404", 
+    /** 服务器内部错误 */
+    'ServerError': "500" 
 },
+ /**
+  * 获取接口请求地址
+  * @param {string} name 接口配置名称
+  * @returns {string} 返回接口名对应完整地址
+  * @function
+  * @static
+  */
   getUrl = __non_webpack_require__('configs').getUrl,
   noop = $.noop,
   globalAjaxSetting = {
@@ -92,11 +113,20 @@ function wrapReuqest(options) {
     return deferred.promise(ajax);
 }
 /**
- * @param {type} name configs 接口配置名称
- * @param {type} options jQuery.Ajax（options）参数 可以参考jquery ajax
- * @returns {type} ajax promise 对象
- * @example 
- * mjb.getRequest('getList',{data:{pageSize:10,pageIndex:1}}).then(sucessCallback,failCallback);
+ * 网络请求
+ * @param {object} options jQuery.Ajax（options）参数 可以参考jquery ajax
+ * @param {string} options.name 接口配置名称，当为空null时，读取url
+ * @param {boolean} [options.isCustomerError=false] 默认系统处理错误信息，设为true自己处理 
+ * @param {boolean} [options.isWrapAjax=true] 默认强制后台返回特定格式，设为false不要求
+ * @param {boolean} [options.inShowLoading=true] 默认请求后台会显示加载动画，设为false为不显示动画
+ * @returns {promise} ajax promise 对象
+ * @static
+ * @example  <caption>Ajax 返回格式</caption>
+ * {
+ *  “retBody”:null,  // 操作数据
+ *  "retStatus":"",// 状态码
+ *  "retMsg":"" //错误信息
+ * }
  */
 function request(options) {
     if (options.name) {
@@ -104,12 +134,22 @@ function request(options) {
     }
     return wrapReuqest(options);
 }
-
+/**
+ * POST网络请求,参考request
+ * @param {object} options 参考request
+ * @static
+ * @example 
+ * mjb.getRequest('getList',{data:{pageSize:10,pageIndex:1}}).then(sucessCallback,failCallback);
+ */
 function postRequest(options) {
     options.type = "post";
     return request(options);
 }
-
+/**
+ * GET网络请求
+ * @param {object} options 参考request
+ * @static
+ */
 function getRequest(options) {
     options.type = "get";
     return request(options);

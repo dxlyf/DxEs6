@@ -1,14 +1,16 @@
-# Mjb.js API文档教程
-## 开发
+  
+## 基本示例
 html
-```xml 
+```hmtl 
  <html>
   <head>
       <title>示例</title>
          <script src="/assets/js/require.min.js" main="></script>
       </head>
  <body>
-     <div id="container"></div>
+     <div id="container">
+        <button id="btn">提交</button>
+     </div>
  </body>
 </html>
 ```
@@ -31,3 +33,4 @@ js:
             });
     })
 ```
+## 

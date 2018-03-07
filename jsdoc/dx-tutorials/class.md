@@ -1,4 +1,4 @@
-# 基类
+
 继承类
 ```javascript
 var Parent=Mjb.Class.extend({

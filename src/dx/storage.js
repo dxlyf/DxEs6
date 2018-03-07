@@ -34,8 +34,20 @@ Storage.prototype = {
         }
     }
 };
+/** 
+ * 参考window.sessionStorage 唯一的区别支持存储对象，原生的不支持存储对象
+ * @type {object} 
+*/
 export const sessionStorage = new Storage(window.sessionStorage);
+/** 
+ * 参考window.localStorage 唯一的区别支持存储对象，原生的不支持存储对象
+ * @type {object} 
+*/
 export const localStorage = new Storage(window.localStorage);
+/** 
+ * 参考localStorage，唯一的区别在它只允许读取一次
+ * @type {object} 
+*/
 export const tempStorage = {
     setItem (name, data) {
         localStorage.setItem(name, data);

@@ -1,8 +1,11 @@
+
 import Vue from 'vue'
 import _ from 'lodash'
 import $ from 'jquery'
 import {DataSource} from './data-source'
-
+/**
+ * @exports components
+ */
 var components = Object.create(null);
 Vue.directive('authorize', (function () {
     var permissions = window.GLOBALREQUIRECONFIGS.permissions || [];
@@ -27,8 +30,16 @@ Vue.directive('authorize', (function () {
         }
     }
 }()));
-
+/**
+ * 组件基础方法混合对象
+ * @mixin
+ * @type {object}
+ * @property {object} methods 方法
+ * @property {function} methods._cloeProps 复制props
+ * @property {function} methods._cloneListeners 复制listeners
+*/
 components.base = {
+
     methods: {
         _cloeProps: function (options) {
             return _.extend({}, this.$props, options);
@@ -64,6 +75,19 @@ components.base = {
         }
     }
 };
+/**
+ * 组件数据源混合对象
+ * @mixin
+ * @type {object}
+ * @property {object} props 方法
+ * @property {boolean} [props.autoBind=false] 自动绑定数据源读取
+ * @property {dataSource} [props.dataSource] 数据源
+ * @property {object} methods
+ * @property {function} methods.onBeforeLoad  数据源请求前
+ * @property {function} methods.onSuccess  数据源请求完成
+ * @property {function} methods.onFail  数据源请求失败
+ * @property {function} methods.onCompleteLoad  数据源请求完成
+*/
 components.data = {
     extends: components.base,
     data () {
@@ -143,8 +167,14 @@ components.emitter = {
         }
     }
 };
+/**
+ * 注册vue组件
+ * @param {string} name 组件名称 
+ * @param {object} component 属性方法
+ */
 components.registerComponent = (name, component)=>{
     Vue.component('mjb-' + name, component);
     return component;
 }
+
 export  {components}

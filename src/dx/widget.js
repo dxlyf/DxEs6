@@ -1,3 +1,7 @@
+/**
+ * 组件库和组件扩展
+ * @module widget
+ */
 import {Observable,hasInstanceof,requestAnimationFrame} from './core'
 import _ from 'lodash'
 import $,{extend,isPlainObject} from 'jquery'
@@ -66,7 +70,16 @@ $.fn.emulateAnimationEnd = function (duration) {
     return this
 }
 
-var Widget = Observable.extend({
+var Widget = Observable.extend(
+    /** @lends Widget.prototype */
+    {
+    /**
+     * 页面组件基类
+     * @extends Observable
+     * @constructs
+     * @param {(string|element)} element 元素
+     * @param {object} options 组件参数
+     */
     constructor: function (element, options) {
         if (!hasInstanceof(this, this.constructor)) {
             return new this.constructor(element, options);
@@ -75,6 +88,10 @@ var Widget = Observable.extend({
         this.widgetid = _.uniqueId('widget');
         this.initialize.apply(this, arguments);
     },
+    /**
+     * 可监听事件数组
+     * @type {array}
+    */
     events: [],
     initialize: function (element, options) {
         if (element) {
@@ -84,6 +101,10 @@ var Widget = Observable.extend({
         this.setEvents(this.options);
         return this.options;
     },
+    /**
+     * 设置options属性值，会在原来的options 上扩展
+     * @param {object} options 参数
+     */
     setOptions: function (options) {
         this.options = extend({}, this.options, options)
     },
@@ -91,9 +112,20 @@ var Widget = Observable.extend({
         var args = _.toArray(arguments), method = args.shift();
         this.constructor.__super__.prototype[method].apply(this, args);
     },
+    /**
+     * dom重绘
+     * @param {element} element
+     */
     reflow: function (element) {
         element.offsetHeight;
     },
+    /**
+     * 绑定具有当前组件ID命名空间事件
+     * @param {jqueryElement} element
+     * @param {string} name 事件名
+     * @param {string} selector 事件触发目标过滤选择符
+     * @param {function} handler 事件执行函数
+     */
     delegateEvents: function (element, name, selector, handler) {
         var that = this;
         if (typeof selector == "function") {
@@ -109,6 +141,12 @@ var Widget = Observable.extend({
         });
         element.on(name.join(' '), selector, handler);
     },
+    /**
+     * 移除事件
+     * @param {jqueryElement} element
+     * @param {string} name 事件名
+     * @param {function} [handler] 事件执行函数
+     */
     undelegateEvents: function (element, name, handler) {
         name = !name ? "." + this.widgetid : name;
         if (name.indexOf('.') == -1) {
@@ -126,13 +164,25 @@ var Widget = Observable.extend({
             that[name] && that[name](e);
         }
     },
+    /**
+     * 添加监听事件
+     * @param {object} options
+     */
     setEvents: function (options) {
         this.on(_.pick(options, this.events));
     },
     destroy: function () { }
 });
-
-function extendWidget(name, proto, parent, noRegister) {
+/**
+ * 扩展组件
+ * @extends Widget
+ * @param {string} name 组件名
+ * @param {object} proto 属性方法
+ * @param {string} parent 父级组件名
+ * @param {boolean} [noRegister=false] 是否注册在jquery上
+ * @returns {function}
+ */
+function extendWidget(name, proto, parent, noRegister=false) {
     if (widgets[name]) {
         throw "already exist";
     }

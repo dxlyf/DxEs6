@@ -1,3 +1,7 @@
+/**
+ * element-ui 封装扩展
+ * @module element-ui
+ */
 import ELEMENT from 'element-ui'
 import * as core from './core'
 import $,{isPlainObject,isFunction} from 'jquery'
@@ -37,6 +41,7 @@ function showMessageBox(msgAction) {
  * @param {type} message 内容
  * @param {type} title 标题 
  * @param {object} options 参考element-ui 官网API MessageBox 
+ * @function
  */
 export const alert = showMessageBox('alert');
 /**
@@ -44,6 +49,7 @@ export const alert = showMessageBox('alert');
  * @param {type} message 内容
  * @param {type} title 标题 
  * @param {object} options 参考element-ui 官网API MessageBox
+ * @function
  */
 export const confirm = showMessageBox('confirm');
 /**
@@ -51,20 +57,32 @@ export const confirm = showMessageBox('confirm');
 * @param {type} message 内容
 * @param {type} title 标题 
 * @param {object} options 参考element-ui 官网API MessageBox 
+* @function
 */
 export const prompt = showMessageBox('prompt');
 /**
  * 自定义弹出框
  * @param {type} options 参考element-ui 官网API MessageBox msgbox
+ * @function
  */
 export const msgbox = ELEMENT.MessageBox;
 export const message = ELEMENT.Message;
 export const notification = ELEMENT.Notification;
 /*加载动画*/
 var loadingInstance = null;
+/**
+ * 显示加载动画
+ * @param {object} options 参考element-ui ELEMENT.Loading
+ * @function
+ */
 export const loading =  (options)=> {
     loadingInstance = ELEMENT.Loading.service(options);
 }
+/**
+ * 关闭加载动画
+ * @param {object} options //参考element-ui ELEMENT.Loading
+ * @function
+ */
 export const hideLoading = ()=> {
     loadingInstance && loadingInstance.close() && (loadingInstance = null);
 }

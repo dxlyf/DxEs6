@@ -1,18 +1,17 @@
+/**
+ * 数据操作
+ * @module data
+ * @see DataSource
+ */
 import {Observable} from './core';
 import $,{extend,isFunction} from 'jquery';
 import _ from 'lodash';
 import {request} from './request';
 
-/**
- * @extends Observable
- * @name DataSource
- * @class
- * @constructs
- * @param {object} options 数据源参数选项
- * @param {(object|array|function)} options.data 数据
- * @param {object} options.transport  远程数据请求参数
- */
-var Source = Observable.extend({
+
+var Source = Observable.extend(
+    /** @lends DataSource.prototype*/
+    {
     options: {
         data: null, // 本地数据
         transport: null, // 远程ajax 参数
@@ -22,6 +21,13 @@ var Source = Observable.extend({
         parseData: null// 数据转换
     },
     events: ['onBeforeSend', 'onSuccess', 'onFail', 'onComplete', 'onRead', 'onQuery', 'onRefresh'],
+    /** 
+     * @extends Observable
+     * @constructs DataSource
+     * @param {object} options 数据源参数选项
+     * @param {(object|array|function)} options.data 数据
+     * @param {object} options.transport  远程数据请求参数
+     */
     constructor (options) {
         Observable.call(this);
         _.bindAll(this, '_dataHandler', '_fail');
@@ -45,6 +51,11 @@ var Source = Observable.extend({
         this.on('onComplete', callback);
         return this;
     },
+    /**
+     * 绑定成功或失败回调
+     * @param {function} success 成功回调
+     * @param {function} fail 失败回调
+    */
     then (success, fail) {
         if (this.data != null) {
             success.call(this, this.data, this.orgData);
@@ -72,16 +83,28 @@ var Source = Observable.extend({
         this.trigger('onFail', this.errorMessages);
         this.trigger('onComplete');
     },
+    /**
+     * 查询数据
+     * @param {object} [data] 请求参数
+    */
     query (data) {
         data = data || {};
         this.trigger('onQuery', data);
         this.fetch(data);
     },
+    /**
+     * 请求数据
+     * @param {object} [data] 请求参数
+     */
     read (data) {
         data = data || {};
         this.trigger('onRead', data);
         this.fetch(data);
     },
+     /**
+     * 刷新数据
+     * @param {object} [data] 请求参数
+     */
     refresh (data) {
         data = data || {};
         this.trigger('onRefresh', data);
@@ -99,21 +122,47 @@ var Source = Observable.extend({
         this._fetch(data);
     },
     _fetch () { },
+     /**
+     * 获取数据
+     * @returns {any}
+     */
     getData () {
         return this.data;
     },
+    /**
+     * 根据索引获取数据
+     * @returns {any}
+     */
     getItemData (index) {
         return this.data[index];
     },
+    /**
+     * 获取数据所在索引
+     * @param {(function|object|array|string)} predicate  这个函数会在每一次迭代调用
+     * @returns {number} 返回找到元素的 索引值（index），否则返回 -1。
+     */
     findItemIndex (predicate) {
         return _.findIndex(this.data, predicate);
     },
+     /**
+     * 查找数据，返回
+     * @param {(function|object|array|string)} predicate  这个函数会在每一次迭代调用。
+     * @returns {number} 返回匹配元素
+     */
     findItem (predicate) {
         return _.find(this.data, predicate);
     },
+        /**
+     * 获取数据所在索引
+     * @param {(function|object|array|string)} predicate  这个函数会在每一次迭代调用
+     * @returns {number} 返回数组
+     */
     filter (predicate) {
         return _.filter(this.data, predicate);
     },
+    /** 
+     * 终止请求
+    */
     abort(){}
 });
 var remoteSource = Source.extend({
@@ -197,7 +246,7 @@ function DataSource(options) {
 }
 /**
  * 垂直数组转换树形数据
- * @function
+ * @static
  * @param {array<object>} data 数据
  * @param {string} idField 主键唯一字段名
  * @param {string} parentField 关联字段名
