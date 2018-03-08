@@ -60,7 +60,7 @@ module.exports={
         "encoding": "utf8",               // same as -e utf8
         "destination": "./dist/jsdoc/",          // same as -d ./out/
         "recurse": true,                  // same as -r
-      //  "tutorials": "jsdoc/dx-tutorials", // same as -u path/to/tutorials
+        "tutorials": "jsdoc/dx-tutorials", // same as -u path/to/tutorials
     },
     // "class":{
     //     "title":"类"
