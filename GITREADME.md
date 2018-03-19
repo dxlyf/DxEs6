@@ -309,6 +309,12 @@ doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 其他连续的星号被认为是无效的。
 ```
 ## 分支
+基本命令
+```bash
+git branch -all
+git branch --list 
+git branch --remotes
+```
 **创建**
 创建分支，并检出设为当前分支
 ```bash
