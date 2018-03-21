@@ -29,6 +29,22 @@ function getDiv() {
   }
   return <div {...list}>{data.map((item,index)=><p>{getItems()[index]}</p>)}</div>;
 }
+
+function getDiv2()
+{
+  return   <div>
+  { this.listType === 'picture-card' ? uploadList : ''}
+  {
+    this.$slots.trigger
+      ? [uploadComponent, this.$slots.default]
+      : uploadComponent
+  }
+  {this.$slots.tip}
+  { this.listType !== 'picture-card' ? uploadList : ''}
+</div>
+}
+
+
 if (module.hot) {
   module.hot.accept('./print', function () {
     console.log('Accepting the updated printMe module!');

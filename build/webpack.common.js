@@ -57,7 +57,8 @@ module.exports = {
                         options:{
                           presets:['env','flow'],
                           retainLines:true,
-                          plugins:['transform-react-jsx','transform-object-rest-spread'],
+                          plugins:['transform-vue-jsx','transform-object-rest-spread'],
+                         // plugins:['babel-plugin-transform-vue-jsx','transform-object-rest-spread'],
                           babelrc:false,
                          // plugins:['syntax-jsx']
                         }
