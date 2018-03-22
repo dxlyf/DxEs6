@@ -2,8 +2,10 @@ const path=require('path');
 let root=path.resolve(__dirname,'../../');
 import replace from 'rollup-plugin-replace';
 import babel from 'rollup-plugin-babel';
+import resolve from 'rollup-plugin-node-resolve';
 import alias from 'rollup-plugin-alias';
 import minify from 'rollup-plugin-babel-minify';
+import commonjs from 'rollup-plugin-commonjs';
 var argv=require('yargs').boolean('ug').argv;
 var plugins=[];
 if(argv.ug)
@@ -31,7 +33,7 @@ export default {
     iife – 一个自动执行的功能，适合作为<script>标签。（如果要为应用程序创建一个捆绑包，您可能想要使用它，因为它会使文件大小变小。）
     umd – 通用模块定义，以amd，cjs 和 iife 为一体
       */
-      format: 'umd',
+      format: 'amd',
       //代表你的 iife/umd 包，同一页上的其他脚本可以访问它。
        name:"mjb", 
         //字符串以 前置/追加 到文件束(bundle)。(注意:“banner”和“footer”选项不会破坏sourcemaps)
@@ -45,7 +47,7 @@ export default {
            // id: 'my-bundle'
         },
         globals:{
-            jquery:'$'
+          //  jquery:'$'
         },
         strict:true,
         /**
@@ -74,16 +76,28 @@ export default {
     //             }
     //         }
     //    }     
-    }),babel(
+    }),commonjs(),resolve(),babel(
         {
             babelrc:false,
             presets:[['env',{
                     targets:{
-                    //    chrome:50
+                        browsers:['last 3 versions','ie >= 9'],
                     },
-                  modules: false
+                   modules: false
                     
             }]],
+           // externalHelpers: true,
+            runtimeHelpers:true,
+            plugins:[['transform-runtime',{
+                "helpers": true,
+                'polyfill':true
+            }]],
+            // plugins:[['transform-runtime',{
+            //     "helpers": false,//是否切换将内联（inline）的 Babel helper（classCallCheck，extends 等）替换为对 moduleName 的调用。
+            //     "polyfill": false, //是否切换新的内置插件（Promise，Set，Map等）为使用非全局污染的 polyfill
+            //     "regenerator": true, //是否切换 generator 函数为不污染全局作用域的 regenerator 运行时。
+            //     "moduleName": "babel-runtime"
+            // }],"external-helpers"],
             exclude: 'node_modules/**' // 只编译我们的源代码
         }
     )],

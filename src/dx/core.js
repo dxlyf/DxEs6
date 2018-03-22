@@ -12,7 +12,7 @@ import Vue from 'vue';
  * @requires jQuery
  * @readonly
  */
-import $,{isPlainObject,isFunction,extend,isArray} from 'jquery';
+import $,{isPlainObject,isFunction,extend} from 'jquery';
 /** 
  * lodash 变量
  * @var {function} _
