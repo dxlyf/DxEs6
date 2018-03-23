@@ -44,6 +44,7 @@ module.exports ={
                       use:{
                             loader:'babel-loader',
                             options:{
+                                
                             //     babelrc:false,
                             //   //  plugins:['syntax-jsx'],
                             //     presets:[['env',{

@@ -28,6 +28,8 @@
  */ 
 
  import _ from 'lodash'
+ import {Promise,extend} from './core'
+ import {noop} from 'jquery'
      
         /**
          *  获取一年所有月份的天数
@@ -477,7 +479,81 @@ export const dom={
     {
         var {innerWidth:width,innerHeight:height}=top?window.top:window.self;
         return {width,height}
-    }   
+    }
+}
+export const utils={
+        /**
+     * 获取图像文件原始宽高
+     * @param {file} file  
+     * @returns {Promise}
+     */
+    getImageFileSize(file)
+    {
+        return Promise(({resolve,reject})=>{
+            let img=new Image();
+            img.onload=function(){
+                resolve({
+                    width:img.naturalWidth||img.width,
+                    height:img.naturalHeight ||img.height,
+                    size:file.size
+                });
+                window.URL.revokeObjectURL(img.src);
+            }
+            img.onerror=img.onabort=function(){
+                reject();
+            }
+            if(window.URL)
+            {
+            img.src=window.URL.createObjectURL(file);
+            }else{
+                reject();
+            }
+
+        })       
+    },
+    /**
+     * 
+     * @param {*} file  文件
+     * @param {*} options 
+     */
+    checkImageFile(file,options)
+    {
+        options=extend({
+            limitExtensions:[],
+            limitSize:-1,
+            maxWidth:-1,
+            maxHeight:-1,
+            minWidth:-1,
+            minHeight:-1,
+            onLimitExtendsion:noop,
+            onLimitSize:noop,
+            onLimit:noop
+        },options);
+        var {limitExtensions,limitSize,maxWidth,maxHeight,minWidth,minHeight,onLimitExtendsion,onLimitSize,onLimit}=options;
+        return Promise(function({resolve,reject}){        
+            if (limitExtensions.length>0&&limitExtensions.indexOf(file.type) == -1) {
+                reject(file);
+                onLimitExtendsion(file);
+                return false;
+            }
+            if (limitSize!=-1&&file.size > limitSize) {
+                reject(file);
+                onLimitSize(file);
+                return false;
+            }
+            utils.getImageFileSize(file).then((img)=>{
+                var {width:w,height:h}=img;
+                if (maxWidth!=-1&&w>maxWidth||minWidth!=-1&&w<minWidth||maxHeight!=-1&&h>maxHeight||minHeight!=-1&&h<minHeight) {
+                    reject(file);
+                    onLimit(img,file);
+                    return;
+                }
+                resolve(img);
+            },function(){
+                reject(file);
+            })
+        })
+    }
 }
 
 export const  strings = {

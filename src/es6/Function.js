@@ -4,6 +4,36 @@ var f = v => v;
 
 const  call =(key,...args)=>  context  => context [key](... args);
 
+// 参数解板
+function args55(name,{age = 43,name = '4'})
+{
+
+}
+// // 参数解板2
+// function args2(name,options={age=43,name='4'}={})
+// {
+
+// }
+// // 参数解板3
+// function args2(name,{age,name}={age=43,name='4'})
+// {
+
+// }
+// // 参数解板4
+// function args2(name,{age:age4,name:name4}={age=43,name='4'})
+// {
+
+// }
+// // 参数解板4
+// function args2(name,{age,name}={age:43,name:'4'})
+// {
+
+// }
+// // 参数解板4
+// function args2(name,{age:age4=3,name:name4}={age:43,name:'4'})
+// {
+
+// }
 function compose(...funcs) {
     if (funcs.length === 0) {
       return arg => arg

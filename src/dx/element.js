@@ -5,7 +5,7 @@
 import ELEMENT from 'element-ui'
 import * as core from './core'
 import $,{isPlainObject,isFunction} from 'jquery'
-function showMessageBox(msgAction) {
+function showMessageBox(msgAction,defaultOption={}) {
     return function (message, title, options) {
         var promise = new core.Promise();
         if (isPlainObject(title) || isFunction(title)) {
@@ -15,6 +15,7 @@ function showMessageBox(msgAction) {
         if (!isPlainObject(options)) {
             options = {};
         }
+        options=core.extend({},defaultOption,options);
         var oldCallback = options.callback;
         options.callback = function (action, instance) {
             if (action == 'confirm') {
@@ -51,7 +52,7 @@ export const alert = showMessageBox('alert');
  * @param {object} options 参考element-ui 官网API MessageBox
  * @function
  */
-export const confirm = showMessageBox('confirm');
+export const confirm = showMessageBox('confirm',{type:'warning'});
 /**
 * 对话弹出框
 * @param {type} message 内容
