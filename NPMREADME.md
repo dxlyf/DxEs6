@@ -27,8 +27,8 @@ c:/Program Files/nodejs/node_global
 ### 设置NPM安装路径
 `npm config list` 查看配置
 ```bash
-npm config set prefix “C:\Program Files\nodejs\node_global”
-npm config set cache “C:\Program Files\nodejs\node_cache”
+npm config set prefix "c:\Program Files\nodejs\node_global"
+npm config set cache "c:\Program Files\nodejs\node_cache"
 ```
 或者通过打开C:\Program Files\nodejs\node_modules\npm\npmrc 添加
 ```
@@ -415,3 +415,7 @@ depth|int|0|检查依赖关系树的最大
 如果--production标志被指定或者NODE_ENV环境变量被设置为production，这个命令将删除在你指定的包devDependencies。设置--production=false将取消NODE_ENV设置production。
 
 ## 更新NPM和NODE
+清除缓存
+```baseh
+npm cache clear --force
+```
