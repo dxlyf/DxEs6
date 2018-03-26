@@ -27,8 +27,8 @@ c:/Program Files/nodejs/node_global
 ### 设置NPM安装路径
 `npm config list` 查看配置
 ```bash
-npm config set prefix “D:\SoftWare\NodeJS_Redis\NodeJS\node_modules\node_global”
-npm config set cache “D:\SoftWare\NodeJS_Redis\NodeJS\node_modules\node_cache”
+npm config set prefix “C:\Program Files\nodejs\node_global”
+npm config set cache “C:\Program Files\nodejs\node_cache”
 ```
 或者通过打开C:\Program Files\nodejs\node_modules\npm\npmrc 添加
 ```
