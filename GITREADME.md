@@ -45,7 +45,15 @@ $ git commit -m '初始化项目版本'
 ## git clone
 
 我们使用 git clone 从现有 Git 仓库中拷贝项目（类似 svn checkout）。
-
+```bash
+git clone [--template=<template_directory>]
+	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+	  [--dissociate] [--separate-git-dir <git dir>]
+	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
+	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
+	  [--jobs <n>] [--] <repository> [<directory>]
+```
 克隆仓库的命令格式为：
 ```bash
 git clone <repo>
@@ -67,6 +75,10 @@ $ git clone git://github.com/schacon/grit.git
 如果要自己定义要新建的项目目录名称，可以在上面的命令末尾指定新的名字：
 ```bash
 $ git clone git://github.com/schacon/grit.git mygrit
+```
+指定分支:
+```bash
+git clone <-b|--branch> barnchName <repo> [directory]
 ```
 ## Git 标签
 
