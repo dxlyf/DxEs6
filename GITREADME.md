@@ -381,6 +381,10 @@ git rm --cached README 移除暂存区
 ```bash
 $ git mv file_from file_to
 ```
+**撤销操作**
+```bash
+git commit --amend
+```
 ## 分支
 基本命令
 ```bash
