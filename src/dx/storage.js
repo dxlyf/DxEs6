@@ -6,32 +6,16 @@ var Storage = function (storage) {
 Storage.prototype = {
     constructor: Storage,
     setItem (name, data) {
-        var valuetype = Object.prototype.toString.call(data);
-        if (_.isObject(data) && !_.isFunction(data)) {
-            data = JSON.stringify(data);
-        }
-        this.storage.setItem("_" + name + "_type", valuetype)
-        this.storage.setItem(name, data);
+        this.storage.setItem(name, JSON.stringify(data));
     },
     getItem (name) {
-        var value, valuetype;
-        if (this.has(name)) {
-            value = this.storage.getItem(name)
-            valuetype = this.storage.getItem("_" + name + "_type");
-            if (valuetype == '[object Object]' || valuetype == '[object Array]') {
-                value = JSON.parse(value);
-            }
-        }
-        return value;
+        return JSON.parse(this.storage.getItem(name));
     },
     has (name) {
         return this.storage.hasOwnProperty(name);
     },
     removeItem (name) {
-        if (this.has(name)) {
-            this.storage.removeItem(name);
-            this.storage.removeItem("_" + name + "_type");
-        }
+        return      this.storage.removeItem(name);
     }
 };
 /** 
