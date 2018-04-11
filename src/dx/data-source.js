@@ -27,6 +27,8 @@ var Source = Observable.extend(
      * @param {object} options 数据源参数选项
      * @param {(object|array|function)} options.data 数据
      * @param {object} options.transport  远程数据请求参数
+     * @param {boolean} server 当transport不为null时，是否开启transport请求,默认true
+     * @param {function} parseData 数据结果转换
      */
     constructor (options) {
         Observable.call(this);

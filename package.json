@@ -4,6 +4,7 @@
   "description": "开发",
   "main": "index.js",
   "scripts": {
+    "dx:doc":"jsdoc -c jsdoc/dx.js",
     "rollup-dx": "rollup -c build/rollup/rollup.dx.js",
     "webserver": "node build/web-server",
     "test": "node build/test",

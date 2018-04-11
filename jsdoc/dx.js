@@ -1,6 +1,7 @@
 
 //jsdoc -c jsdoc/dx.js
 /**
+ * npm i jsdoc -g
  * 
  * templates:
     *  cerulean
