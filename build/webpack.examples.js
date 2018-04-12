@@ -342,7 +342,7 @@ module.exports = {
   },
   // 精确控制要显示的 bundle 信息
 
-  devServer: {
+   {
     proxy: { // proxy URLs to backend development server
       '/api': 'http://localhost:3000'
     },
@@ -353,6 +353,212 @@ module.exports = {
     https: false, // true for self-signed, object for cert authority
     noInfo: true, // only errors & warns on hot reload
     // ...
+      
+    hot:false，//启用热模块更换。
+    hotOnly:false，//启用热更换模块而不刷新页面作为后备。
+    lazy:false，//禁用watch模式并仅在请求时重新编译bundle。
+    bonjour:false，//发布ZeroConf DNS服务
+    host:，//服务器监听的主机。
+    allowedHosts:，//指定哪些主机被允许访问dev服务器。
+    filename:false，//为了触发重新编译需要被请求的文件名（只在懒惰模式下）。
+    
+    /*[
+      {
+        "instanceof": "RegExp"
+      },
+      {
+        "type": "string"
+      }
+    ]*/
+    publicPath:，//网址文件所在的URL路径。
+    port:false，//服务器侦听的端口。
+    
+    /*[
+      {
+        "type": "number"
+      },
+      {
+        "type": "string"
+      }
+    ]*/
+    socket:，//用于监听的Unix套接字（而不是主机）。
+    watchOptions:{}，//更改手表行为的选项。
+    headers:{}，//添加到每个响应的响应标题。
+    logLevel:，//终端/控制台中的日志级别（trace，debug，info，warn，error或none）
+    clientLogLevel:，//控制浏览器中显示的日志消息。
+    overlay:false，//在浏览器中显示错误覆盖。
+    
+    /*[
+      {
+        "type": "boolean"
+      },
+      {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "boolean"
+          },
+          "warnings": {
+            "type": "boolean"
+          }
+        }
+      }
+    ]*/
+    progress:false，//在浏览器控制台中显示编译进度。
+    key:false，// SSL密钥的内容。
+    
+    /*[
+      {
+        "type": "string"
+      },
+      {
+        "instanceof": "Buffer"
+      }
+    ]*/
+    cert:false，// SSL证书的内容。
+    
+    /*[
+      {
+        "type": "string"
+      },
+      {
+        "instanceof": "Buffer"
+      }
+    ]*/
+    ca:false，// SSL CA证书的内容。
+    
+    /*[
+      {
+        "type": "string"
+      },
+      {
+        "instanceof": "Buffer"
+      }
+    ]*/
+    pfx:false，// SSL pfx文件的内容。
+    
+    /*[
+      {
+        "type": "string"
+      },
+      {
+        "instanceof": "Buffer"
+      }
+    ]*/
+    pfxPassphrase:，//到（SSL）PFX文件的密码。
+    requestCert:false，//启用对客户端证书的请求。这直接传递给https服务器。
+    inline:false，//启用内联模式以将客户端脚本包含在包中（仅限CLI）。
+    disableHostCheck:false，//禁用主机头检查（安全性）。
+    public:，//服务器的公共主机名/ IP地址。
+    https:false，//启用服务器的HTTPS。
+    
+    /*[
+      {
+        "type": "object"
+      },
+      {
+        "type": "boolean"
+      }
+    ]*/
+    contentBase:false，//从非webpack文件提供文件的目录。
+    
+    /*[
+      {
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      {
+        "enum": [
+          false
+        ]
+      },
+      {
+        "type": "number"
+      },
+      {
+        "type": "string"
+      }
+    ]*/
+    watchContentBase:false，//观察contentBase目录中的更改。
+    open:false，//让CLI用URL打开浏览器。
+    
+    /*[
+      {
+        "type": "string"
+      },
+      {
+        "type": "boolean"
+      }
+    ]*/
+    useLocalIp:false，//让浏览器打开本地IP。
+    openPage:，//让CLI将浏览器打开到网站上的特定页面。
+    features:，//功能将被触发的顺序。
+    compress:false，//对所有请求进行Gzip压缩。
+    proxy:false，//代理请求到另一台服务器。
+    
+    /*[
+      {
+        "items": {
+          "anyOf": [
+            {
+              "type": "object"
+            },
+            {
+              "instanceof": "Function"
+            }
+          ]
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      {
+        "type": "object"
+      }
+    ]*/
+    historyApiFallback:false，// 404回退到指定的文件。
+    
+    /*[
+      {
+        "type": "boolean"
+      },
+      {
+        "type": "object"
+      }
+    ]*/
+    staticOptions:{}，//用contentBase提供静态文件的选项。
+    setup:undefined，//公开Express服务器以添加自定义中间件或路由。
+    before:undefined，//在添加webpack-dev-middleware之前，公开Express服务器以添加自定义中间件或路由。
+    after:undefined，//在添加webpack-dev-middleware后，公开Express服务器以添加自定义中间件或路由。
+    stats:false，//决定显示哪些束信息。
+    
+    /*[
+      {
+        "type": "object"
+      },
+      {
+        "type": "boolean"
+      },
+      {
+        "enum": [
+          "none",
+          "errors-only",
+          "minimal",
+          "normal",
+          "verbose"
+        ]
+      }
+    ]*/
+    reporter:undefined，//定制编译时控制台显示的内容。
+    logTime:false，//在控制台显示中编译前后报告时间。
+    noInfo:false，//在控制台上隐藏所有信息。
+    quiet:false，//在控制台上隐藏所有消息。
+    serverSideRender:false，//公开服务器端渲染的统计信息（实验）。
+    index:，//被认为是索引文件的文件名。
+    log:undefined，//自定义webpack-dev-middleware的信息日志。
+    warn:undefined，//为webpack-dev-middleware自定义警告日志。
   },
 
   plugins: [
