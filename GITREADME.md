@@ -117,7 +117,7 @@ Git 使用两种主要类型的标签：轻量标签（lightweight）与附注�
 ### 附注标签
 在 Git 中创建一个附注标签是很简单的。 最简单的方式是当你在运行 tag 命令时指定 -a 选项：
 ```bash
-$ git tag -a v1.4 -m 'my version 1.4'
+$ git tag -a v1.4 -m "my version 1.4"
 $ git tag
 v0.1
 v1.3
@@ -418,6 +418,20 @@ git commit --amend
 ## 分支
 基本命令
 ```bash
+git branch [--color[=<when>] | --no-color] [-r | -a]
+	[--list] [-v [--abbrev=<length> | --no-abbrev]]
+	[--column[=<options>] | --no-column] [--sort=<key>]
+	[(--merged | --no-merged) [<commit>]]
+	[--contains [<commit]] [--no-contains [<commit>]]
+	[--points-at <object>] [--format=<format>] [<pattern>…​]
+git branch [--track | --no-track] [-l] [-f] <branchname> [<start-point>]
+git branch (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+git branch --unset-upstream [<branchname>]
+git branch (-m | -M) [<oldbranch>] <newbranch>
+git branch (-c | -C) [<oldbranch>] <newbranch>
+git branch (-d | -D) [-r] <branchname>…​
+git branch --edit-description [<branchname>]
+
 git branch -all
 git branch --list 
 git branch --remotes
@@ -516,6 +530,12 @@ To https://github.com/schacon/simplegit
  - [deleted]         serverfix
 ```
 基本上这个命令做的只是从服务器上移除这个指针。 Git 服务器通常会保留数据一段时间直到垃圾回收运行，所以如果不小心删除掉了，通常是很容易恢复的
+**重命名远程分支**
+```bash
+git push --delete origin devel
+git branch -m devel develop
+git push origin serverfix
+```
 
 ## fetch
 更新
