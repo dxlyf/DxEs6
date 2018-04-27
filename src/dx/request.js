@@ -24,13 +24,16 @@ var responseStatus = {
     'ServerError': "500" 
 },
  /**
+  * 需要重写
   * 获取接口请求地址
   * @param {string} name 接口配置名称
   * @returns {string} 返回接口名对应完整地址
   * @function
   * @static
   */
-  getUrl = __non_webpack_require__('configs').getUrl,
+  getUrl =function(name){
+      return name;
+  },
   noop = $.noop,
   globalAjaxSetting = {
       inShowLoading: false,

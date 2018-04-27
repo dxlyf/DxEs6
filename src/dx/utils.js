@@ -587,5 +587,29 @@ export const paths = {
                     return d.replace(/[\\/]/g, '');
                 });
                 return paths.join('/');
+            },
+            resolve(...paths)
+            {
+                var current,result=[],index,element,prev;
+                while(paths.length)
+                {
+                    current=paths.shift();
+                    current=current.split(/\/|\\/);
+                    for (index = 0; index < current.length; index++) {
+                         prev=element;
+                         element = current[index];
+                         if(index==0&&element==''&&prev!=='')
+                         {
+                            result.push(element);
+                        }if(element.indexOf('..')==0&&element.length==2)
+                         {
+                            result.pop();
+                         }else if(element.indexOf('.')!=0&&element.length>0)
+                         {
+                            result.push(element);
+                         }
+                    }
+                }
+                return result.join('/');
             }
   };
