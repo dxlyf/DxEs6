@@ -1,19 +1,19 @@
 #npm 使用
 * [初始化](#初始化)
 * [npm install](#安装包)
-* [npm link](#NPM链接)
-* [npm view](#查看安装包)
+* [npm link](#npmlink)
+* [npm view](#viewinstallpackage)
 * [查看包版本](#查看版本)
 * [检查过时包](#检查过时包)
 * [搜索包](#搜索)
 * [配置](#配置)
 * [更新](#更新)
 * [卸载](#卸载)
-* [删除多余的包](#删除多余的包)
+* [删除多余的包](#delpackage)
 * [更新NPM和NODE](#更新npm和node)
 * [package配置](#package配置)
 ---
-## 安装node
+## 安装nodek
 [node下载](#http://nodejs.cn/download/)
 
 ## 全局化文件夹自定义设置
@@ -240,7 +240,8 @@ aliases: dist-tags
 
 **此外，如果你有一个npm-shrinkwrap.json或package-lock.json那么它也会被更新。**
 
-## NPM链接
+## <span id="npmlink">NPM链接</span>
+
 ```bash
 > npm link (in package dir)
 > npm link [<@scope>/]<pkg>[@<version>]
@@ -285,7 +286,7 @@ aliases: remove, rm, r, un, unlink
 > npm uninstall <package> --no-save  包将不会从您的package.json文件中删除。
 ```
 
-## 查看安装包
+## <span id="viewinstallpackage">查看安装包</span>
 ```bash
 > npm view [<@scope>/]<name>[@<version>] [<field>[.<subfield>]...]
 aliases: info, show, v
@@ -407,7 +408,7 @@ parseable|boolean|false|显示可解析的输出而不是树视图。
 global|boolean|false|检查全局安装前缀中的包而不是当前项目中的包。
 depth|int|0|检查依赖关系树的最大
 
-## 删除多余的包
+## <span id="delpackage">删除多余的包</span>
 ```bash
 > npm prune [[<@scope>/]<pkg>...] [--production]
 ```

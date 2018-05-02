@@ -23,7 +23,47 @@ webpack -d --config ../config.js
 module.exports=(env, argv)=>{
     let webpackConfig=merge(baseConfig,{
         mode:'development',//
+        output: {
+          chunkLoadTimeout:120000,//chunk 请求到期之前的毫秒数，默认为 120 000
+          filename: '[name].js',
+          path: path.join(root, 'dist'),
+          publicPath:"/", //对于按需加载(on-demand-load)或加载外部资源(external resources)（如图片、文件等）来说，output.publicPath 是很重要的选项。如果指定了一个错误的值，则在加载这些资源时会收到 404 错误。
+          chunkFilename:'[id].js',//此选项决定了非入口(non-entry) chunk 文件的名称。有关可取的值的详细信息，请查看 output.filename 选项。
+          hotUpdateChunkFilename: "[id].[hash].hot-update.js",//自定义热更新 chunk 的文件名
+          pathinfo:true ,//告诉 webpack 在 bundle 中引入「所包含模块信息」的相关注释
+          library: {
+              commonjs: "dx-vuexproject"
+           },
+          libraryTarget: "commonjs",
+          sourceMapFilename:'[file].map',
+          /**
+           * [absolute-resource-path]
+            绝对路径文件名
+            [all-loaders]
+            自动和显式的 loader，并且参数取决于第一个 loader 名称
+            [hash]
+            模块标识符的 hash
+            [id]
+            模块标识符
+            [loaders]
+            显式的 loader，并且参数取决于第一个 loader 名称
+            [resource]
+            用于解析文件的路径和用于第一个 loader 的任意查询参数
+            [resource-path]
+            不带任何查询参数，用于解析文件的路径
+            [namespace]
+            模块命名空间。在构建成为一个 library 之后，通常也是 library 名称，否则为空
+            当使用一个函数，同样的选项要通过 info 参数
+           *
+           * 当使用 devtool: 'eval' 
+          */
+         // devtoolModuleFilenameTemplate: "webpack://[namespace]/[resource-path]?[loaders]",
+          umdNamedDefine:false //会对 UMD 的构建过程中的 AMD 模块进行命名。否则就使用匿名的 define。
+       },    
         devtool: 'inline-source-map',
+           // devtool:'source-map',
+    //devtool:'eval-source-map',
+   // devtool:'eval-cheap-module-source-map',
         plugins:[
             new CleanWebpackPlugin(['dist'],{
                 root:resolve(),
