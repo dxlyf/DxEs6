@@ -349,7 +349,7 @@ module.exports = {
   },
   // 精确控制要显示的 bundle 信息
 
-   {
+  devServer: {
     proxy: { // proxy URLs to backend development server
       '/api': 'http://localhost:3000'
     },

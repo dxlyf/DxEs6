@@ -432,7 +432,7 @@ git branch (-c | -C) [<oldbranch>] <newbranch>
 git branch (-d | -D) [-r] <branchname>…​
 git branch --edit-description [<branchname>]
 
-git branch -all
+git branch --all
 git branch --list 
 git branch --remotes
 ```

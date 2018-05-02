@@ -590,7 +590,12 @@ export const paths = {
             },
             resolve(...paths)
             {
-                var current,result=[],index,element,prev;
+                var current,result=[],index,element,prev,first='',m;
+                if (paths.length > 0 && (m=paths[0].match(/^https*:\/\//)))
+                {
+                    first=m[0];
+                    paths[0] =paths[0].substr(first.length);
+                }
                 while(paths.length)
                 {
                     current=paths.shift();
@@ -610,6 +615,6 @@ export const paths = {
                          }
                     }
                 }
-                return result.join('/');
+                return first+result.join('/');
             }
   };

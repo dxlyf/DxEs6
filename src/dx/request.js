@@ -6,6 +6,7 @@ import $ from 'jquery'
 import _ from 'lodash'
 //import configs from 'configs'
 import {loading,hideLoading,alert} from './element'
+
 /**
  * ajax响应 retStatus状态码
  * @readonly
@@ -23,23 +24,13 @@ var responseStatus = {
     /** 服务器内部错误 */
     'ServerError': "500" 
 },
- /**
-  * 需要重写
-  * 获取接口请求地址
-  * @param {string} name 接口配置名称
-  * @returns {string} 返回接口名对应完整地址
-  * @function
-  * @static
-  */
-  getUrl =function(name){
-      return name;
-  },
   noop = $.noop,
   globalAjaxSetting = {
       inShowLoading: false,
       isAutoCloseLoading: true,
       loading: false
   };
+
 $.ajaxSetup({
     type: "GET",
     dataType: "json",
@@ -65,6 +56,8 @@ $(document).ajaxStop(function () {
     }
 
 });
+
+
 function wrapReuqest(options) {
     function wrapSuccess(d) {
         if (!options.isWrapAjax) {
@@ -157,9 +150,27 @@ function getRequest(options) {
     options.type = "get";
     return request(options);
 }
+ /**
+  * 需要重写
+  * 获取接口请求地址
+  * @param {string} name 接口配置名称
+  * @returns {string} 返回接口名对应完整地址
+  * @function
+  * @static
+  */
+ function getUrl(name)
+ {
+     var _mjb=window[process.env.globalvar];
+     if(_mjb.getUrl)
+     {
+         return _mjb.getUrl(name);
+     }
+     return name;
+ }
+
 export {
-    getUrl,
     request,
     postRequest,
-    getRequest
+    getRequest,
+    getUrl
 }

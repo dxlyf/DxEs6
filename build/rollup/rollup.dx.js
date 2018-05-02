@@ -46,6 +46,7 @@ export default {
         amd: {
            // id: 'my-bundle'
         },
+        freeze:false,// 导出不冻结
         globals:{
           //  jquery:'$'
         },

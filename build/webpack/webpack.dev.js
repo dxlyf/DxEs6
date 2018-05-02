@@ -16,6 +16,9 @@ module.exports = {
 -   new webpack.DefinePlugin({ "process.env.NODE_ENV": JSON.stringify("development") }),
 - ]
 }
+-d --debug --devtool cheap-module-eval-source-map --output-pathinfo
+
+webpack -d --config ../config.js
 */
 module.exports=(env, argv)=>{
     let webpackConfig=merge(baseConfig,{
@@ -44,6 +47,8 @@ module.exports=(env, argv)=>{
              progress:true, //将运行进度输出到控制台。
             // openPage:null //指定打开浏览器时导航到的页面。
              quiet: false,//启用quiet后，除了初始启动信息之外的任何内容都不会被打印到控制台。这也意味着来自的WebPack的错误或警告在控制台不可见。
+
+             
         }
     });
     return webpackConfig;

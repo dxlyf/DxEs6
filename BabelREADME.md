@@ -3,7 +3,7 @@
 - [语法转换](#插件语法转换情况)
 - [类型转换](#类型转换)
 - [所有插件](#所有插件)
-- [插件/预设排序](#插件/预设排序)
+- [插件/预设排序](#插件预设排序)
 
 ## 默认转换情况
 Babel 默认只转换新的 JavaScript 句法（syntax），而不转换新的 API ，比如 Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise 等全局对象，以及一些定义在全局对象上的方法（比如 Object.assign）都不会转码。Babel 默认不转码的 API 非常多，详细清单可以查看 definitions.js 文件
@@ -1485,7 +1485,7 @@ Copy
 * 不推荐
   * class-constructor-call
 
-### 插件/预设排序
+### 插件预设排序
 
 为插件中的每个访问者排序。
 
