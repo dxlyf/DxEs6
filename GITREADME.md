@@ -3,11 +3,12 @@
 - [提交](#提交)
 - [提交更新](#提交更新)
 - [忽略文件](#忽略文件)
-- [分支](#分支)
+- [分支](#fenzhi)
 - [远程分支](#远程分支)
 - [fetch](#fetch)
 - [远程仓库](#远程仓库)
 - [标签](#git-标签)
+- [合并](#merge)
 
 ## 创建仓库
 
@@ -215,7 +216,7 @@ Writing objects: 100% (14/14), 2.05 KiB | 0 bytes/s, done.
 Total 14 (delta 3), reused 0 (delta 0)
 To git@github.com:schacon/simplegit.git
  * [new tag]         v1.5 -> v1.5
- ```
+```
 如果想要一次性推送很多标签，也可以使用带有 --tags 选项的 git push 命令。 这将会把所有不在远程仓库服务器上的标签全部传送到那里。
 ```bash
 $ git push origin --tags
@@ -225,7 +226,7 @@ Total 1 (delta 0), reused 0 (delta 0)
 To git@github.com:schacon/simplegit.git
  * [new tag]         v1.4 -> v1.4
  * [new tag]         v1.4-lw -> v1.4-lw
- ```
+```
 现在，当其他人从仓库中克隆或拉取，他们也能得到你的那些标签。
 
 ### 检出标签
@@ -367,7 +368,7 @@ $ cat .gitignore
 *(a|b|c) 匹配零次或多次出现的模式
 @(pattern|pat*|pat?erN) 完全匹配提供的模式之一
 **如果“globstar”在路径部分单独存在，则匹配零个或多个目录和搜索匹配的子目录。它不抓取符号链接的目录。
- ```
+```
 
 **查看已暂存和未暂存的修改**
 查看已暂存
@@ -415,7 +416,7 @@ $ git mv file_from file_to
 ```bash
 git commit --amend
 ```
-## 分支
+## <span id="fenzhi">分支</span>
 基本命令
 ```bash
 git branch [--color[=<when>] | --no-color] [-r | -a]
@@ -461,7 +462,7 @@ git merge <branchname>
 
 git mergetool
 ```
-## 远程分支
+## <span id="远程分支">远程分支</span>
 
 **推送**
 当你想要公开分享一个分支时，需要将其推送到有写入权限的远程仓库上。 本地的分支并不会自动与远程仓库同步 - 你必须显式地推送想要分享的分支。 这样，你就可以把不愿意分享的内容放到私人分支上，而将需要和别人协作的内容推送到公开分支。
@@ -619,4 +620,14 @@ paul
 $ git remote rm paul
 $ git remote
 origin
+```
+
+## merge
+```bash
+git merge [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+	[-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
+	[--[no-]allow-unrelated-histories]
+	[--[no-]rerere-autoupdate] [-m <msg>] [<commit>…​]
+git merge --abort
+git merge --continue
 ```
