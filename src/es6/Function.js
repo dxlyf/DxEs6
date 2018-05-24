@@ -9,6 +9,28 @@ function args55(name,{age = 43,name2 = '4'}={})
 {
 
 }
+function args999(options={
+  cateid=0,
+  lowerprice=0,
+  orderfield=0,
+  orderform=0,
+  pageindex=1,
+  pagesize=10,
+  sortid='',
+  upperprice=0
+  }={cateid:0,
+    lowerprice:0,
+    orderfield:0,
+    orderform:0,
+    pageindex:1,
+    pagesize:10,
+    sortid:'',
+    upperprice:0}){
+
+
+
+      var cateid=options.cateid;
+  }
 // // 参数解板2
 // function args2(name,options={age=43,name='4'}={})
 // {
