@@ -9,6 +9,10 @@ function args55(name,{age = 43,name2 = '4'}={})
 {
 
 }
+function args8(options={age=43}={})
+{
+    let p=options.age;
+}
 function args999(options={
   cateid=0,
   lowerprice=0,
