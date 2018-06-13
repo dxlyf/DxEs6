@@ -21,3 +21,9 @@ arrayProto.pushList=function()
 var arr3=[];
 arr3.__proto__=arrayProto;
 Object.setPrototypeOf(arr3,arrayProto);
+
+
+// flat T39草案
+
+var aflat=[1,2,3,4,[6,7]].flat()
+

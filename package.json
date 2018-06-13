@@ -4,7 +4,7 @@
   "description": "开发",
   "main": "index.js",
   "scripts": {
-    "dx:doc":"jsdoc -c jsdoc/dx.js",
+    "dx:doc": "jsdoc -c jsdoc/dx.js",
     "rollup-dx": "rollup -c build/rollup/rollup.dx.js",
     "webserver": "node build/web-server",
     "test": "node build/test",
@@ -60,6 +60,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-3": "^6.24.1",
     "clean-webpack-plugin": "^0.1.17",
     "css-loader": "^0.28.7",
     "express": "^4.16.2",
