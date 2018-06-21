@@ -97,7 +97,12 @@ module.exports = {
 
     rules: [
       // 模块规则（配置 loader、解析器等选项）
+      {
 
+        use:'label-laoder'
+        //use:[ "style-loader" ],
+        //use:[{loader:'style-laoder',options:{}}]
+      },
       {
         test: /\.jsx?$/,
         include: [
