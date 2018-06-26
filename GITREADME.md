@@ -9,6 +9,7 @@
 - [远程仓库](#远程仓库)
 - [标签](#git-标签)
 - [合并](#merge)
+- [checkout](#checkout)
 
 ## 创建仓库
 
@@ -630,4 +631,15 @@ git merge [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
 	[--[no-]rerere-autoupdate] [-m <msg>] [<commit>…​]
 git merge --abort
 git merge --continue
+```
+
+## checkout
+```bash
+git checkout [-q] [-f] [-m] [<branch>]
+git checkout [-q] [-f] [-m] --detach [<branch>]
+git checkout [-q] [-f] [-m] [--detach] <commit>
+git checkout [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
+git checkout [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>…​
+git checkout [<tree-ish>] [--] <pathspec>…​
+git checkout (-p|--patch) [<tree-ish>] [--] [<paths>…​]
 ```
