@@ -11,7 +11,7 @@ var files=fs.readdirSync(dir,{
     encoding:"utf8"
 });
 var entryFiles={
-   // polyfill:'babel-polyfill'
+ //   polyfill:'babel-polyfill'
 };   //{['babel-polyfill']:'babel-polyfill'};
 files.forEach((file)=>{
     

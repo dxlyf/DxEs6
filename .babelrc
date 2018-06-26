@@ -9,7 +9,11 @@
         "include":[],
         "exclude":[]
     }]],
-    "plugins": ["transform-decorators-legacy","transform-class-properties","transform-object-rest-spread"],
+    "plugins": ["transform-decorators-legacy","transform-class-properties","transform-object-rest-spread", ["transform-regenerator", {
+        "asyncGenerators": true,
+        "generators": true,
+        "async": false
+      }]],
     "ignore": [
     "dist/**/*.js",
     "packages/**/*.js",
