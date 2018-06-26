@@ -10,7 +10,7 @@
         "exclude":[]
     }]],
     "plugins": ["transform-decorators-legacy","transform-class-properties","transform-object-rest-spread", ["transform-regenerator", {
-        "asyncGenerators": true,
+        "asyncGenerators": false,
         "generators": true,
         "async": false
       }]],
