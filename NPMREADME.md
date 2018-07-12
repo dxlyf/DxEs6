@@ -12,6 +12,7 @@
 * [删除多余的包](#delpackage)
 * [更新NPM和NODE](#更新npm和node)
 * [package配置](#package配置)
+* [版本](#版本)
 ---
 ## 安装nodek
 [node下载](#http://nodejs.cn/download/)
@@ -422,6 +423,8 @@ depth|int|0|检查依赖关系树的最大
 npm cache clear --force
 ```
 ## package配置
+
+
 
 ### 版本
 有关指定版本范围的更多详细信息，请参阅semver。
