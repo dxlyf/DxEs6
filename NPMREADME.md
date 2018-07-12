@@ -1,6 +1,6 @@
 #npm 使用
 * [初始化](#初始化)
-* [npm install](#安装包)
+* [npm install](#installpackage)
 * [npm link](#npmlink)
 * [npm view](#viewinstallpackage)
 * [查看包版本](#查看版本)
@@ -185,7 +185,7 @@ ll和la命令：ls --long
 > npm set init.author.name "ag_dubs"  
 > npm set init.license "MIT"  
 ```
-## 安装包
+## <span id="installpackage">安装包</psan>
 ```bash
 > npm install (with no args, in package dir)
 > npm install [<@scope>/]<name>
