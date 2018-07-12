@@ -13,6 +13,7 @@
 * [更新NPM和NODE](#更新npm和node)
 * [package配置](#package配置)
 * [版本](#版本)
+* [scripts](#scripts)
 ---
 ## 安装nodek
 [node下载](#http://nodejs.cn/download/)
@@ -166,7 +167,7 @@ ll和la命令：ls --long
 ## 初始化
 ```bash
 > npm init
- ``` 
+``` 
 要获得默认值package.json，请npm init使用--yes 或-y标志运行：
 - name：当前目录名称
 - version：总是 1.0.0
@@ -547,3 +548,71 @@ Caret Ranges ^1.2.3 ^0.2.5 ^0.0.4
 
 ^1.x ：= >=1.0.0 <2.0.0
 ^0.x ：= >=0.0.0 <1.0.0
+
+## scripts
+```bash
+npm run-script <command> [--silent] [-- <args>...]
+
+alias: npm run
+npm-scripts
+npm-test
+npm-start
+npm-restart
+npm-stop
+npm-config
+如果是并行执行（即同时的平行执行），可以使用&符号。
+$ npm run script1.js & npm run script2.js
+//如果是继发执行（即只有前一个任务成功，才执行下一个任务），可以使用&&符号。
+npm run <command>&&npm run <command>
+```
+描述
+对于以下脚本，npm支持package.json文件的“scripts”属性：
+
+prepublish：在包打包和发布之前运行，以及在npm install没有任何参数的本地运行。（见下文）
+准备：在打包和发布包之前运行，在npm install没有任何参数的本地运行（见下文）。这是在之后运行prepublish，但是之前prepublishOnly。
+prepublishOnly：在准备和包装之前运行，仅打开npm publish。（见下文。）
+预包装：前运行压缩包包装（上npm pack，npm publish并安装git的依赖时）
+postpack：在生成tarball之后运行并移动到其最终目标。
+发布，postpublish：发布包后运行。
+预安装：在安装软件包之前运行
+install，postinstall：安装软件包后运行。
+preuninstall，uninstall：在卸载软件包之前运行。
+postuninstall：在卸载软件包后运行。
+preversion：在碰撞包版本之前运行。
+version：运行AFTER碰撞包版本，但提交之前。
+postversion：运行AFTER碰撞包版本，然后提交。
+pretest，test，posttest：由npm test命令运行。
+prestop，stop，poststop：由npm stop命令运行。
+prestart，start，poststart：由npm start命令运行。
+prerestart，restart，postrestart：按npm restart命令运行。注意：npm restart如果没有restart提供脚本，将运行停止和启动脚本。
+preshrinkwrap，shrinkwrap，postshrinkwrap：由npm shrinkwrap命令运行。
+此外，可以通过运行执行任意脚本npm run-script <stage>。前置和后名称匹配的命令将这些运行以及（例如premyscript，myscript， postmyscript）。可以运行依赖项的脚本npm explore <pkg> -- npm run <stage>。
+
+** 钩子**
+七、钩子
+npm 脚本有pre和post两个钩子。举例来说，build脚本命令的钩子就是prebuild和postbuild。
+
+
+"prebuild": "echo I run before the build script",
+"build": "cross-env NODE_ENV=production webpack",
+"postbuild": "echo I run after the build script"
+用户执行npm run build的时候，会自动按照下面的顺序执行。
+
+
+npm run prebuild && npm run build && npm run postbuild
+因此，可以在这两个钩子里面，完成一些准备工作和清理工作。下面是一个例子。
+
+
+"clean": "rimraf ./dist && mkdir dist",
+"prebuild": "npm run clean",
+"build": "cross-env NODE_ENV=production webpack"
+npm 默认提供下面这些钩子。
+
+prepublish，postpublish
+preinstall，postinstall
+preuninstall，postuninstall
+preversion，postversion
+pretest，posttest
+prestop，poststop
+prestart，poststart
+prerestart，postrestart
