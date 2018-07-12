@@ -250,7 +250,7 @@ alias: npm ln
 ```
 如果需要require全局包，可以先npm link到local。
 无论你在哪个文件夹 执行 npm link xxx , 如果没有xxx模块, 那么xxx就会先安装在全局, 然后再从全局link过来
-
+* npm unlink 从全局包模块位置删除当前包
 * npm link 在一个包文件夹中，将在全局文件夹中创建一个符号链接 ，链接到npm link执行该命令的包.如果下面有package.json 会安装文件里面的依赖
 * npm link package-name 将创建一个从全局安装package-name到node_modules/ 当前文件夹的符号链接。
 ## 更新
