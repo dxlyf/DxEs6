@@ -16,7 +16,8 @@
 本章节我们将为大家介绍如何创建一个 Git 仓库。
 
 你可以使用一个已经存在的目录作为Git仓库。
-
+## 配置用户
+清除 git config --system --unset credential.helper
 ## git init
 
 Git 使用 git init 命令来初始化一个 Git 仓库，Git 的很多命令都需要在 Git 的仓库中运行，所以 git init 是使用 Git 的第一个命令。
