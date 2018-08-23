@@ -85,7 +85,16 @@ $ git clone git://github.com/schacon/grit.git mygrit
 git clone <-b|--branch> barnchName <repo> [directory]
 ```
 ## Git 标签
-
+```bash
+git tag [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>] [-e]
+	<tagname> [<commit> | <object>]
+git tag -d <tagname>…​
+git tag [-n[<num>]] -l [--contains <commit>] [--no-contains <commit>]
+	[--points-at <object>] [--column[=<options>] | --no-column]
+	[--create-reflog] [--sort=<key>] [--format=<format>]
+	[--[no-]merged [<commit>]] [<pattern>…​]
+git tag -v [--format=<format>] <tagname>…​
+```
 ### 打标签
 像其他版本控制系统（VCS）一样，Git 可以给历史中的某一个提交打上标签，以示重要。 比较有代表性的是人们会使用这个功能来标记发布结点（v1.0 等等）。 在本节中，你将会学习如何列出已有的标签、如何创建新标签、以及不同类型的标签分别是什么。
 
