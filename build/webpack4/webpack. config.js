@@ -64,16 +64,6 @@ module.exports = {
     crossOriginLoading: false,
     // 指定运行时如何发出跨域请求问题
     /* 专家级输出配置（自行承担风险） */
-    devtoolLineToLine: {
-      test: /\.jsx$/
-    },
-    // 为这些模块使用 1:1 映射 SourceMaps（快速）
-    hotUpdateMainFilename: "[hash].hot-update.json", // string
-    // 「HMR 清单」的文件名模板
-    hotUpdateChunkFilename: "[id].[hash].hot-update.js", // string
-    // 「HMR 分块」的文件名模板
-    sourcePrefix: "\t", // string
-    // 包内前置式模块资源具有更好可读性
   },
   module: {
     // 关于模块配置
@@ -213,29 +203,69 @@ module.exports = {
     // 应用于解析器的附加插件
   },
   performance: {
-    hints: "warning", // 枚举    maxAssetSize: 200000, // 整数类型（以字节为单位）
+    hints: "warning", // 枚举
+    hints: "error", // 性能提示中抛出错误
+    hints: false, // 关闭性能提示
+    maxAssetSize: 200000, // 整数类型（以字节为单位）
     maxEntrypointSize: 400000, // 整数类型（以字节为单位）
     assetFilter: function(assetFilename) {
       // 提供资源文件名的断言函数
       return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
     }
   },
-  devtool: "source-map", // enum  // 通过在浏览器调试工具(browser devtools)中添加元信息(meta info)增强调试
+  devtool: "source-map", // enum
+  devtool: "inline-source-map", // 嵌入到源文件中
+  devtool: "eval-source-map", // 将 SourceMap 嵌入到每个模块中
+  devtool: "hidden-source-map", // SourceMap 不在源文件中引用
+  devtool: "cheap-source-map", // 没有模块映射(module mappings)的 SourceMap 低级变体(cheap-variant)
+  devtool: "cheap-module-source-map", // 有模块映射(module mappings)的 SourceMap 低级变体
+  devtool: "eval", // 没有模块映射，而是命名模块。以牺牲细节达到最快。
+  // 通过在浏览器调试工具(browser devtools)中添加元信息(meta info)增强调试
   // 牺牲了构建速度的 `source-map' 是最详细的。
   context: __dirname, // string（绝对路径！）
   // webpack 的主目录
   // entry 和 module.rules.loader 选项
   // 相对于此目录解析
-  target: "web", // 枚举  // bundle 应该运行的环境
+  target: "web", // 枚举
+  target: "webworker", // WebWorker
+  target: "node", // node.js 通过 require
+  target: "async-node", // Node.js 通过 fs 和 vm
+  target: "node-webkit", // nw.js
+  target: "electron-main", // electron，主进程(main process)
+  target: "electron-renderer", // electron，渲染进程(renderer process)
+  target: (compiler) => { /* ... */ }, // 自定义
+  // bundle 应该运行的环境
   // 更改 块加载行为(chunk loading behavior) 和 可用模块(available module)
-  externals: ["react", /^@angular\//],  // 不要遵循/打包这些模块，而是在运行时从环境中请求他们
+  externals: ["react", /^@angular\//],
+  externals: "react", // string（精确匹配）
+  externals: /^[a-z\-]+($|\/)/, // 正则
+  externals: { // 对象
+    angular: "this angular", // this["angular"]
+    react: { // UMD
+      commonjs: "react",
+      commonjs2: "react",
+      amd: "react",
+      root: "React"
+    }
+  },
+  externals: (request) => { /* ... */ return "commonjs " + request }
+  // 不要遵循/打包这些模块，而是在运行时从环境中请求他们
   serve: { //object
     port: 1337,
     content './dist',
     // ...
   },
   // 为 webpack-serve 提供选项
-  stats: "errors-only",  // 精确控制要显示的 bundle 信息
+  stats: "errors-only",
+  stats: { //object
+    assets: true,
+    colors: true,
+    errors: true,
+    errorDetails: true,
+    hash: true,
+    // ...
+  },
+  // 精确控制要显示的 bundle 信息
   devServer: {
     proxy: { // proxy URLs to backend development server
       '/api': 'http://localhost:3000'
