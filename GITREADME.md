@@ -293,7 +293,7 @@ e435fe8 add readme
 - 匹配模式可以以（/）结尾指定目录。
 - 要忽略指定模式以外的文件或目录，可以在模式前加上惊叹号（!）取反。
 
-```cpp
+```md
 # 此为注释 – 将被 Git 忽略
 1）配置语法：
 以斜杠“/”开头表示目录；
@@ -302,11 +302,20 @@ e435fe8 add readme
 以方括号“[]”包含单个字符的匹配列表；
 以叹号“!”表示不忽略(跟踪)匹配到的文件或目录；
 
-*.a       # 忽略所有 .a 结尾的文件
-!lib.a    # 但 lib.a 除外
-/TODO     # 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO
-build/    # 忽略 build/ 目录下的所有文件
-doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+# 忽略 .a 文件
+*.a
+# 但否定忽略 lib.a, 尽管已经在前面忽略了 .a 文件
+!lib.a
+# 仅在当前目录下忽略 TODO 文件， 但不包括子目录下的 subdir/TODO
+/TODO
+# 忽略 build/ 文件夹下的所有文件
+build/
+# 忽略 doc/notes.txt, 不包括 doc/server/arch.txt
+doc/*.txt
+# 忽略所有的 .pdf 文件 在 doc/ directory 下的
+doc/**/*.pdf
+
+
 ```
 ## 模式
 ```
