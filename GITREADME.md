@@ -61,8 +61,16 @@ git clone [--template=<template_directory>]
 克隆仓库的命令格式为：
 ```bash
 git clone <repo>
-git clone <repo> --bare // 克隆一个干净的库
+git clone <repo> --bare 
 ```
+复制仓库到新的仓库
+```bash
+git clone https://github.com/antirez/redis.git --bare // 克隆一个干净的库
+git push https://git.coding.net/jiong/redis.git --all //推送所有的分支和对象
+git push https://git.coding.net/jiong/redis.git --tags //推送所有的标签。
+
+```
+
 如果我们需要克隆到指定的目录，可以使用以下命令格式：
 ```bash
 git clone <repo> <directory>
