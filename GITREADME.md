@@ -61,6 +61,7 @@ git clone [--template=<template_directory>]
 克隆仓库的命令格式为：
 ```bash
 git clone <repo>
+git clone <repo> --bare // 克隆一个干净的库
 ```
 如果我们需要克隆到指定的目录，可以使用以下命令格式：
 ```bash
@@ -483,7 +484,7 @@ git merge <branchname>
 
 git mergetool
 ```
-## <span id="远程分支">远程分支</span>
+## 远程分支
 
 **推送**
 当你想要公开分享一个分支时，需要将其推送到有写入权限的远程仓库上。 本地的分支并不会自动与远程仓库同步 - 你必须显式地推送想要分享的分支。 这样，你就可以把不愿意分享的内容放到私人分支上，而将需要和别人协作的内容推送到公开分支。
@@ -574,6 +575,21 @@ git fetch --all [<options>]
 git merge origin/dev
 ```
 ## 远程仓库
+```bash
+git remote [-v | --verbose]
+git remote add [-t <branch>] [-m <master>] [-f] [--[no-]tags] [--mirror=<fetch|push>] <name> <url>
+git remote rename <old> <new>
+git remote remove <name>
+git remote set-head <name> (-a | --auto | -d | --delete | <branch>)
+git remote set-branches [--add] <name> <branch>…​
+git remote get-url [--push] [--all] <name>
+git remote set-url [--push] <name> <newurl> [<oldurl>]
+git remote set-url --add [--push] <name> <newurl>
+git remote set-url --delete [--push] <name> <url>
+git remote [-v | --verbose] show [-n] <name>…​
+git remote prune [-n | --dry-run] <name>…​
+git remote [-v | --verbose] update [-p | --prune] [(<group> | <remote>)…​]
+```
 **获取克隆远程仓库**
 ```bash
 $ git clone https://github.com/schacon/ticgit
