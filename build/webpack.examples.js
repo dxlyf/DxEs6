@@ -46,17 +46,17 @@ module.exports = {
     // 导出库(exported library)的名称
 
     libraryTarget: "umd", // 通用模块定义
-        libraryTarget: "umd2", // 通用模块定义
-        libraryTarget: "commonjs2", // exported with module.exports
-        libraryTarget: "commonjs-module", // 使用 module.exports 导出
-        libraryTarget: "commonjs", // 作为 exports 的属性导出
-        libraryTarget: "amd", // 使用 AMD 定义方法来定义
-        libraryTarget: "this", // 在 this 上设置属性
-        libraryTarget: "var", // 变量定义于根作用域下
-        libraryTarget: "assign", // 盲分配(blind assignment)
-        libraryTarget: "window", // 在 window 对象上设置属性
-        libraryTarget: "global", // property set to global object
-        libraryTarget: "jsonp", // jsonp wrapper
+    libraryTarget: "umd2", // 通用模块定义
+    libraryTarget: "commonjs2", // exported with module.exports
+    libraryTarget: "commonjs-module", // 使用 module.exports 导出
+    libraryTarget: "commonjs", // 作为 exports 的属性导出
+    libraryTarget: "amd", // 使用 AMD 定义方法来定义
+    libraryTarget: "this", // 在 this 上设置属性
+    libraryTarget: "var", // 变量定义于根作用域下
+    libraryTarget: "assign", // 盲分配(blind assignment)
+    libraryTarget: "window", // 在 window 对象上设置属性
+    libraryTarget: "global", // property set to global object
+    libraryTarget: "jsonp", // jsonp wrapper
     // 导出库(exported library)的类型
 
     /* 高级输出配置（点击显示） */
@@ -99,7 +99,7 @@ module.exports = {
       // 模块规则（配置 loader、解析器等选项）
       {
 
-        use:'label-laoder'
+        use: 'label-laoder'
         //use:[ "style-loader" ],
         //use:[{loader:'style-laoder',options:{}}]
       },
@@ -165,20 +165,20 @@ module.exports = {
         ]
       },
 
-      { oneOf: [ /* rules */ ] },
+      { oneOf: [ /* rules */] },
       // 只使用这些嵌套规则之一
 
-      { rules: [ /* rules */ ] },
+      { rules: [ /* rules */] },
       // 使用所有这些嵌套规则（合并可用条件）
 
-      { resource: { and: [ /* 条件 */ ] } },
+      { resource: { and: [ /* 条件 */] } },
       // 仅当所有条件都匹配时才匹配
 
-      { resource: { or: [ /* 条件 */ ] } },
-      { resource: [ /* 条件 */ ] },
+      { resource: { or: [ /* 条件 */] } },
+      { resource: [ /* 条件 */] },
       // 任意条件匹配时匹配（默认为数组）
 
-      { resource: { not:true /* 条件 */ } }
+      { resource: { not: true /* 条件 */ } }
       // 条件不匹配时匹配
     ],
 
@@ -289,7 +289,7 @@ module.exports = {
     hints: false, // 关闭性能提示
     maxAssetSize: 200000, // 整数类型（以字节为单位）
     maxEntrypointSize: 400000, // 整数类型（以字节为单位）
-    assetFilter: function(assetFilename) {
+    assetFilter: function (assetFilename) {
       // 提供资源文件名的断言函数
       return assetFilename.endsWith('.css') || assetFilename.endsWith('.js');
     }
@@ -365,15 +365,15 @@ module.exports = {
     https: false, // true for self-signed, object for cert authority
     noInfo: true, // only errors & warns on hot reload
     // ...
-      
-    hot:false，//启用热模块更换。
-    hotOnly:false，//启用热更换模块而不刷新页面作为后备。
-    lazy:false，//禁用watch模式并仅在请求时重新编译bundle。
-    bonjour:false，//发布ZeroConf DNS服务
-    host:，//服务器监听的主机。
-    allowedHosts:，//指定哪些主机被允许访问dev服务器。
-    filename:false，//为了触发重新编译需要被请求的文件名（只在懒惰模式下）。
-    
+
+    hot: false，//启用热模块更换。
+    hotOnly: false，//启用热更换模块而不刷新页面作为后备。
+    lazy: false，//禁用watch模式并仅在请求时重新编译bundle。
+    bonjour: false，//发布ZeroConf DNS服务
+    host: ，//服务器监听的主机。
+    allowedHosts: ，//指定哪些主机被允许访问dev服务器。
+    filename: false，//为了触发重新编译需要被请求的文件名（只在懒惰模式下）。
+
     /*[
       {
         "instanceof": "RegExp"
@@ -382,9 +382,9 @@ module.exports = {
         "type": "string"
       }
     ]*/
-    publicPath:，//网址文件所在的URL路径。
-    port:false，//服务器侦听的端口。
-    
+    publicPath: ，//网址文件所在的URL路径。
+    port: false，//服务器侦听的端口。
+
     /*[
       {
         "type": "number"
@@ -393,13 +393,13 @@ module.exports = {
         "type": "string"
       }
     ]*/
-    socket:，//用于监听的Unix套接字（而不是主机）。
-    watchOptions:{}，//更改手表行为的选项。
-    headers:{}，//添加到每个响应的响应标题。
-    logLevel:，//终端/控制台中的日志级别（trace，debug，info，warn，error或none）
-    clientLogLevel:，//控制浏览器中显示的日志消息。
-    overlay:false，//在浏览器中显示错误覆盖。
-    
+    socket: ，//用于监听的Unix套接字（而不是主机）。
+    watchOptions: {}，//更改手表行为的选项。
+    headers: {}，//添加到每个响应的响应标题。
+    logLevel: ，//终端/控制台中的日志级别（trace，debug，info，warn，error或none）
+    clientLogLevel: ，//控制浏览器中显示的日志消息。
+    overlay: false，//在浏览器中显示错误覆盖。
+
     /*[
       {
         "type": "boolean"
@@ -416,9 +416,9 @@ module.exports = {
         }
       }
     ]*/
-    progress:false，//在浏览器控制台中显示编译进度。
-    key:false，// SSL密钥的内容。
-    
+    progress: false，//在浏览器控制台中显示编译进度。
+    key: false，// SSL密钥的内容。
+
     /*[
       {
         "type": "string"
@@ -427,8 +427,8 @@ module.exports = {
         "instanceof": "Buffer"
       }
     ]*/
-    cert:false，// SSL证书的内容。
-    
+    cert: false，// SSL证书的内容。
+
     /*[
       {
         "type": "string"
@@ -437,8 +437,8 @@ module.exports = {
         "instanceof": "Buffer"
       }
     ]*/
-    ca:false，// SSL CA证书的内容。
-    
+    ca: false，// SSL CA证书的内容。
+
     /*[
       {
         "type": "string"
@@ -447,8 +447,8 @@ module.exports = {
         "instanceof": "Buffer"
       }
     ]*/
-    pfx:false，// SSL pfx文件的内容。
-    
+    pfx: false，// SSL pfx文件的内容。
+
     /*[
       {
         "type": "string"
@@ -457,13 +457,13 @@ module.exports = {
         "instanceof": "Buffer"
       }
     ]*/
-    pfxPassphrase:，//到（SSL）PFX文件的密码。
-    requestCert:false，//启用对客户端证书的请求。这直接传递给https服务器。
-    inline:false，//启用内联模式以将客户端脚本包含在包中（仅限CLI）。
-    disableHostCheck:false，//禁用主机头检查（安全性）。
-    public:，//服务器的公共主机名/ IP地址。
-    https:false，//启用服务器的HTTPS。
-    
+    pfxPassphrase: ，//到（SSL）PFX文件的密码。
+    requestCert: false，//启用对客户端证书的请求。这直接传递给https服务器。
+    inline: false，//启用内联模式以将客户端脚本包含在包中（仅限CLI）。
+    disableHostCheck: false，//禁用主机头检查（安全性）。
+    public: ，//服务器的公共主机名/ IP地址。
+    https: false，//启用服务器的HTTPS。
+
     /*[
       {
         "type": "object"
@@ -472,8 +472,8 @@ module.exports = {
         "type": "boolean"
       }
     ]*/
-    contentBase:false，//从非webpack文件提供文件的目录。
-    
+    contentBase: false，//从非webpack文件提供文件的目录。
+
     /*[
       {
         "items": {
@@ -494,9 +494,9 @@ module.exports = {
         "type": "string"
       }
     ]*/
-    watchContentBase:false，//观察contentBase目录中的更改。
-    open:false，//让CLI用URL打开浏览器。
-    
+    watchContentBase: false，//观察contentBase目录中的更改。
+    open: false，//让CLI用URL打开浏览器。
+
     /*[
       {
         "type": "string"
@@ -505,12 +505,12 @@ module.exports = {
         "type": "boolean"
       }
     ]*/
-    useLocalIp:false，//让浏览器打开本地IP。
-    openPage:，//让CLI将浏览器打开到网站上的特定页面。
-    features:，//功能将被触发的顺序。
-    compress:false，//对所有请求进行Gzip压缩。
-    proxy:false，//代理请求到另一台服务器。
-    
+    useLocalIp: false，//让浏览器打开本地IP。
+    openPage: ，//让CLI将浏览器打开到网站上的特定页面。
+    features: ，//功能将被触发的顺序。
+    compress: false，//对所有请求进行Gzip压缩。
+    proxy: false，//代理请求到另一台服务器。
+
     /*[
       {
         "items": {
@@ -530,8 +530,8 @@ module.exports = {
         "type": "object"
       }
     ]*/
-    historyApiFallback:false，// 404回退到指定的文件。
-    
+    historyApiFallback: false，// 404回退到指定的文件。
+
     /*[
       {
         "type": "boolean"
@@ -540,12 +540,12 @@ module.exports = {
         "type": "object"
       }
     ]*/
-    staticOptions:{}，//用contentBase提供静态文件的选项。
-    setup:undefined，//公开Express服务器以添加自定义中间件或路由。
-    before:undefined，//在添加webpack-dev-middleware之前，公开Express服务器以添加自定义中间件或路由。
-    after:undefined，//在添加webpack-dev-middleware后，公开Express服务器以添加自定义中间件或路由。
-    stats:false，//决定显示哪些束信息。
-    
+    staticOptions: {}，//用contentBase提供静态文件的选项。
+    setup: undefined，//公开Express服务器以添加自定义中间件或路由。
+    before: undefined，//在添加webpack-dev-middleware之前，公开Express服务器以添加自定义中间件或路由。
+    after: undefined，//在添加webpack-dev-middleware后，公开Express服务器以添加自定义中间件或路由。
+    stats: false，//决定显示哪些束信息。
+
     /*[
       {
         "type": "object"
@@ -563,14 +563,14 @@ module.exports = {
         ]
       }
     ]*/
-    reporter:undefined，//定制编译时控制台显示的内容。
-    logTime:false，//在控制台显示中编译前后报告时间。
-    noInfo:false，//在控制台上隐藏所有信息。
-    quiet:false，//在控制台上隐藏所有消息。
-    serverSideRender:false，//公开服务器端渲染的统计信息（实验）。
-    index:，//被认为是索引文件的文件名。
-    log:undefined，//自定义webpack-dev-middleware的信息日志。
-    warn:undefined，//为webpack-dev-middleware自定义警告日志。
+    reporter: undefined，//定制编译时控制台显示的内容。
+    logTime: false，//在控制台显示中编译前后报告时间。
+    noInfo: false，//在控制台上隐藏所有信息。
+    quiet: false，//在控制台上隐藏所有消息。
+    serverSideRender: false，//公开服务器端渲染的统计信息（实验）。
+    index: ，//被认为是索引文件的文件名。
+    log: undefined，//自定义webpack-dev-middleware的信息日志。
+    warn: undefined，//为webpack-dev-middleware自定义警告日志。
   },
 
   plugins: [
@@ -609,23 +609,30 @@ module.exports = {
     // 必须用在不通知更改的文件系统中
     // 即 nfs shares（译者注：Network FileSystem，最大的功能就是可以透過網路，讓不同的機器、不同的作業系統、可以彼此分享個別的檔案 ( share file )）
   },
-
+  /**
+   * 是一个对象，其中每个属性都是 Node.js 全局变量或模块的名称，每个 value 是以下其中之一……
+  此功能由 webpack 内部的 NodeStuffPlugin 插件提供。如果 target 是 "web"（默认）或 "webworker"，那么 NodeSourcePlugin 插件也会被激活。
+  true：提供 polyfill。
+  "mock"：提供 mock 实现预期接口，但功能很少或没有。
+  "empty"：提供空对象。
+  false: 什么都不提供。预期获取此对象的代码，可能会因为获取不到此对象，触发 ReferenceError 而崩溃。尝试使用 require('modulename') 导入模块的代码，可能会触发 Cannot find module "modulename" 错误。
+    * * *//
   node: {
-    // Polyfills and mocks to run Node.js-
-    // environment code in non-Node environments.
+  // Polyfills and mocks to run Node.js-
+  // environment code in non-Node environments.
 
-    console: false, // boolean | "mock"
+  console: false, // boolean | "mock"
     global: true, // boolean | "mock"
-    process: true, // boolean
-    __filename: "mock", // boolean | "mock"
-    __dirname: "mock", // boolean | "mock"
-    Buffer: true, // boolean | "mock"
-    setImmediate: true // boolean | "mock" | "empty"
-  },
+      process: true, // boolean
+        __filename: "mock", // boolean | "mock"
+          __dirname: "mock", // boolean | "mock"
+            Buffer: true, // boolean | "mock"
+              setImmediate: true // boolean | "mock" | "empty"
+},
 
-  recordsPath: path.resolve(__dirname, "build/records.json"),
+recordsPath: path.resolve(__dirname, "build/records.json"),
   recordsInputPath: path.resolve(__dirname, "build/records.json"),
-  recordsOutputPath: path.resolve(__dirname, "build/records.json"),
+    recordsOutputPath: path.resolve(__dirname, "build/records.json"),
   // TODO
 
 }
