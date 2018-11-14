@@ -19,6 +19,18 @@ export default {
     context:'window',
    // intro:'var global=window,process={};',
    // outro:'lib_1=lib;'
+    /** 
+     * legacy
+为了增加对诸如IE8之类的旧版环境的支持，通过剥离更多可能无法正常工作的现代化的代码，其代价是偏离ES6模块环境所需的精确规范。
+
+exports
+String 使用什么导出模式。默认为auto，它根据entry模块导出的内容猜测你的意图：
+
+default – 如果你使用 export default ... 仅仅导出一个东西，那适合用这个
+named – 如果你导出多个东西，适合用这个
+none – 如果你不导出任何内容 (例如，你正在构建应用程序，而不是库)，则适合用这个
+default 和 named之间的区别会影响其他人如何使用文件束(bundle)。如果您使用default，则Common
+     * */
     exports:"named"
     // globals:{
     //   'global':'sd'
