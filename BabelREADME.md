@@ -5,6 +5,14 @@
 - [所有插件](#所有插件)
 - [插件/预设排序](#插件预设排序)
 
+## 介绍
+- Babel-types: Babel Types 是一个为 AST 节点提供的 lodash 类的实用程序库
+- Babel-register: require 钩子会将自己绑定到 node 的require 上并且能自动即时编译
+- Babel-template: 从一个字符串模板中生成 AST
+- Babel-helpers: Babel 转换的帮助函数集合
+- Babel-code-frame: 生成指向源位置包含代码帧的错误
+- Babylon: Babylon 是一个用于 Babel 的 JavaScript 解析器
+
 ## 默认转换情况
 Babel 默认只转换新的 JavaScript 句法（syntax），而不转换新的 API ，比如 Iterator、Generator、Set、Maps、Proxy、Reflect、Symbol、Promise 等全局对象，以及一些定义在全局对象上的方法（比如 Object.assign）都不会转码。Babel 默认不转码的 API 非常多，详细清单可以查看 definitions.js 文件
 
