@@ -1,6 +1,6 @@
 #npm 使用
 * [初始化](#初始化)
-* [npm install](#installpackage)
+* [npm install](#安装包)
 * [npm link](#npmlink)
 * [npm view](#viewinstallpackage)
 * [查看包版本](#查看版本)
@@ -12,13 +12,18 @@
 * [删除多余的包](#delpackage)
 * [更新NPM和NODE](#更新npm和node)
 * [package配置](#package配置)
-* [版本](#版本)
-* [scripts](#scripts)
+* [publishing](#publishing)
 ---
 ## 安装nodek
 [node下载](#http://nodejs.cn/download/)
 
 ## 全局化文件夹自定义设置
+### 映射
+```bash
+$ npm install -g cnpm --registry=https://registry.npm.taobao.org
+npm config get registry
+npm config set registry http://registry.npmjs.org
+```
 ### 创建文件夹
 在nodejs 下面创建两个文件夹
 - node_cache
@@ -186,7 +191,7 @@ ll和la命令：ls --long
 > npm set init.author.name "ag_dubs"  
 > npm set init.license "MIT"  
 ```
-## <span id="installpackage">安装包</psan>
+## 安装包
 ```bash
 > npm install (with no args, in package dir)
 > npm install [<@scope>/]<name>
@@ -251,7 +256,7 @@ alias: npm ln
 ```
 如果需要require全局包，可以先npm link到local。
 无论你在哪个文件夹 执行 npm link xxx , 如果没有xxx模块, 那么xxx就会先安装在全局, 然后再从全局link过来
-* npm unlink 从全局包模块位置删除当前包
+
 * npm link 在一个包文件夹中，将在全局文件夹中创建一个符号链接 ，链接到npm link执行该命令的包.如果下面有package.json 会安装文件里面的依赖
 * npm link package-name 将创建一个从全局安装package-name到node_modules/ 当前文件夹的符号链接。
 ## 更新
@@ -288,7 +293,7 @@ aliases: remove, rm, r, un, unlink
 > npm uninstall <package> --no-save  包将不会从您的package.json文件中删除。
 ```
 
-## <span id="viewinstallpackage">查看安装包</span>
+## viewinstallpackage
 ```bash
 > npm view [<@scope>/]<name>[@<version>] [<field>[.<subfield>]...]
 aliases: info, show, v
@@ -426,7 +431,6 @@ npm cache clear --force
 ## package配置
 
 
-
 ### 版本
 有关指定版本范围的更多详细信息，请参阅semver。
 ```
@@ -549,70 +553,90 @@ Caret Ranges ^1.2.3 ^0.2.5 ^0.0.4
 ^1.x ：= >=1.0.0 <2.0.0
 ^0.x ：= >=0.0.0 <1.0.0
 
-## scripts
+## publishing
 ```bash
-npm run-script <command> [--silent] [-- <args>...]
+npm publish [<tarball>|<folder>] [--tag <tag>] [--access <public|restricted>] [--otp otpcode] [--dry-run]
 
-alias: npm run
-npm-scripts
-npm-test
-npm-start
-npm-restart
-npm-stop
-npm-config
-如果是并行执行（即同时的平行执行），可以使用&符号。
-$ npm run script1.js & npm run script2.js
-//如果是继发执行（即只有前一个任务成功，才执行下一个任务），可以使用&&符号。
-npm run <command>&&npm run <command>
+Publishes '.' if no argument supplied
+Sets tag 'latest' if no --tag specified
 ```
-描述
-对于以下脚本，npm支持package.json文件的“scripts”属性：
+将包发布到注册表，以便可以按名称安装它。如果不存在本地.gitignore或 .npmignore文件，则包括程序包目录中的所有文件。如果两个文件都存在且文件被忽略 .gitignore，.npmignore那么它将被包括在内。有关<a href="/misc/developers">npm-developers</a>已发布包中包含的内容的详细信息，请参阅参考资料 ，以及有关如何构建包的详细信息。
 
-prepublish：在包打包和发布之前运行，以及在npm install没有任何参数的本地运行。（见下文）
-准备：在打包和发布包之前运行，在npm install没有任何参数的本地运行（见下文）。这是在之后运行prepublish，但是之前prepublishOnly。
-prepublishOnly：在准备和包装之前运行，仅打开npm publish。（见下文。）
-预包装：前运行压缩包包装（上npm pack，npm publish并安装git的依赖时）
-postpack：在生成tarball之后运行并移动到其最终目标。
-发布，postpublish：发布包后运行。
-预安装：在安装软件包之前运行
-install，postinstall：安装软件包后运行。
-preuninstall，uninstall：在卸载软件包之前运行。
-postuninstall：在卸载软件包后运行。
-preversion：在碰撞包版本之前运行。
-version：运行AFTER碰撞包版本，但提交之前。
-postversion：运行AFTER碰撞包版本，然后提交。
-pretest，test，posttest：由npm test命令运行。
-prestop，stop，poststop：由npm stop命令运行。
-prestart，start，poststart：由npm start命令运行。
-prerestart，restart，postrestart：按npm restart命令运行。注意：npm restart如果没有restart提供脚本，将运行停止和启动脚本。
-preshrinkwrap，shrinkwrap，postshrinkwrap：由npm shrinkwrap命令运行。
-此外，可以通过运行执行任意脚本npm run-script <stage>。前置和后名称匹配的命令将这些运行以及（例如premyscript，myscript， postmyscript）。可以运行依赖项的脚本npm explore <pkg> -- npm run <stage>。
+默认情况下，npm将发布到公共注册表。可以通过指定其他默认注册表或<a href="/misc/scope">npm-scope</a>在名称中使用a来覆盖它（请参阅参考资料<a href="/files/package.json">package.json</a>）。
 
-** 钩子**
-七、钩子
-npm 脚本有pre和post两个钩子。举例来说，build脚本命令的钩子就是prebuild和postbuild。
+`<folder>`：包含package.json文件的文件夹   
+`<tarball>`：gzipped tar归档文件的URL或文件路径，其中包含一个包含package.json文件的文件夹。
+
+[--tag `<tag>`] 使用给定标记注册已发布的包，以便“npm install” @`将安装此版本。默认情况下，`npm publish`更新和`npm install`安装`latest`标签。有关标签的详细信息，请参阅` npm-dist-tag`。                    
+
+[--access `<public|restricted>]` 告知注册表该包是否应该公开发布或限制发布。仅适用于范围包，默认为restricted。如果您没有付费帐户，则必须发布--access public 以发布范围包。
+
+[--otp <otpcode>] 如果您在auth-and-writes模式下启用了双因素身份验证，则可以使用此身份验证身份验证器提供代码。如果你不包括这个并且你从TTY运行，那么你会被提示。
+
+[--dry-run] 除了实际发布到注册表之外，所有发布都会发生。报告将要发布的内容的详细信息。
+如果包名称和版本组合已存在于指定的注册表中，则会失败。
+
+使用给定名称和版本发布包后，即使使用npm-unpublish删除该包，也不能再次使用该特定名称和版本组合。
+
+截止日期npm@5，sha1sum和带有sha512sum of tarball的完整性字段将在发布期间提交给注册表。后续安装将使用最强支持的算法来验证下载。
+
+与--dry-runsee 类似<a href="/cli/pack">npm-pack</a>，它指出要包含的文件并将它们打包成tarball以上传到注册表。
 
 
-"prebuild": "echo I run before the build script",
-"build": "cross-env NODE_ENV=production webpack",
-"postbuild": "echo I run after the build script"
-用户执行npm run build的时候，会自动按照下面的顺序执行。
+Scopes就好像npm模块的namespaces。如果一个包名的第一个字符是@，那么它就是个作用域包。在@和斜杠之间作用域可以是任何字符。
+```bash
+@scope/project-name
+```
+每个npm用户都有他们独自的作用域。
+```bash
+@username/project-name
+```
+你可以在CLI documentation中查看更多有关作用域的信息。
 
+### 更新npm和登录
+npm的版本需要在2.7.0以上，如果你是第一次使用作用域模块，你需要再次登录。
+```bash
+sudo npm install -g npm
+npm login
+```
+初始化一个作用域包
+你仅仅只需要用你的包名加上你的作用域就可以创建一个作用域包。
+```json
+{
+  "name": "@username/project-name"
+}
+```
+如果你使用npm init命令初始化，你可以通过一个指令来添加你的作用域。
+```bash
+npm init --scope=username
+```
+如果你总是使用相同的作用域，你可以把这个选项添加到你的.npmrc文件中。
+```bash
+npm config set scope username
+npm adduser --registry=http://myregistry.example.com --scope=@myco
+```
+### 发布一个作用域包
+作用域包默认是私有的。你需要付费成为一个private modules用户来发布私有模块。
 
-npm run prebuild && npm run build && npm run postbuild
-因此，可以在这两个钩子里面，完成一些准备工作和清理工作。下面是一个例子。
-
-
-"clean": "rimraf ./dist && mkdir dist",
-"prebuild": "npm run clean",
-"build": "cross-env NODE_ENV=production webpack"
-npm 默认提供下面这些钩子。
-
-prepublish，postpublish
-preinstall，postinstall
-preuninstall，postuninstall
-preversion，postversion
-pretest，posttest
-prestop，poststop
-prestart，poststart
-prerestart，postrestart
+然而公共的作用域模块时免费的，也不需要支付订阅。通过在发布时设置权限来发布一个公共作用域的模块，这项设置将保留到后续发布中。
+```bash
+npm publish --access=public
+npm publish --access public
+```
+### 使用作用域包
+通过为你引用的包名加上作用域名你可以方便的使用一个作用域包。
+例如：在package.json文件中：
+```json
+{
+  "dependencies": {
+    "@username/project-name": "^1.0.0"
+  }
+}
+```
+或者通过使用命令行：
+```bash
+npm install @username/project-name --save
+```
+在引用的地方加上：
+var projectName = require("@username/project-name")
+可以通过浏览npmjs.com/private-modules来获得更多关于私有模块的信息。
