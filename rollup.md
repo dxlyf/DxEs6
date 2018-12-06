@@ -61,6 +61,7 @@ $ rollup main.js --o bundle.js --f cjs
 ```
 对于浏览器和 Node.js:
 ```bash
+$ rollup -i index.js -o ./dist/index.js -f umd -n index
 # UMD format requires a bundle name
 $ rollup main.js --o bundle.js -f umd --name "myBundle"
 ```

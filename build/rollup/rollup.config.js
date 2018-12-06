@@ -1,6 +1,6 @@
 const path=require('path');
 let root=path.resolve(__dirname);
-
+// rollup -i 
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import babel from 'rollup-plugin-babel';
