@@ -6,6 +6,7 @@
   "scripts": {
     "dx:doc": "jsdoc -c jsdoc/dx.js",
     "rollup-dx": "rollup -c build/rollup/rollup.dx.js",
+    "debug":"node --inspect-brk=9229 ./node_modules/.bin/cross-env APP_TYPE=site PROT=9000 ./node_modules/.bin/umi dev",
     "webserver": "node build/web-server",
     "test": "node build/test",
     "dx:test": "karma start test/unit/dx.dev.config",
