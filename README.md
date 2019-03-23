@@ -1551,6 +1551,41 @@ console-要使用什么样的主机，例如internalConsole，integratedTerminal
 
 VS Code支持字符串中的变量替换，launch.json并具有以下预定义变量：
 
+预定义的变量
+支持以下预定义变量：
+
+$ {workspaceFolder} - 在VS Code中打开的文件夹的路径
+$ {workspaceFolderBasename} - VS代码中打开的文件夹的名称，没有任何斜杠（/）
+$ {file} - 当前打开的文件
+$ {relativeFile} - 当前打开的文件相对于workspaceFolder
+$ {fileBasename} - 当前打开文件的基本名称
+$ {fileBasenameNoExtension} - 当前打开文件的基本名称，没有文件扩展名
+$ {fileDirname} - 当前打开文件的目录名
+$ {fileExtname} - 当前打开文件的扩展名
+$ {cwd} - 启动时任务运行器的当前工作目录
+$ {lineNumber} - 活动文件中当前选定的行号
+$ {selectedText} - 活动文件中当前选定的文本
+$ {execPath} - 运行VS Code可执行文件的路径
+预定义变量示例
+假设您有以下要求：
+
+位于/home/your-username/your-project/folder/file.ext编辑器中打开的文件;
+该目录/home/your-username/your-project作为根工作空间打开。
+因此，每个变量都有以下值：
+
+$ {workspaceFolder} -/home/your-username/your-project
+$ {workspaceFolderBasename} -your-project
+$ {file} -/home/your-username/your-project/folder/file.ext
+$ {relativeFile} -folder/file.ext
+$ {fileBasename} -file.ext
+$ {fileBasenameNoExtension} -file
+$ {fileDirname} -/home/your-username/your-project/folder
+$ {fileExtname} -.ext
+$ {lineNumber} - 游标的行号
+$ {selectedText} - 在代码编辑器中选择的文本
+$ {execPath} - Code.exe的位置
+提示：在字符串值内使用IntelliSense tasks.json，launch.json以获取预定义变量的完整列表
+
 $ {workspaceFolder} - 在VS Code中打开的文件夹的路径
 $ {workspaceFolderBasename} - VS代码中打开的文件夹的名称，不带任何斜杠（/）
 $ {file} - 当前打开的文件
