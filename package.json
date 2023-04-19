@@ -82,7 +82,7 @@
     "karma-safari-launcher": "^1.0.0",
     "karma-sauce-launcher": "^1.2.0",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^2.0.9",
+    "karma-webpack": "^2.0.13",
     "opn": "^5.1.0",
     "rollup": "^0.53.4",
     "rollup-plugin-alias": "^1.4.0",
